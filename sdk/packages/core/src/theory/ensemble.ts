@@ -40,8 +40,8 @@ export class Ensemble {
       throw new Error(`Invalid ensemble version: ${config.version}`);
     }
 
-    // Set balance rules (mapped from balanceRules property)
-    this.balanceRules = config.balanceRules;
+    // Set balance rules (mapped from balance property)
+    this.balanceRules = config.balance;
 
     // Add voices
     for (const voice of config.voices) {
@@ -72,7 +72,7 @@ export class Ensemble {
       voices: Array.from(this.voices.values()),
       voiceCount: this.voices.size,
       groups: Array.from(this.groups.values()),
-      balanceRules: this.balanceRules,
+      balance: this.balanceRules,
     };
   }
 
@@ -414,7 +414,7 @@ export class EnsembleBuilder {
       id: this.generateUUID(),
       voices: this.voices,
       groups: this.groups.length > 0 ? this.groups : undefined,
-      balanceRules: this.balanceRules,
+      balance: this.balanceRules,
     });
   }
 
@@ -512,8 +512,8 @@ export function createFullEnsemble(): Ensemble {
   // Create new ensemble with priority set
   return new Ensemble({
     ...model,
-    balanceRules: {
-      ...model.balanceRules,
+    balance: {
+      ...model.balance,
       priority: voiceIds, // Set priority with actual voice IDs
     },
   });
@@ -569,8 +569,8 @@ export function validateEnsembleModel(model: EnsembleModel): {
   }
 
   // Validate balance rules
-  if (model.balanceRules) {
-    const balanceErrors = validateBalanceRules(model.balanceRules);
+  if (model.balance) {
+    const balanceErrors = validateBalanceRules(model.balance);
     errors.push(...balanceErrors);
   }
 

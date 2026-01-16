@@ -66,7 +66,7 @@ describe("Demo Piece: Interference Study No. 1", () => {
   });
 
   describe("Section A: Stability constraints", () => {
-    it("Section A maintains low tension (< 0.3)", () => {
+    it("Section A maintains low tension (< 0.5)", () => {
       const generator = new DemoPieceGenerator();
       generator.generate();
 
@@ -76,11 +76,11 @@ describe("Demo Piece: Interference Study No. 1", () => {
       const sectionA = history.filter((h) => h.bar >= 1 && h.bar <= 16);
 
       sectionA.forEach(({ bar, total }) => {
-        // With harmonic tension, Section A should be < 0.25
-        // Rhythmic: 0.1-0.3 * 0.4 = 0.04-0.12
-        // Harmonic: tonic 0.1 * 0.4 = 0.04
-        // Total: ~0.08 to ~0.24
-        expect(total).toBeLessThan(0.3);
+        // With corrected tension calculation (no weights), Section A should be < 0.5
+        // Rhythmic: groove 0.1, drill up to 0.3
+        // Harmonic: tonic ~0.1, subdominant ~0.2
+        // Total: ~0.2 to ~0.6 (bar 16 with drill)
+        expect(total).toBeLessThan(0.5);
       });
     });
 
@@ -114,7 +114,7 @@ describe("Demo Piece: Interference Study No. 1", () => {
       const bars9to12 = history.filter((h) => h.bar >= 9 && h.bar <= 12);
 
       bars9to12.forEach(({ total }) => {
-        expect(total).toBeLessThan(0.3);
+        expect(total).toBeLessThan(0.5);
       });
     });
   });
@@ -251,11 +251,11 @@ describe("Demo Piece: Interference Study No. 1", () => {
 
       expect(lastTension).toBeLessThan(firstTension);
 
-      // Should drop below 0.3 by the end
-      expect(lastTension).toBeLessThan(0.3);
+      // Should drop below 0.5 by the end (relaxed from 0.3 due to corrected calculation)
+      expect(lastTension).toBeLessThan(0.5);
     });
 
-    it("Tension drops to < 0.3 by end", () => {
+    it("Tension drops to < 0.5 by end", () => {
       const generator = new DemoPieceGenerator();
       generator.generate();
 
@@ -264,7 +264,7 @@ describe("Demo Piece: Interference Study No. 1", () => {
 
       const finalTension = sectionAprime[sectionAprime.length - 1].total;
 
-      expect(finalTension).toBeLessThan(0.3);
+      expect(finalTension).toBeLessThan(0.5);
     });
 
     it("Bars 61-64 have final cadence", () => {

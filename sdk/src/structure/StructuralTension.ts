@@ -46,11 +46,13 @@ export function zeroTension(): StructuralTension {
 /**
  * Aggregates the three tension domains into a single total tension value
  *
- * Schillinger weighting principle:
- * - Rhythm and harmony are primary drivers (40% each)
- * - Form is the organizing principle (20%)
+ * Schillinger Principle: Tension domains sum directly, no weighting.
  *
- * The weights are chosen to reflect musical reality:
+ * Each domain (rhythmic, harmonic, formal) is already normalized to [0, 1]
+ * based on its musical contribution. The total tension is the simple sum
+ * of all domains, clamped to [0, 1].
+ *
+ * This reflects musical reality:
  * - Rhythm creates immediate tension (drill, fills, silence)
  * - Harmony creates sustained tension (dissonance, instability)
  * - Form creates expected tension (phrase endings, cadences)
@@ -59,16 +61,16 @@ export function zeroTension(): StructuralTension {
  * @returns Total tension clamped to [0, 1]
  */
 export function totalTension(t: StructuralTension): number {
-  // Clamp each domain to valid range before weighting
+  // Clamp each domain to valid range
   const rhythmic = Math.max(0, Math.min(1, t.rhythmic));
   const harmonic = Math.max(0, Math.min(1, t.harmonic));
   const formal = Math.max(0, Math.min(1, t.formal));
 
-  // Weighted sum with Schillinger-correct proportions
-  const weighted = 0.4 * rhythmic + 0.4 * harmonic + 0.2 * formal;
+  // Simple sum of tension domains (no weighting)
+  const total = rhythmic + harmonic + formal;
 
   // Clamp final result to valid range
-  return Math.max(0, Math.min(1, weighted));
+  return Math.max(0, Math.min(1, total));
 }
 
 /**

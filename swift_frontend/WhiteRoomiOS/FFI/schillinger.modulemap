@@ -7,8 +7,8 @@
 //
 
 module SchillingerFFI {
-    header "sch_engine.hpp"
+    header "sch_engine_ffi.h"
 
-    // Export all C functions and types from sch_engine.hpp
+    // Export all C functions and types from sch_engine_ffi.h
     export *
 }

@@ -1,7 +1,7 @@
 /**
  * Mixing Console Data Models
  *
- * Professional mixing console with channel strips, effects, and automation
+ * Professional mixing console with channel strips, effects, buses, and automation
  */
 
 /**
@@ -23,6 +23,48 @@ export interface Send {
   bus: string // Target bus ID
   amount: number // 0-1 (send level)
   prePost: 'pre' | 'post' // Pre-fader or post-fader send
+}
+
+/**
+ * Bus type enumeration
+ */
+export enum BusType {
+  REVERB = 'reverb',
+  DELAY = 'delay',
+  COMPRESSOR = 'compressor',
+  EQ = 'eq',
+  SUBGROUP = 'subgroup',
+  MASTER = 'master',
+  AUX = 'aux',
+  FX = 'fx'
+}
+
+/**
+ * Bus channel (for effects, subgroups, master)
+ */
+export interface BusChannel {
+  id: string
+  name: string
+  type: BusType
+  channels: string[] // IDs of channels routed to this bus
+
+  // Bus-specific controls
+  volume: number
+  pan: number
+  isMuted: boolean
+
+  // Metering
+  levelL: number
+  levelR: number
+  peakL: number
+  peakR: number
+
+  // Pre/Post fader selection
+  sends: Send[] // Can send to other buses
+
+  // UI properties
+  icon: string
+  color: string
 }
 
 /**
@@ -91,14 +133,17 @@ export interface AutomationCurve {
  */
 export class MixingConsole {
   private channels: Map<string, ChannelStrip>
+  private buses: Map<string, BusChannel>
   private masterBus: ChannelStrip
   private automation: Map<string, AutomationCurve>
   private isPlayingAutomation: boolean = false
 
   constructor() {
     this.channels = new Map()
+    this.buses = new Map()
     this.automation = new Map()
     this.masterBus = this.createMasterBus()
+    this.initializeDefaultBuses()
   }
 
   /**
@@ -123,6 +168,80 @@ export class MixingConsole {
     }
   }
 
+  /**
+   * Initialize default bus configuration
+   */
+  private initializeDefaultBuses(): void {
+    // Create common buses
+    this.addBus({
+      id: 'bus-reverb-1',
+      name: 'Reverb 1',
+      type: BusType.REVERB,
+      channels: [],
+      volume: 0.75,
+      pan: 0,
+      isMuted: false,
+      levelL: -60,
+      levelR: -60,
+      peakL: -60,
+      peakR: -60,
+      sends: [],
+      icon: 'waveform.path',
+      color: '#8B5CF6'
+    })
+
+    this.addBus({
+      id: 'bus-delay-1',
+      name: 'Delay 1',
+      type: BusType.DELAY,
+      channels: [],
+      volume: 0.75,
+      pan: 0,
+      isMuted: false,
+      levelL: -60,
+      levelR: -60,
+      peakL: -60,
+      peakR: -60,
+      sends: [],
+      icon: 'timelapse',
+      color: '#EC4899'
+    })
+
+    this.addBus({
+      id: 'bus-subgroup-drums',
+      name: 'Drums',
+      type: BusType.SUBGROUP,
+      channels: [],
+      volume: 0.8,
+      pan: 0,
+      isMuted: false,
+      levelL: -60,
+      levelR: -60,
+      peakL: -60,
+      peakR: -60,
+      sends: [],
+      icon: 'speaker.wave.2',
+      color: '#F59E0B'
+    })
+
+    this.addBus({
+      id: 'bus-master',
+      name: 'Master',
+      type: BusType.MASTER,
+      channels: [], // Routes all channels by default
+      volume: 1.0,
+      pan: 0,
+      isMuted: false,
+      levelL: -60,
+      levelR: -60,
+      peakL: -60,
+      peakR: -60,
+      sends: [],
+      icon: 'speaker.wave.3',
+      color: '#10B981'
+    })
+  }
+
   // ========== Channel Management ==========
 
   /**
@@ -136,7 +255,31 @@ export class MixingConsole {
    * Remove a channel from the console
    */
   removeChannel(id: string): void {
+    // Remove from all buses
+    this.buses.forEach(bus => {
+      bus.channels = bus.channels.filter(channelId => channelId !== id)
+    })
+
+    // Remove channel
     this.channels.delete(id)
+  }
+
+  /**
+   * Duplicate channel strip
+   */
+  duplicateChannel(channelId: string): ChannelStrip {
+    const source = this.channels.get(channelId)
+    if (!source) throw new Error(`Channel ${channelId} not found`)
+
+    const newId = `${source.id}-copy-${Date.now()}`
+    const duplicate: ChannelStrip = {
+      ...source,
+      id: newId,
+      name: `${source.name} (copy)`
+    }
+
+    this.channels.set(newId, duplicate)
+    return duplicate
   }
 
   /**
@@ -169,6 +312,105 @@ export class MixingConsole {
    */
   getMasterBus(): ChannelStrip {
     return this.masterBus
+  }
+
+  // ========== Bus Management ==========
+
+  /**
+   * Add a new bus
+   */
+  addBus(bus: BusChannel): void {
+    this.buses.set(bus.id, bus)
+  }
+
+  /**
+   * Remove a bus
+   */
+  removeBus(busId: string): void {
+    // Unroute all channels from this bus
+    const bus = this.buses.get(busId)
+    if (bus) {
+      bus.channels.forEach(channelId => {
+        this.unrouteChannelFromBus(channelId, busId)
+      })
+    }
+
+    this.buses.delete(busId)
+  }
+
+  /**
+   * Get a specific bus by ID
+   */
+  getBus(id: string): BusChannel | undefined {
+    return this.buses.get(id)
+  }
+
+  /**
+   * Get all buses
+   */
+  getAllBuses(): BusChannel[] {
+    return Array.from(this.buses.values())
+  }
+
+  /**
+   * Route channel to bus
+   */
+  routeChannelToBus(channelId: string, busId: string): void {
+    const bus = this.buses.get(busId)
+    if (!bus) {
+      throw new Error(`Bus ${busId} not found`)
+    }
+
+    if (!bus.channels.includes(channelId)) {
+      bus.channels.push(channelId)
+    }
+  }
+
+  /**
+   * Unroute channel from bus
+   */
+  unrouteChannelFromBus(channelId: string, busId: string): void {
+    const bus = this.buses.get(busId)
+    if (bus) {
+      bus.channels = bus.channels.filter(id => id !== channelId)
+    }
+  }
+
+  /**
+   * Add bus send (send from one bus to another)
+   */
+  addBusSend(fromBusId: string, toBusId: string, amount: number): void {
+    const fromBus = this.buses.get(fromBusId)
+    if (!fromBus) {
+      throw new Error(`Bus ${fromBusId} not found`)
+    }
+
+    const toBus = this.buses.get(toBusId)
+    if (!toBus) {
+      throw new Error(`Bus ${toBusId} not found`)
+    }
+
+    const existingSend = fromBus.sends.find(s => s.bus === toBusId)
+    if (existingSend) {
+      existingSend.amount = amount
+    } else {
+      fromBus.sends.push({
+        id: `send-${fromBusId}-${toBusId}-${Date.now()}`,
+        bus: toBusId,
+        amount,
+        prePost: 'post'
+      })
+    }
+  }
+
+  /**
+   * Remove bus send
+   */
+  removeBusSend(fromBusId: string, toBusId: string): void {
+    const fromBus = this.buses.get(fromBusId)
+    if (fromBus) {
+      fromBus.sends = fromBus.sends.filter(s => s.bus !== toBusId)
+    }
   }
 
   // ========== Level Controls ==========
@@ -426,6 +668,7 @@ export class MixingConsole {
   toJSON(): object {
     return {
       channels: Array.from(this.channels.entries()),
+      buses: Array.from(this.buses.entries()),
       masterBus: this.masterBus,
       automation: Array.from(this.automation.entries())
     }
@@ -441,6 +684,13 @@ export class MixingConsole {
     if (json.channels) {
       json.channels.forEach(([id, channel]: [string, ChannelStrip]) => {
         console.channels.set(id, channel)
+      })
+    }
+
+    // Restore buses
+    if (json.buses) {
+      json.buses.forEach(([id, bus]: [string, BusChannel]) => {
+        console.buses.set(id, bus)
       })
     }
 

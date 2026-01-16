@@ -74,7 +74,7 @@ describe("Section Transition Manager", () => {
         minBars: 4,
         maxBars: null,
         tensionRange: [0.3, 0.7],
-        tensionThreshold: 0.35, // Threshold for weighted tension (0.9 * 0.4 = 0.36)
+        tensionThreshold: 0.85, // Threshold for simple sum tension (0.9 direct)
       });
 
       transitions.setCurrentSection("dev1");
@@ -242,7 +242,7 @@ describe("Section Transition Manager", () => {
         minBars: 8,
         maxBars: null,
         tensionRange: [0.3, 0.7],
-        tensionThreshold: 0.35, // Threshold for weighted tension (0.9 * 0.4 = 0.36)
+        tensionThreshold: 0.85, // Threshold for simple sum tension (0.9 direct)
       });
 
       transitions.setCurrentSection("dev");
@@ -318,7 +318,7 @@ describe("Section Transition Manager", () => {
 
       const trigger = transitions.forceTransition("resolution", "manual");
 
-      expect(trigger.tension).toBe(0.2); // 0.5 * 0.4 (weighted)
+      expect(trigger.tension).toBe(0.5); // Simple sum (no weighting)
       expect(trigger.energy.momentum).toBeDefined();
       expect(trigger.energy.exhaustion).toBeDefined();
     });
@@ -333,7 +333,7 @@ describe("Section Transition Manager", () => {
         minBars: 4,
         maxBars: null,
         tensionRange: [0.3, 0.7],
-        tensionThreshold: 0.35, // Low enough to trigger (0.9 * 0.4 = 0.36)
+        tensionThreshold: 0.85, // Low enough to trigger (0.9 simple sum)
       });
 
       transitions.setCurrentSection("dev1");
@@ -466,13 +466,13 @@ describe("Section Transition Manager", () => {
         minBars: 4,
         maxBars: null,
         tensionRange: [0.1, 0.5], // Wider range
-        tensionThreshold: 0.35, // Low enough for 1.0 * 0.4 = 0.4 to exceed
+        tensionThreshold: 0.95, // High threshold to distinguish 0.4 vs 1.0
       });
 
       transitions.setCurrentSection("dev1");
 
       // Same bar count, different tension = different transition behavior
-      accumulator.writeRhythmicTension(0.4, "low"); // 0.16 weighted (in range)
+      accumulator.writeRhythmicTension(0.4, "low"); // 0.4 simple sum (in range)
       energy.update(8, 1, "low");
 
       const trigger1 = transitions.shouldTransition(8, 1);
@@ -481,7 +481,7 @@ describe("Section Transition Manager", () => {
       transitions.reset();
       transitions.setCurrentSection("dev1");
 
-      accumulator.writeRhythmicTension(1.0, "high"); // 0.4 weighted (exceeds threshold of 0.35)
+      accumulator.writeRhythmicTension(1.0, "high"); // 1.0 simple sum (exceeds threshold of 0.95)
       energy.update(8, 1, "high");
 
       const trigger2 = transitions.shouldTransition(8, 1);
@@ -525,14 +525,14 @@ describe("Section Transition Manager", () => {
         endBar: null,
         minBars: 4,
         maxBars: null,
-        tensionRange: [0.1, 0.4], // Adjusted range for low tension
+        tensionRange: [0.1, 0.6], // Adjusted range for simple sum tension
         tensionThreshold: null,
       });
 
       transitions.setCurrentSection("dev1");
 
       // Low tension within range, no max bars → can continue indefinitely
-      accumulator.writeRhythmicTension(0.5, "sustained"); // 0.5 * 0.4 = 0.2 (in range)
+      accumulator.writeRhythmicTension(0.5, "sustained"); // 0.5 simple sum (in range)
       energy.update(20, 1, "sustained");
 
       const trigger = transitions.shouldTransition(20, 1);

@@ -241,3 +241,7 @@ export interface UserPreferences {
   last_updated?: string;
   version?: string;
 }
+
+// Export mixing console models
+export * from './models/MixingConsole'
+export * from './models/MixingPresets'

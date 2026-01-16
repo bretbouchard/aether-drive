@@ -598,6 +598,12 @@ export class DemoPieceGenerator {
     const rhythmicTensions: number[] = [];
     const rhythmicCauses: string[] = [];
 
+    // Base groove tension (even without drill/gate)
+    if (params.groove) {
+      rhythmicTensions.push(0.1);
+      rhythmicCauses.push("groove_base");
+    }
+
     if (params.drill > 0) {
       rhythmicTensions.push(params.drill);
       rhythmicCauses.push(params.cause || `drill_bar_${barNumber}`);
@@ -608,7 +614,7 @@ export class DemoPieceGenerator {
       rhythmicCauses.push("gate_silence");
     }
 
-    // Use maximum of drill and gate (they don't stack, gate dominates)
+    // Use maximum of all rhythmic sources (gate dominates, then drill, then groove)
     if (rhythmicTensions.length > 0) {
       const maxRhythmic = Math.max(...rhythmicTensions);
       const cause = rhythmicCauses.join("_and_");
@@ -858,6 +864,9 @@ export class DemoPieceGenerator {
 
   /**
    * Get tension history for analysis
+   *
+   * Returns the final tension state for each bar, captured from the
+   * TensionAccumulator after all tension writes for that bar are complete.
    */
   getTensionHistory(): {
     bar: number;
@@ -870,16 +879,23 @@ export class DemoPieceGenerator {
       total: number;
     }[] = [];
 
-    // Group events by bar
+    // Group events by bar and take the LAST event (which has the final tension state)
+    const eventsByBar = new Map<number, MusicalEvent[]>();
     for (const event of this.events) {
-      const existing = snapshots.find((s) => s.bar === event.bar);
-      if (!existing) {
-        snapshots.push({
-          bar: event.bar,
-          tension: event.tension,
-          total: totalTension(event.tension),
-        });
+      if (!eventsByBar.has(event.bar)) {
+        eventsByBar.set(event.bar, []);
       }
+      eventsByBar.get(event.bar)!.push(event);
+    }
+
+    // For each bar, use the tension from the last event (final state after all writes)
+    for (const [bar, events] of eventsByBar) {
+      const lastEvent = events[events.length - 1];
+      snapshots.push({
+        bar,
+        tension: lastEvent.tension,
+        total: totalTension(lastEvent.tension),
+      });
     }
 
     return snapshots.sort((a, b) => a.bar - b.bar);

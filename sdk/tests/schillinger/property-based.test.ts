@@ -16,7 +16,7 @@ import { DomainOrthogonalMotionManager } from "../../src/structure/DomainOrthogo
 
 describe("Property-Based Tests: Mathematical Invariants", () => {
   describe("Tension Accumulation", () => {
-    it("should maintain weighted sum invariant (rhythmic 40%, harmonic 40%, formal 20%)", () => {
+    it("should maintain simple sum invariant (rhythmic + harmonic + formal)", () => {
       // Test 100 random combinations
       for (let i = 0; i < 100; i++) {
         const rhythmic = Math.random();
@@ -33,11 +33,8 @@ describe("Property-Based Tests: Mathematical Invariants", () => {
         const current = accumulator.getCurrent();
         const total = accumulator.getTotal();
 
-        // Weighted sum should equal total
-        const expectedTotal =
-          current.rhythmic * 0.4 +
-          current.harmonic * 0.4 +
-          current.formal * 0.2;
+        // Simple sum should equal total (clamped to [0, 1])
+        const expectedTotal = Math.min(1, current.rhythmic + current.harmonic + current.formal);
 
         expect(Math.abs(total - expectedTotal)).toBeLessThan(0.001);
       }

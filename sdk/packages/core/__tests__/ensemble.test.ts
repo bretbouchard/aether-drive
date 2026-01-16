@@ -596,7 +596,7 @@ describe("Ensemble", () => {
 
       expect(model.voices).toHaveLength(2);
       expect(model.voices[0].rolePools).toHaveLength(2);
-      expect(model.balance?.limits?.maxVoices).toBe(2);
+      expect(model.balanceRules?.limits?.maxVoices).toBe(2);
     });
 
     it("should throw error when building ensemble with no voices", () => {
@@ -629,8 +629,8 @@ describe("Ensemble", () => {
 
       expect(model.voices).toHaveLength(3);
       expect(model.voiceCount).toBe(3);
-      expect(model.balance?.limits?.maxVoices).toBe(3);
-      expect(model.balance?.limits?.maxPolyphony).toBe(12);
+      expect(model.balanceRules?.limits?.maxVoices).toBe(3);
+      expect(model.balanceRules?.limits?.maxPolyphony).toBe(12);
     });
 
     it("should create full ensemble", () => {
@@ -640,9 +640,9 @@ describe("Ensemble", () => {
       expect(model.voices).toHaveLength(8);
       expect(model.voiceCount).toBe(8);
       expect(model.groups).toHaveLength(2);
-      expect(model.balance?.priority).toHaveLength(8);
-      expect(model.balance?.limits?.maxVoices).toBe(8);
-      expect(model.balance?.limits?.maxPolyphony).toBe(32);
+      expect(model.balanceRules?.priority).toHaveLength(8);
+      expect(model.balanceRules?.limits?.maxVoices).toBe(8);
+      expect(model.balanceRules?.limits?.maxPolyphony).toBe(32);
     });
   });
 

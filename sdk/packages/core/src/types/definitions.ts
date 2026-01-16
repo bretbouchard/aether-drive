@@ -723,7 +723,7 @@ export interface EnsembleModel {
   groups?: VoiceGroup[]; // Sections, choirs, layers
 
   // Balance
-  balance?: BalanceRules; // Optional balance rules
+  balanceRules?: BalanceRules; // Optional balance rules
 }
 
 // Type aliases for ensemble system compatibility

@@ -105,10 +105,10 @@ export class SectionTransitionManager {
   private currentSection: string | null = null;
   private transitionHistory: TransitionTrigger[] = [];
 
-  // Default thresholds (account for weighted tension from getTotal())
-  // getTotal() returns: rhythmic * 0.4 + harmonic * 0.4 + formal * 0.2
-  private readonly HIGH_TENSION_THRESHOLD = 0.35; // ~0.9 raw * 0.4
-  private readonly EXHAUSTION_THRESHOLD = 0.7;
+  // Default thresholds (account for simple sum tension from getTotal())
+  // getTotal() returns: rhythmic + harmonic + formal (clamped to [0,1])
+  private readonly HIGH_TENSION_THRESHOLD = 0.85; // High tension threshold for simple sum
+  private readonly EXHAUSTION_THRESHOLD = 0.85; // Higher threshold to allow tension triggers first
 
   constructor(accumulator: TensionAccumulator, energy: EnergyManager) {
     this.accumulator = accumulator;

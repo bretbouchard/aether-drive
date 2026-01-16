@@ -8,6 +8,86 @@
 import Foundation
 import Combine
 
+// MARK: - Bus Type
+
+public enum BusType: String, CaseIterable, Identifiable {
+    public var id: String { rawValue }
+
+    case reverb = "Reverb"
+    case delay = "Delay"
+    case compressor = "Compressor"
+    case eq = "EQ"
+    case subgroup = "Subgroup"
+    case master = "Master"
+    case aux = "Aux"
+    case fx = "FX"
+}
+
+// MARK: - Bus Channel Model
+
+@MainActor
+public class BusChannel: ObservableObject, Identifiable {
+    public let id: String
+    @Published public var name: String
+    @Published public var type: BusType
+    @Published public var channels: [String]
+
+    // Bus-specific controls
+    @Published public var volume: Double
+    @Published public var pan: Double
+    @Published public var isMuted: Bool
+
+    // Metering
+    @Published public var levelL: Double
+    @Published public var levelR: Double
+    @Published public var peakL: Double
+    @Published public var peakR: Double
+
+    // Sends to other buses
+    @Published public var sends: [Send]
+
+    // UI properties
+    public let icon: String
+    public let color: String
+
+    public init(
+        id: String,
+        name: String,
+        type: BusType,
+        channels: [String] = [],
+        volume: Double = 0.75,
+        pan: Double = 0.0,
+        isMuted: Bool = false,
+        levelL: Double = -60.0,
+        levelR: Double = -60.0,
+        peakL: Double = -60.0,
+        peakR: Double = -60.0,
+        sends: [Send] = [],
+        icon: String = "speaker.wave.2.fill",
+        color: String = "#8B5CF6"
+    ) {
+        self.id = id
+        self.name = name
+        self.type = type
+        self.channels = channels
+        self.volume = volume
+        self.pan = pan
+        self.isMuted = isMuted
+        self.levelL = levelL
+        self.levelR = levelR
+        self.peakL = peakL
+        self.peakR = peakR
+        self.sends = sends
+        self.icon = icon
+        self.color = color
+    }
+
+    // Convert to dB for display
+    public var volumeDB: Double {
+        20 * log10(volume)
+    }
+}
+
 // MARK: - Channel Strip Model
 
 @MainActor
@@ -137,6 +217,7 @@ public struct Send: Identifiable, Equatable {
 @MainActor
 public class MixingConsole: ObservableObject {
     @Published public var channels: [ChannelStrip]
+    @Published public var buses: [BusChannel]
     @Published public var masterBus: ChannelStrip
     @Published public var selectedChannel: String?
 
@@ -163,6 +244,42 @@ public class MixingConsole: ObservableObject {
             ChannelStrip(id: "8", name: "FX", type: .audio)
         ]
 
+        // Initialize default buses
+        self.buses = [
+            BusChannel(
+                id: "bus-reverb-1",
+                name: "Reverb 1",
+                type: .reverb,
+                volume: 0.75,
+                icon: "waveform.path",
+                color: "#8B5CF6"
+            ),
+            BusChannel(
+                id: "bus-delay-1",
+                name: "Delay 1",
+                type: .delay,
+                volume: 0.75,
+                icon: "timelapse",
+                color: "#EC4899"
+            ),
+            BusChannel(
+                id: "bus-subgroup-drums",
+                name: "Drums",
+                type: .subgroup,
+                volume: 0.8,
+                icon: "speaker.wave.2",
+                color: "#F59E0B"
+            ),
+            BusChannel(
+                id: "bus-master",
+                name: "Master",
+                type: .master,
+                volume: 1.0,
+                icon: "speaker.wave.3",
+                color: "#10B981"
+            )
+        ]
+
         startMeterUpdates()
     }
 
@@ -173,12 +290,94 @@ public class MixingConsole: ObservableObject {
     }
 
     public func removeChannel(id: String) {
+        // Remove from all buses
+        for bus in buses {
+            bus.channels.removeAll { $0 == id }
+        }
         channels.removeAll { $0.id == id }
+    }
+
+    public func duplicateChannel(id: String) -> ChannelStrip? {
+        guard let source = getChannel(id) else { return nil }
+
+        let newId = "\(source.id)-copy-\(UUID().uuidString.prefix(8))"
+        let duplicate = ChannelStrip(
+            id: newId,
+            name: "\(source.name) (copy)",
+            type: source.type,
+            volume: source.volume,
+            pan: source.pan,
+            isMuted: source.isMuted,
+            isSolo: source.isSolo,
+            levelL: source.levelL,
+            levelR: source.levelR,
+            peakL: source.peakL,
+            peakR: source.peakR,
+            inserts: source.inserts,
+            sends: source.sends,
+            outputBus: source.outputBus
+        )
+
+        channels.append(duplicate)
+        return duplicate
     }
 
     public func getChannel(id: String) -> ChannelStrip? {
         if id == "master" { return masterBus }
         return channels.first { $0.id == id }
+    }
+
+    // MARK: - Bus Management
+
+    public func addBus(_ bus: BusChannel) {
+        buses.append(bus)
+    }
+
+    public func removeBus(id: String) {
+        // Unroute all channels from this bus
+        if let bus = buses.first(where: { $0.id == id }) {
+            for channelId in bus.channels {
+                unrouteChannelFromBus(channelId: channelId, busId: id)
+            }
+        }
+        buses.removeAll { $0.id == id }
+    }
+
+    public func getBus(id: String) -> BusChannel? {
+        buses.first { $0.id == id }
+    }
+
+    public func routeChannelToBus(channelId: String, busId: String) {
+        guard let bus = buses.first(where: { $0.id == busId }) else { return }
+        if !bus.channels.contains(channelId) {
+            bus.channels.append(channelId)
+        }
+    }
+
+    public func unrouteChannelFromBus(channelId: String, busId: String) {
+        guard let bus = buses.first(where: { $0.id == busId }) else { return }
+        bus.channels.removeAll { $0 == channelId }
+    }
+
+    public func addBusSend(fromBusId: String, toBusId: String, amount: Double) {
+        guard let fromBus = buses.first(where: { $0.id == fromBusId }),
+              buses.contains(where: { $0.id == toBusId }) else { return }
+
+        if let existingSend = fromBus.sends.first(where: { $0.bus == toBusId }) {
+            existingSend.amount = amount
+        } else {
+            fromBus.sends.append(Send(
+                id: "send-\(fromBusId)-\(toBusId)-\(UUID().uuidString.prefix(8))",
+                bus: toBusId,
+                amount: amount,
+                prePost: .post
+            ))
+        }
+    }
+
+    public func removeBusSend(fromBusId: String, toBusId: String) {
+        guard let fromBus = buses.first(where: { $0.id == fromBusId }) else { return }
+        fromBus.sends.removeAll { $0.bus == toBusId }
     }
 
     // MARK: - Level Controls

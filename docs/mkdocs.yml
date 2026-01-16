@@ -1,0 +1,171 @@
+# MkDocs Configuration for White Room Documentation
+site_name: White Room Documentation
+site_description: Comprehensive documentation for White Room - Next-generation DAW
+site_author: White Room Development Team
+copyright: Copyright &copy; 2026 White Room Development Team
+
+# Repository
+repo_url: https://github.com/white-room/white_room
+repo_name: white-room/white_room
+
+# Theme
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - toc.follow
+    - content.code.copy
+  language: en
+
+# Plugins
+plugins:
+  - search
+  - mermaid2:
+      version: 10.6.1
+  - git-revision-date-localized:
+      type: date
+      timezone: America/Los_Angeles
+      fallback_to_build_date: true
+
+# Markdown Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - footnotes
+  - admonition
+  - meta
+
+# Navigation Structure
+nav:
+  - Home: index.md
+  - User Guide:
+      - user/index.md
+      - Getting Started: user/GETTING_STARTED.md
+      - DAW User Guide: user/DAW_USER_GUIDE.md
+      - Features: user/FEATURES.md
+      - Schillinger User Guide: user/USER_GUIDE.md
+      - Accessibility: user/accessibility-guide.md
+  - Development:
+      - development/index.md
+      - Architecture: development/ARCHITECTURE.md
+      - System Architecture Diagrams: development/SYSTEM_ARCHITECTURE.md
+      - Contributing: development/CONTRIBUTING.md
+      - Build System: development/BUILD_SYSTEM.md
+      - Getting Started: development/getting-started.md
+      - Beads Integration: development/beads-integration.md
+      - Error Handling: development/error-handling-guide.md
+      - Security:
+          - development/security/SECURITY_AUDIT_PREPARATION.md
+          - development/security/SECURITY_AUDIT_SUMMARY.md
+          - development/security/SECURITY_CHECKLIST.md
+          - development/security/SECURITY_QUICK_REFERENCE.md
+          - development/security/THREAT_MODEL.md
+  - API Reference:
+      - api/index.md
+      - SDK API: api/SDK_API.md
+      - Swift API: api/SWIFT_API.md
+      - C++ API (FFI): api/CPP_API.md
+  - Tutorials:
+      - tutorials/index.md
+      - First Song: tutorials/FIRST_SONG.md
+      - Code Examples: tutorials/EXAMPLES.md
+      - Plugin Development: development/PLUGIN_DEVELOPMENT_WORKFLOW.md
+  - Architecture:
+      - architecture/index.md
+      - App Flow & Page Inventory: architecture/APP_FLOW_AND_PAGE_INVENTORY.md
+      - Platform Capabilities Matrix: architecture/PLATFORM_CAPABILITIES_MATRIX.md
+      - FFI Bridge Architecture: architecture/FFI_BRIDGE_ARCHITECTURE.md
+      - Schillinger Integration: architecture/SCHILLINGER_INTEGRATION.md
+      - Undo/Redo System: architecture/undo-redo-system.md
+  - Deployment:
+      - deployment/index.md
+      - Production Readiness Checklist: deployment/production-readiness-checklist.md
+      - Production Readiness Summary: deployment/production-readiness-summary.md
+      - Launch Day Quick Reference: deployment/launch-day-quick-reference.md
+
+# Extra CSS
+extra_css:
+  - stylesheets/extra.css
+
+# Extra JavaScript
+extra_javascript:
+  - javascripts/extra.js
+
+# Extra Configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/white-room/white_room
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/whiteroomapp
+    - icon: fontawesome/solid/envelope
+      link: mailto:support@white-room.io
+  version:
+    provider: mike
+    default: latest
+  analytics:
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: Thanks for your feedback!
+        - icon: material/emoticon-neutral-outline
+          name: This page could be improved
+          data: 0
+          note: Thanks for your feedback! Help us improve this page by opening an issue.
+
+# Build Directories
+docs_dir: .
+site_dir: _site
+
+# Exclude files from build
+exclude_docs: |
+  *.swp
+  *.bak
+  ~*
+  .DS_Store
+
+# Python requirements for MkDocs
+# Install with: pip install -r requirements.txt
+# requirements.txt:
+#   - mkdocs-material>=9.4.0
+#   - mkdocs-mermaid2-plugin>=0.6.0
+#   - mkdocs-git-revision-date-localized-plugin>=1.2.0

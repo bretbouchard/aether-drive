@@ -2,8 +2,8 @@
  * CI Tests: StructuralTension Aggregation
  *
  * These tests enforce Schillinger correctness by verifying that:
- * 1. Tension aggregates across domains with proper weighting
- * 2. Tension is clamped to valid range
+ * 1. Tension aggregates across domains (rhythmic + harmonic + formal)
+ * 2. Tension is clamped to valid range [0, 1]
  * 3. All tension domains contribute meaningfully to total
  *
  * If any of these tests fail, the system is not Schillinger-compliant.
@@ -22,7 +22,7 @@ import {
 
 describe("StructuralTension", () => {
   describe("aggregation", () => {
-    it("aggregates rhythmic, harmonic, and formal tension with correct weights", () => {
+    it("aggregates rhythmic, harmonic, and formal tension (simple sum)", () => {
       const t: StructuralTension = {
         rhythmic: 0.5,
         harmonic: 0.5,
@@ -31,12 +31,11 @@ describe("StructuralTension", () => {
 
       const total = totalTension(t);
 
-      // Should be close to 0.5 (all domains equal)
-      expect(total).toBeGreaterThan(0.45);
-      expect(total).toBeLessThan(0.55);
+      // Should be 1.5, but clamped to 1.0
+      expect(total).toBe(1.0);
     });
 
-    it("weights rhythm and harmony equally (40% each)", () => {
+    it("sums all tension domains directly (no weighting)", () => {
       const onlyRhythm: StructuralTension = {
         rhythmic: 1.0,
         harmonic: 0,
@@ -49,37 +48,33 @@ describe("StructuralTension", () => {
         formal: 0,
       };
 
-      const rhythmTotal = totalTension(onlyRhythm);
-      const harmonyTotal = totalTension(onlyHarmony);
-
-      // Both should contribute 40%
-      expect(rhythmTotal).toBe(0.4);
-      expect(harmonyTotal).toBe(0.4);
-    });
-
-    it("weights form as 20%", () => {
       const onlyForm: StructuralTension = {
         rhythmic: 0,
         harmonic: 0,
         formal: 1.0,
       };
 
-      const total = totalTension(onlyForm);
+      const rhythmTotal = totalTension(onlyRhythm);
+      const harmonyTotal = totalTension(onlyHarmony);
+      const formTotal = totalTension(onlyForm);
 
-      expect(total).toBe(0.2);
+      // All domains should contribute directly (no weights)
+      expect(rhythmTotal).toBe(1.0);
+      expect(harmonyTotal).toBe(1.0);
+      expect(formTotal).toBe(1.0);
     });
 
     it("calculates total tension correctly for mixed values", () => {
       const t: StructuralTension = {
-        rhythmic: 0.8, // 0.32
-        harmonic: 0.6, // 0.24
-        formal: 0.4, // 0.08
+        rhythmic: 0.8,
+        harmonic: 0.6,
+        formal: 0.4,
       };
 
       const total = totalTension(t);
 
-      // Expected: 0.32 + 0.24 + 0.08 = 0.64
-      expect(total).toBeCloseTo(0.64, 2);
+      // Expected: 0.8 + 0.6 + 0.4 = 1.8, clamped to 1.0
+      expect(total).toBe(1.0);
     });
   });
 
@@ -105,9 +100,9 @@ describe("StructuralTension", () => {
 
       const total = totalTension(t);
 
-      // Only formal contributes (0.2 * 0.5 = 0.1)
+      // Only formal contributes (negative values clamped to 0)
       // Rhythm and harmony are clamped to 0
-      expect(total).toBeCloseTo(0.1, 2);
+      expect(total).toBeCloseTo(0.5, 2);
     });
 
     it("provides clampTension utility function", () => {
@@ -287,14 +282,10 @@ describe("StructuralTension", () => {
       const onlyHarmony = totalTension({ rhythmic: 0, harmonic: 1, formal: 0 });
       const onlyForm = totalTension({ rhythmic: 0, harmonic: 0, formal: 1 });
 
-      // All should contribute
-      expect(onlyRhythm).toBeGreaterThan(0);
-      expect(onlyHarmony).toBeGreaterThan(0);
-      expect(onlyForm).toBeGreaterThan(0);
-
-      // Rhythm and harmony should contribute more than form
-      expect(onlyRhythm).toBeGreaterThan(onlyForm);
-      expect(onlyHarmony).toBeGreaterThan(onlyForm);
+      // All should contribute equally (no weighting)
+      expect(onlyRhythm).toBe(1.0);
+      expect(onlyHarmony).toBe(1.0);
+      expect(onlyForm).toBe(1.0);
     });
   });
 });

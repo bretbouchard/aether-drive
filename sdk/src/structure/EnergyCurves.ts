@@ -85,7 +85,7 @@ export class EnergyManager {
 
   // Configuration
   private readonly HISTORY_SIZE = 100; // Beats to track for momentum
-  private readonly EXHAUSTION_THRESHOLD = 0.3; // Tension level that causes fatigue (accounting for weighted total)
+  private readonly EXHAUSTION_THRESHOLD = 0.7; // Tension level that causes fatigue (accounting for simple sum)
   private readonly EXHAUSTION_DECAY = 0.05; // How fast exhaustion recovers
   private readonly MOMENTUM_WINDOW = 4; // Beats to average for momentum
 
@@ -272,7 +272,7 @@ export class EnergyManager {
     if (currentTension > this.EXHAUSTION_THRESHOLD) {
       // Accumulate exhaustion based on how far above threshold
       const excess = currentTension - this.EXHAUSTION_THRESHOLD;
-      this.exhaustionAccumulator += excess * 0.5; // Increased accumulation rate
+      this.exhaustionAccumulator += excess * 0.1; // Reduced accumulation rate for simple sum tension
     } else {
       // Decay exhaustion when tension is low
       this.exhaustionAccumulator = Math.max(

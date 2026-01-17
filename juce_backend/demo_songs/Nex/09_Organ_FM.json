@@ -1,0 +1,81 @@
+{
+  "name": "Organ FM",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 130,
+  "key": "D min",
+  "duration": "3:30",
+  "difficulty": "Beginner",
+
+  "description": "FM organ with drawbar harmonics and rotary speaker effect",
+
+  "features": {
+    "primary": ["FM Organ", "Drawbar Harmonics", "Rotary Speaker"],
+    "obscure": ["Integer Ratios", "Harmonic Stacking", "Leslie Effect"]
+  },
+
+  "algorithm": 2,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.7, "enabled": true},
+    {"index": 2, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+    {"index": 3, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 4, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 6.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true},
+    {"index": 6, "frequency_ratio": 8.0, "modulation_index": 0.0, "output_level": 0.2, "enabled": true}
+  ],
+
+  "modulation_matrix": [
+    {"source": 3, "destination": 1, "amount": 1},
+    {"source": 4, "destination": 2, "amount": 1},
+    {"source": 5, "destination": 1, "amount": 0.5},
+    {"source": 6, "destination": 2, "amount": 0.5}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.01,
+    "amp_decay": 0.2,
+    "amp_sustain": 0.8,
+    "amp_release": 0.3,
+    "leslie_enabled": true,
+    "leslie_speed": 0.5,
+    "leslie_depth": 0.7,
+    "vibrato_enabled": true,
+    "vibrato_rate": 0.6,
+    "vibrato_depth": 0.08
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 85, "duration": 1.0},
+      {"note": 53, "velocity": 82, "duration": 1.0},
+      {"note": 57, "velocity": 85, "duration": 1.0},
+      {"note": 62, "velocity": 88, "duration": 2.0},
+      {"note": 65, "velocity": 86, "duration": 1.0},
+      {"note": 62, "velocity": 85, "duration": 1.0},
+      {"note": 57, "velocity": 82, "duration": 1.0},
+      {"note": 53, "velocity": 85, "duration": 1.0},
+      {"note": 50, "velocity": 85, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "FM organ using Algorithm 2 (parallel carriers). All six operators act as drawbars with integer ratios (1, 2, 3, 4, 6, 8). Very low modulation (indices 0.5-1) for subtle brightness. Operators create harmonic series like organ drawbars. Fast attack (0.01s) for organ response. High sustain (0.8) for sustained chords. Leslie effect adds rotary speaker simulation. Vibrato adds warmth. Creates classic organ tone.",
+    "technique": "Integer ratios = drawbar harmonics. Low modulation = subtle. Parallel carriers = organ tone. Leslie = rotary speaker. Vibrato = warmth. Classic FM organ technique.",
+    "genre": "All Genres / Organ",
+    "tip": "Integer ratios (1, 2, 3, 4, 6, 8) = drawbars. Low modulation = organ purity. Leslie = essential. Vibrato = warmth."
+  },
+
+  "algorithmDescription": "Algorithm 2: Parallel carriers acting as drawbars",
+
+  "drawbarMapping": [
+    "Operator 1 (1:1) - 16' drawbar",
+    "Operator 2 (2:1) - 8' drawbar",
+    "Operator 3 (3:1) - 5 1/3' drawbar",
+    "Operator 4 (4:1) - 4' drawbar",
+    "Operator 5 (6:1) - 2 2/3' drawbar",
+    "Operator 6 (8:1) - 2' drawbar"
+  ],
+
+  "tags": ["organ", "fm", "drawbar", "leslie", "rotary", "algorithm 2"]
+}

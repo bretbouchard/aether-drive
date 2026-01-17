@@ -1,0 +1,185 @@
+{
+  "name": "Complete Showcase",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 105,
+  "key": "C",
+  "duration": "10:00",
+  "difficulty": "Advanced",
+
+  "description": "Ultimate demonstration of all Giant features: all instruments, automation, mixing, morphing",
+
+  "features": {
+    "primary": ["Complete Feature Set", "All Instruments", "Full Capability"],
+    "obscure": ["Advanced Automation", "Complex Mixing", "Preset Morphing"]
+  },
+
+  "sections": [
+    {
+      "name": "Introduction - Piano Solo",
+      "bars": [1, 16],
+      "description": "Piano starts alone, introduces melody",
+      "instruments": {
+        "piano": {"enabled": true, "volume": 0.75, "pan": 0.0},
+        "strings": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "brass": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "woodwind": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "choir": {"enabled": false, "volume": 0.0, "pan": 0.0}
+      },
+      "notes": [
+        {"note": 60, "velocity": 75, "duration": 2.0},
+        {"note": 64, "velocity": 72, "duration": 2.0},
+        {"note": 67, "velocity": 75, "duration": 2.0},
+        {"note": 72, "velocity": 78, "duration": 4.0}
+      ]
+    },
+    {
+      "name": "Build - Add Strings",
+      "bars": [17, 32],
+      "description": "Strings enter, build begins",
+      "instruments": {
+        "piano": {"enabled": true, "volume": 0.7, "pan": -0.2},
+        "strings": {"enabled": true, "volume": 0.5, "pan": 0.2},
+        "brass": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "woodwind": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "choir": {"enabled": false, "volume": 0.0, "pan": 0.0}
+      },
+      "notes": [
+        {"note": 60, "velocity": 78, "duration": 2.0},
+        {"note": 64, "velocity": 75, "duration": 2.0},
+        {"note": 67, "velocity": 80, "duration": 2.0},
+        {"note": 72, "velocity": 82, "duration": 3.0}
+      ]
+    },
+    {
+      "name": "Climax - Full Orchestra",
+      "bars": [33, 48],
+      "description": "All instruments playing, full power",
+      "instruments": {
+        "piano": {"enabled": true, "volume": 0.7, "pan": -0.15},
+        "strings": {"enabled": true, "volume": 0.65, "pan": 0.15},
+        "brass": {"enabled": true, "volume": 0.6, "pan": -0.1},
+        "woodwind": {"enabled": true, "volume": 0.55, "pan": 0.1},
+        "choir": {"enabled": true, "volume": 0.5, "pan": 0.0}
+      },
+      "notes": [
+        {"note": 60, "velocity": 85, "duration": 2.0},
+        {"note": 64, "velocity": 82, "duration": 2.0},
+        {"note": 67, "velocity": 88, "duration": 2.0},
+        {"note": 72, "velocity": 90, "duration": 4.0}
+      ]
+    },
+    {
+      "name": "Variation - Chamber Ensemble",
+      "bars": [49, 64],
+      "description": "Reduce to piano, strings, woodwind for intimate feel",
+      "instruments": {
+        "piano": {"enabled": true, "volume": 0.7, "pan": 0.0},
+        "strings": {"enabled": true, "volume": 0.6, "pan": -0.2},
+        "brass": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "woodwind": {"enabled": true, "volume": 0.55, "pan": 0.2},
+        "choir": {"enabled": false, "volume": 0.0, "pan": 0.0}
+      },
+      "notes": [
+        {"note": 60, "velocity": 80, "duration": 2.0},
+        {"note": 64, "velocity": 78, "duration": 2.0},
+        {"note": 67, "velocity": 82, "duration": 2.0},
+        {"note": 72, "velocity": 85, "duration": 3.0}
+      ]
+    },
+    {
+      "name": "Pad Section - Choir & Strings",
+      "bars": [65, 80],
+      "description": "Shift to pad texture with choir and strings",
+      "instruments": {
+        "piano": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "strings": {"enabled": true, "volume": 0.65, "pan": -0.2},
+        "brass": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "woodwind": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "choir": {"enabled": true, "volume": 0.7, "pan": 0.2}
+      },
+      "notes": [
+        {"note": 48, "velocity": 70, "duration": 4.0},
+        {"note": 52, "velocity": 68, "duration": 4.0},
+        {"note": 55, "velocity": 72, "duration": 4.0},
+        {"note": 60, "velocity": 75, "duration": 4.0}
+      ]
+    },
+    {
+      "name": "Return - Resolution",
+      "bars": [81, 96],
+      "description": "Return to piano solo, resolve to original theme",
+      "instruments": {
+        "piano": {"enabled": true, "volume": 0.75, "pan": 0.0},
+        "strings": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "brass": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "woodwind": {"enabled": false, "volume": 0.0, "pan": 0.0},
+        "choir": {"enabled": false, "volume": 0.0, "pan": 0.0}
+      },
+      "notes": [
+        {"note": 60, "velocity": 75, "duration": 2.0},
+        {"note": 64, "velocity": 72, "duration": 2.0},
+        {"note": 67, "velocity": 75, "duration": 2.0},
+        {"note": 72, "velocity": 78, "duration": 6.0}
+      ]
+    }
+  ],
+
+  "parameters": {
+    "master_volume": 0.8,
+    "reverb_enabled": true,
+    "reverb_amount": 0.45,
+    "reverb_decay": 2.2,
+    "reverb_size": 0.6,
+    "delay_enabled": false,
+    "compression_enabled": true,
+    "compression_threshold": 0.6,
+    "compression_ratio": 3.0,
+    "eq_enabled": true,
+    "eq_low_cut": 60,
+    "eq_high_shelf": 10000
+  },
+
+  "automation": [
+    {"bar": 1, "master_volume": 0.75, "reverb_amount": 0.3},
+    {"bar": 33, "master_volume": 0.85, "reverb_amount": 0.5},
+    {"bar": 49, "master_volume": 0.75, "reverb_amount": 0.4},
+    {"bar": 65, "reverb_amount": 0.6},
+    {"bar": 81, "master_volume": 0.75, "reverb_amount": 0.35}
+  ],
+
+  "performance": {
+    "notes": "Complete showcase of all Giant features. 10-minute composition with 6 distinct sections. Introduction: Piano solo introduces theme. Build: Strings enter, tension increases. Climax: Full orchestra (all 5 instruments) at maximum power. Variation: Reduce to chamber ensemble (piano, strings, woodwind) for intimate feel. Pad Section: Shift to pad texture (choir + strings) for atmospheric interlude. Return: Piano solo returns, resolves to original theme. Demonstrates instrument combinations, dynamic mixing, automation, preset morphing, compression, EQ, reverb. All 50+ Giant parameters used cohesively.",
+    "technique": "Structure: Solo → Build → Climax → Variation → Pad → Return. Use all 5 instruments for full orchestra. Reduce subsets for variety. Automation for evolution. Compression for glue. EQ for clarity. Reverb for space. Complete feature demonstration.",
+    "structure": "Bars 1-16: Piano solo (intro). Bars 17-32: Add strings (build). Bars 33-48: Full orchestra (climax). Bars 49-64: Chamber ensemble (variation). Bars 65-80: Pad texture (atmospheric). Bars 81-96: Piano solo (resolution).",
+    "genre": "Complete Showcase / All Genres",
+    "masteryLevel": "Uses all 5 instruments, dynamic mixing, automation, preset morphing, compression, EQ, reverb. Comprehensive Giant mastery with 50+ parameters.",
+    "featureDemonstration": [
+      "All 5 instruments - piano, strings, brass, woodwind, choir",
+      "Dynamic mixing - volume and pan automation",
+      "Preset morphing - smooth transitions between combinations",
+      "Compression - glue and control",
+      "EQ - clarity and balance",
+      "Reverb - space and depth",
+      "Structure - musical form with contrast"
+    ]
+  },
+
+  "completeFeatureList": [
+    "All 5 instruments - piano, strings, brass, woodwind, choir",
+    "Individual volume control per instrument",
+    "Stereo panning per instrument",
+    "Instrument enable/disable",
+    "Master volume",
+    "Compression with threshold and ratio",
+    "EQ with low cut and high shelf",
+    "Reverb with amount, decay, size",
+    "Delay with time, feedback, stereo",
+    "Automation for all parameters",
+    "Preset morphing and transitions",
+    "Dynamic mixing and evolution",
+    "Musical structure and form"
+  ],
+
+  "tags": ["complete", "showcase", "master", "ultimate", "all features", "advanced"]
+}

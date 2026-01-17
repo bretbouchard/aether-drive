@@ -1,0 +1,75 @@
+{
+  "name": "Lead Screaming",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 140,
+  "key": "A min",
+  "duration": "3:00",
+  "difficulty": "Advanced",
+
+  "description": "Aggressive screaming lead with heavy modulation and filter resonance",
+
+  "features": {
+    "primary": ["FM Lead", "Algorithm 5", "Heavy Modulation"],
+    "obscure": ["Feedback Modulation", "Resonant Filter", "High Ratios"]
+  },
+
+  "algorithm": 5,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.8, "enabled": true},
+    {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+    {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 4, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 8.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true},
+    {"index": 6, "frequency_ratio": 13.0, "modulation_index": 0.0, "output_level": 0.2, "enabled": true}
+  ],
+
+  "modulation_matrix": [
+    {"source": 2, "destination": 1, "amount": 20},
+    {"source": 3, "destination": 2, "amount": 12},
+    {"source": 4, "destination": 3, "amount": 8},
+    {"source": 5, "destination": 4, "amount": 5},
+    {"source": 6, "destination": 5, "amount": 3},
+    {"source": 1, "destination": 2, "amount": 5}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.01,
+    "amp_decay": 0.4,
+    "amp_sustain": 0.6,
+    "amp_release": 0.3,
+    "filter_enabled": true,
+    "filter_cutoff": 0.7,
+    "filter_resonance": 0.85,
+    "filter_type": "lowpass",
+    "filter_env_amount": 0.6,
+    "filter_env_attack": 0.1,
+    "filter_env_decay": 0.2
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 57, "velocity": 110, "duration": 0.5},
+      {"note": 60, "velocity": 115, "duration": 0.5},
+      {"note": 64, "velocity": 118, "duration": 0.5},
+      {"note": 69, "velocity": 120, "duration": 1.0},
+      {"note": 72, "velocity": 118, "duration": 0.5},
+      {"note": 69, "velocity": 117, "duration": 0.5},
+      {"note": 64, "velocity": 115, "duration": 0.5},
+      {"note": 60, "velocity": 112, "duration": 0.5},
+      {"note": 57, "velocity": 110, "duration": 1.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Aggressive screaming FM lead using Algorithm 5 (complex feedback). Cascading modulation chain: Op6 → Op5 → Op4 → Op3 → Op2 → Op1. Very high modulation indices (20, 12, 8, 5, 3). Operator 1 feeds back to operator 2 (feedback loop). High ratios (1, 1, 2, 4, 8, 13) create extreme harmonics. Resonant filter (0.85) adds scream. Filter envelope adds movement. Creates biting, aggressive lead.",
+    "technique": "Algorithm 5 = complex feedback. High modulation indices = aggression. Cascading modulation creates complexity. Feedback loop adds chaos. High ratios = extreme harmonics. Resonant filter = scream. Perfect for trance leads.",
+    "genre": "Trance / Hard Dance / Aggressive",
+    "tip": "High modulation indices = brighter, more aggressive. Feedback loops add chaos. Resonant filter adds scream. Filter envelope adds movement."
+  },
+
+  "algorithmDescription": "Algorithm 5: Complex feedback structure with cascading modulation",
+
+  "tags": ["lead", "fm", "screaming", "aggressive", "trance", "algorithm 5"]
+}

@@ -1,0 +1,79 @@
+{
+  "name": "Growl Bass",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 140,
+  "key": "F min",
+  "duration": "3:00",
+  "difficulty": "Advanced",
+
+  "description": "Aggressive growl feel vector with distortion and filter modulation",
+
+  "features": {
+    "primary": ["Growl Feel Vector", "Distortion", "Filter Modulation"],
+    "obscure": ["Growl-to-Distortion Amount", "Resonance Feedback", "Aggressive Harmonics"]
+  },
+
+  "feelVector": {
+    "rubber": 0.3,
+    "bite": 0.6,
+    "hollow": 0.1,
+    "growl": 0.95
+  },
+
+  "parameters": {
+    "osc1_waveform": "sawtooth",
+    "osc1_pitch": 0.3,
+    "osc2_waveform": "square",
+    "osc2_detune": 0.05,
+    "osc3_enabled": true,
+    "osc3_waveform": "sawtooth",
+    "osc3_detune": 0.1,
+    "osc3_octave": 1,
+    "filter_cutoff": 0.6,
+    "filter_resonance": 0.85,
+    "filter_type": "lowpass",
+    "distortion_enabled": true,
+    "distortion_amount": 0.8,
+    "distortion_type": "fuzz",
+    "amp_env_attack": 0.01,
+    "amp_env_decay": 0.3,
+    "amp_env_sustain": 0.4,
+    "mod_matrix": [
+      {"source": "growl", "destination": "distortion_amount", "amount": 0.9},
+      {"source": "growl", "destination": "filter_resonance", "amount": 0.5},
+      {"source": "lfo1", "destination": "filter_cutoff", "amount": 0.3}
+    ]
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 36, "velocity": 120, "duration": 0.5},
+      {"note": 36, "velocity": 115, "duration": 0.5},
+      {"note": 39, "velocity": 118, "duration": 0.5},
+      {"note": 41, "velocity": 120, "duration": 1.0},
+      {"note": 43, "velocity": 117, "duration": 0.5},
+      {"note": 41, "velocity": 115, "duration": 0.5},
+      {"note": 39, "velocity": 118, "duration": 0.5},
+      {"note": 36, "velocity": 120, "duration": 1.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Maximum growl feel with distortion. Three oscillators create thick harmonics. Fuzz distortion adds aggression. High resonance (0.85) for filter scream. Growl routed to distortion and resonance. LFO modulates filter for movement. Angry, aggressive bass.",
+    "technique": "Growl feel vector controls harmonics and distortion. High growl (0.9+) = aggressive, distorted, screaming. Use multiple oscillators for thickness. Fuzz distortion = maximum aggression. High resonance = filter scream.",
+    "genre": "Dubstep / Riddim / Bass Music",
+    "tip": "Use monophonic mode for tight bass. Add sub oscillator for extra weight. Experiment with distortion types (overdrive, fuzz, bitcrush)."
+  },
+
+  "growlValues": [
+    "0.0 - Clean, pure",
+    "0.3 - Subtle harmonics",
+    "0.5 - Noticeable growl",
+    "0.7 - Heavy growl",
+    "0.9 - Aggressive distortion",
+    "1.0 - Maximum screaming aggression"
+  ],
+
+  "tags": ["growl", "distortion", "bass", "dubstep", "aggressive", "scream"]
+}

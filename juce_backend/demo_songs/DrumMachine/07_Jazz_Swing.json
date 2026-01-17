@@ -1,0 +1,72 @@
+{
+  "name": "Jazz Swing",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 110,
+  "key": "C",
+  "duration": "3:30",
+  "difficulty": "Intermediate",
+
+  "description": "Ride cymbal jazz swing with brush snare and walking feel",
+
+  "features": {
+    "primary": ["Ride Cymbal Pattern", "Brush Snare", "Jazz Swing Feel"],
+    "obscure": ["Swing Override", "Timing Role Permutations", "Velocity Feathering"]
+  },
+
+  "kit": {
+    "name": "Jazz Kit",
+    "voices": {
+      "kick": {"pitch": 0.5, "decay": 0.6, "click": 0.2},
+      "snare": {"tone": 0.4, "decay": 0.5, "snap": 0.3},
+      "ride": {"tone": 0.5, "decay": 0.8, "metal": 0.4}
+    }
+  },
+
+  "pattern": {
+    "length": 32,
+    "swing": 0.65,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 100}, {"step": 10, "active": true, "velocity": 95},
+          {"step": 20, "active": true, "velocity": 100}, {"step": 28, "active": true, "velocity": 98}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.65,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 90}, {"step": 12, "active": true, "velocity": 88},
+          {"step": 20, "active": true, "velocity": 92}, {"step": 28, "active": true, "velocity": 89}
+        ]
+      },
+      {
+        "index": 8,
+        "type": "Ride",
+        "timing_role": "Pull",
+        "volume": 0.6,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 85}, {"step": 2, "active": true, "velocity": 80},
+          {"step": 4, "active": true, "velocity": 85}, {"step": 6, "active": true, "velocity": 80},
+          {"step": 8, "active": true, "velocity": 85}, {"step": 10, "active": true, "velocity": 80},
+          {"step": 12, "active": true, "velocity": 85}, {"step": 14, "active": true, "velocity": 80}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Jazz swing with heavy swing (0.65). Ride cymbal plays straight eighth notes, swing timing creates triplet feel. Kick plays walking pattern (1, 3, 5, 7). Snare on 2 and 4 with feathered velocity.",
+    "technique": "Use Pull timing role for ride to play laid back. Feather velocities (80-85) for softer touch. Swing should be 60-70% for authentic jazz feel.",
+    "genre": "Jazz / Swing"
+  },
+
+  "tags": ["jazz", "swing", "ride", "brushes", "walking", "triplet feel"]
+}

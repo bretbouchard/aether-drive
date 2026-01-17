@@ -1,0 +1,61 @@
+{
+  "name": "Orchestral Hits",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 140,
+  "key": "C min",
+  "duration": "2:00",
+  "difficulty": "Intermediate",
+
+  "description": "Powerful orchestral hits and impacts with trailer-style punctuation",
+
+  "features": {
+    "primary": ["Orchestral Hits", "Impact Samples", "Trailer Effects"],
+    "obscure": ["Riser Builds", "Sub Drop", "Brass Ensemble"]
+  },
+
+  "soundfont": {
+    "file": "orchestral_hits.sf2",
+    "preset": "00 Trailer Hits",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 1.5,
+    "amp_sustain": 0.0,
+    "amp_release": 2.0,
+    "filter_enabled": true,
+    "filter_cutoff": 0.7,
+    "filter_resonance": 0.2,
+    "sub_drop": true,
+    "riser_enabled": true,
+    "brass_ensemble": true
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 48, "velocity": 127, "duration": 0.1},
+      {"note": 48, "velocity": 127, "duration": 0.1},
+      {"note": 48, "velocity": 127, "duration": 0.1},
+      {"note": 36, "velocity": 127, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Powerful orchestral hits for trailer punctuation. Instant attack for impact. Long decay (1.5s) for reverberant tail. Very long release (2.0s) for epic decay. Sub drop adds low-frequency impact. Brass ensemble creates wall of sound. Creates cinematic tension.",
+    "technique": "Load orchestral hits SoundFont. Use for trailer punctuation and impact. Layer multiple hits for bigger sound. Add sub drop for low-frequency impact. Use risers to build tension. Perfect for epic moments.",
+    "genre": "Trailer / Cinematic / Epic",
+    "tip": "Layer multiple hits for bigger sound. Add sub drop for impact. Use risers to build tension. Compress heavily for punch."
+  },
+
+  "hitTypes": [
+    "Short - punchy impact",
+    "Medium - balanced decay",
+    "Long - epic decay",
+    "Riser - building tension",
+    "Sub drop - low-frequency impact"
+  ],
+
+  "tags": ["hits", "orchestral", "trailer", "impact", "cinematic", "epic"]
+}

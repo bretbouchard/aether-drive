@@ -103,7 +103,7 @@ public enum NavigationDestination: Equatable, Hashable {
             switch self {
             case .orchestrationConsole, .songLibrary:
                 return true
-            case .orderSong, .performanceStrip, .performanceEditor, .settings:
+            case .orderSong, .performanceStrip, .performanceEditor, .tablatureEditor, .multiViewNotation, .settings:
                 return false
             case .deepLink:
                 return false
@@ -113,7 +113,7 @@ public enum NavigationDestination: Equatable, Hashable {
             switch self {
             case .orderSong, .songLibrary:
                 return true
-            case .performanceEditor, .orchestrationConsole, .settings, .performanceStrip:
+            case .performanceEditor, .tablatureEditor, .multiViewNotation, .orchestrationConsole, .settings, .performanceStrip:
                 return false
             case .deepLink:
                 return false

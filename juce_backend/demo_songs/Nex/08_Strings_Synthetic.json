@@ -1,0 +1,74 @@
+{
+  "name": "Strings Synthetic",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 85,
+  "key": "Bb maj",
+  "duration": "4:00",
+  "difficulty": "Intermediate",
+
+  "description": "Synthetic string ensemble with slow attack and lush harmonics",
+
+  "features": {
+    "primary": ["FM Strings", "Slow Attack", "Lush Harmonics"],
+    "obscure": ["Detuned Unison", "Vibrato LFO", "Ensemble Effect"]
+  },
+
+  "algorithm": 4,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+    {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 4, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true},
+    {"index": 6, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true}
+  ],
+
+  "modulation_matrix": [
+    {"source": 3, "destination": 1, "amount": 3},
+    {"source": 4, "destination": 2, "amount": 3},
+    {"source": 5, "destination": 1, "amount": 2},
+    {"source": 6, "destination": 2, "amount": 2},
+    {"source": "lfo1", "destination": "pitch", "amount": 0.05}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.4,
+    "amp_decay": 0.3,
+    "amp_sustain": 0.8,
+    "amp_release": 0.8,
+    "lfo1_enabled": true,
+    "lfo1_rate": 0.5,
+    "lfo1_depth": 0.06,
+    "lfo1_waveform": "triangle",
+    "lfo1_destination": "pitch",
+    "chorus_enabled": true,
+    "chorus_rate": 0.4,
+    "chorus_depth": 0.6
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 53, "velocity": 80, "duration": 2.0},
+      {"note": 57, "velocity": 75, "duration": 2.0},
+      {"note": 60, "velocity": 78, "duration": 2.0},
+      {"note": 65, "velocity": 82, "duration": 3.0},
+      {"note": 60, "velocity": 78, "duration": 2.0},
+      {"note": 57, "velocity": 76, "duration": 2.0},
+      {"note": 53, "velocity": 78, "duration": 2.0},
+      {"note": 65, "velocity": 80, "duration": 3.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Synthetic string ensemble using Algorithm 4 (complex parallel). Six operators create lush harmonics. Operators 1 and 2 are detuned carriers (1:1 ratio). Operators 3 and 4 (ratio 2) add brightness. Operators 5 and 6 (ratios 3, 4) add harmonics. Low modulation (indices 2-3) for smooth tone. Slow attack (0.4s) for swell. High sustain (0.8) for sustained notes. LFO adds vibrato (0.06 depth). Chorus adds ensemble width. Creates lush, synthetic strings.",
+    "technique": "Many operators for lush tone. Detuned carriers for width. Low modulation for smoothness. Slow attack for strings. LFO vibrato for warmth. Chorus for ensemble. Perfect for pads and leads.",
+    "genre": "Synthwave / Pop / Ballads",
+    "tip": "Many operators = lush. Detuned carriers = width. Low modulation = smooth. LFO = vibrato. Chorus = ensemble."
+  },
+
+  "algorithmDescription": "Algorithm 4: Complex parallel structure with detuned carriers",
+
+  "tags": ["strings", "fm", "synthetic", "lush", "ensemble", "algorithm 4"]
+}

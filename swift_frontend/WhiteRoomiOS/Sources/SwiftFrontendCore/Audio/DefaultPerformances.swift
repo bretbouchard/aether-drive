@@ -100,7 +100,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Solo Piano",
-            arrangementStyle: .SOLO_PIANO,
+            arrangementStyle: ArrangementStyle.SOLO_PIANO,
             density: 0.35,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -135,7 +135,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "SATB Choir",
-            arrangementStyle: .SATB,
+            arrangementStyle: ArrangementStyle.SATB,
             density: 0.55,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -174,7 +174,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Ambient Techno",
-            arrangementStyle: .AMBIENT_TECHNO,
+            arrangementStyle: ArrangementStyle.AMBIENT_TECHNO,
             density: 0.8,
             grooveProfileId: "swing",
             instrumentationMap: [
@@ -213,7 +213,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Jazz Combo",
-            arrangementStyle: .JAZZ_COMBO,
+            arrangementStyle: ArrangementStyle.JAZZ_COMBO,
             density: 0.6,
             grooveProfileId: "swing",
             instrumentationMap: [
@@ -252,7 +252,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Jazz Trio",
-            arrangementStyle: .JAZZ_TRIO,
+            arrangementStyle: ArrangementStyle.JAZZ_TRIO,
             density: 0.5,
             grooveProfileId: "swing",
             instrumentationMap: [
@@ -291,7 +291,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Rock Band",
-            arrangementStyle: .ROCK_BAND,
+            arrangementStyle: ArrangementStyle.ROCK_BAND,
             density: 0.7,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -332,7 +332,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Electronic",
-            arrangementStyle: .ELECTRONIC,
+            arrangementStyle: ArrangementStyle.ELECTRONIC,
             density: 0.85,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -373,7 +373,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "A Cappella",
-            arrangementStyle: .ACAPPELLA,
+            arrangementStyle: ArrangementStyle.ACAPPELLA,
             density: 0.6,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -414,7 +414,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "String Quartet",
-            arrangementStyle: .STRING_QUARTET,
+            arrangementStyle: ArrangementStyle.STRING_QUARTET,
             density: 0.45,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -457,7 +457,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Chamber Ensemble",
-            arrangementStyle: .CHAMBER_ENSEMBLE,
+            arrangementStyle: ArrangementStyle.CHAMBER_ENSEMBLE,
             density: 0.5,
             grooveProfileId: "straight",
             instrumentationMap: [
@@ -496,7 +496,7 @@ public struct DefaultPerformances {
         PerformanceState_v1(
             id: generateUUID(),
             name: "Full Orchestra",
-            arrangementStyle: .FULL_ORCHESTRA,
+            arrangementStyle: ArrangementStyle.FULL_ORCHESTRA,
             density: 0.65,
             grooveProfileId: "straight",
             instrumentationMap: [

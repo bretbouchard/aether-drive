@@ -1,0 +1,71 @@
+{
+  "name": "Clavinet Hits",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 125,
+  "key": "C min",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "Funky clavinet with brass harmonics and percussive attack",
+
+  "features": {
+    "primary": ["FM Clavinet", "Brass Harmonics", "Percussive Attack"],
+    "obscure": ["Inharmonic Ratios", "Fast Decay", "Velocity Brightness"]
+  },
+
+  "algorithm": 2,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.8, "enabled": true},
+    {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+    {"index": 3, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 4, "frequency_ratio": 6.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 0.0, "modulation_index": 0.0, "output_level": 0.0, "enabled": false},
+    {"index": 6, "frequency_ratio": 0.0, "modulation_index": 0.0, "output_level": 0.0, "enabled": false}
+  ],
+
+  "modulation_matrix": [
+    {"source": 3, "destination": 1, "amount": 6},
+    {"source": 4, "destination": 2, "amount": 6},
+    {"source": 3, "destination": 4, "amount": 3},
+    {"source": "velocity", "destination": "modulation_index", "amount": 0.5}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 0.6,
+    "amp_sustain": 0.1,
+    "amp_release": 0.2,
+    "velocity_sensitivity": 0.9,
+    "filter_enabled": true,
+    "filter_cutoff": 0.7,
+    "filter_resonance": 0.4,
+    "filter_type": "lowpass"
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 48, "velocity": 115, "duration": 0.2},
+      {"note": 48, "velocity": 110, "duration": 0.2},
+      {"note": 52, "velocity": 112, "duration": 0.2},
+      {"note": 48, "velocity": 115, "duration": 0.2},
+      {"note": 55, "velocity": 118, "duration": 0.4},
+      {"note": 52, "velocity": 112, "duration": 0.2},
+      {"note": 48, "velocity": 115, "duration": 0.2},
+      {"note": 50, "velocity": 110, "duration": 0.2},
+      {"note": 48, "velocity": 115, "duration": 0.4}
+    ]
+  },
+
+  "performance": {
+    "notes": "Funky clavinet using Algorithm 2 (parallel carriers). Operators 1 and 2 are detuned carriers (1:1 ratio). Operators 3 and 4 add brass harmonics (ratios 3 and 6). Moderate modulation (index 6) for funky bite. Instant attack for percussive strike. Fast decay (0.6s) for pluck character. Low sustain (0.1) for staccato feel. High velocity sensitivity (0.9) for dynamic brightness. Filter adds warmth. Creates funky, percussive clav.",
+    "technique": "Parallel carriers for rich tone. Brass harmonics (3, 6) for bite. Moderate modulation for funk. Fast decay for pluck. High velocity sensitivity. Filter controls warmth. Classic FM clavinet.",
+    "genre": "Funk / R&B / Disco",
+    "tip": "Parallel carriers = rich tone. Brass ratios (3, 6) = bite. Fast decay = pluck. High velocity = dynamic. Filter = warmth."
+  },
+
+  "algorithmDescription": "Algorithm 2: Op4 → Op2, Op3 → Op1, Op1 + Op2 → Output (parallel)",
+
+  "tags": ["clavinet", "fm", "funk", "percussive", "brass", "algorithm 2"]
+}

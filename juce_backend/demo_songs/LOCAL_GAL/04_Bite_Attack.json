@@ -1,0 +1,70 @@
+{
+  "name": "Bite Attack",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 138,
+  "key": "E min",
+  "duration": "2:45",
+  "difficulty": "Beginner",
+
+  "description": "Aggressive bite feel vector for punchy, percussive bass sounds",
+
+  "features": {
+    "primary": ["Bite Feel Vector", "Percussive Attack", "Filter Snap"],
+    "obscure": ["Bite-to-Filter Cutoff", "Velocity Sensitivity", "Transient Shaping"]
+  },
+
+  "feelVector": {
+    "rubber": 0.2,
+    "bite": 0.9,
+    "hollow": 0.1,
+    "growl": 0.3
+  },
+
+  "parameters": {
+    "osc1_waveform": "sawtooth",
+    "osc1_pitch": 0.35,
+    "osc2_detune": 0.1,
+    "filter_cutoff": 0.7,
+    "filter_resonance": 0.6,
+    "filter_env_amount": 0.85,
+    "filter_env_decay": 0.3,
+    "amp_env_attack": 0.05,
+    "amp_env_decay": 0.4,
+    "mod_matrix": [
+      {"source": "bite", "destination": "filter_cutoff", "amount": 0.7},
+      {"source": "velocity", "destination": "filter_env_amount", "amount": 0.5}
+    ]
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 36, "velocity": 120, "duration": 0.2},
+      {"note": 36, "velocity": 115, "duration": 0.2},
+      {"note": 41, "velocity": 118, "duration": 0.2},
+      {"note": 36, "velocity": 120, "duration": 0.4},
+      {"note": 44, "velocity": 117, "duration": 0.2},
+      {"note": 41, "velocity": 115, "duration": 0.2},
+      {"note": 36, "velocity": 120, "duration": 0.2},
+      {"note": 39, "velocity": 118, "duration": 0.6}
+    ]
+  },
+
+  "performance": {
+    "notes": "Maximum bite feel creates percussive, punchy bass. Fast filter envelope snap. Bite routed to filter cutoff for aggressive response. Short decay for staccato feel. Each note hits hard and cuts through the mix.",
+    "technique": "Bite feel vector controls transient sharpness and filter snap. High bite (0.8+) = aggressive, percussive attack. Filter envelope opens and closes quickly. Short amp decay creates staccato. Perfect for driving basslines.",
+    "genre": "Techno / Acid / Industrial",
+    "tip": "Use with sawtooth waves for maximum bite. Combine with resonance for filter sweep. Lower bite for softer pluck."
+  },
+
+  "biteValues": [
+    "0.0 - Soft attack",
+    "0.3 - Gentle bite",
+    "0.5 - Medium bite",
+    "0.7 - Punchy attack",
+    "0.9 - Aggressive bite",
+    "1.0 - Maximum percussive snap"
+  ],
+
+  "tags": ["bite", "percussive", "bass", "techno", "acid", "aggressive"]
+}

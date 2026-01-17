@@ -1,0 +1,68 @@
+{
+  "name": "Synth Pad Analog",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 85,
+  "key": "F min",
+  "duration": "5:00",
+  "difficulty": "Intermediate",
+
+  "description": "Warm analog synth pad sampled from vintage synthesizers",
+
+  "features": {
+    "primary": ["Analog Synth Pad", "Vintage Samples", "Warm Harmonics"],
+    "obscure": ["Detuned Oscillators", "Chorus Effect", "Analog Warmth"]
+  },
+
+  "soundfont": {
+    "file": "analog_pads.sf2",
+    "preset": "03 Warm Pad",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.6,
+    "amp_decay": 0.3,
+    "amp_sustain": 0.9,
+    "amp_release": 1.5,
+    "filter_enabled": true,
+    "filter_cutoff": 0.5,
+    "filter_resonance": 0.3,
+    "filter_type": "lowpass",
+    "detune_amount": 0.15,
+    "chorus_enabled": true,
+    "chorus_rate": 0.4,
+    "chorus_depth": 0.6,
+    "analog_warmth": 0.7
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 53, "velocity": 75, "duration": 4.0},
+      {"note": 56, "velocity": 72, "duration": 4.0},
+      {"note": 60, "velocity": 78, "duration": 4.0},
+      {"note": 65, "velocity": 80, "duration": 4.0},
+      {"note": 60, "velocity": 76, "duration": 4.0},
+      {"note": 56, "velocity": 73, "duration": 4.0},
+      {"note": 53, "velocity": 75, "duration": 4.0},
+      {"note": 65, "velocity": 78, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Warm analog synth pad sampled from vintage synths. Slow attack (0.6s) for smooth swell. High sustain (0.9) for sustained pad. Very long release (1.5s) for ambient decay. Detuned oscillators create rich chorus. Chorus effect adds width. Analog warmth adds harmonics. Creates lush, evolving pad.",
+    "technique": "Load analog pad SoundFont. Use slow attack/release for pads. Enable detune for richness. Add chorus for width. Filter controls brightness. Perfect for ambient and chillout.",
+    "genre": "Ambient / Chillout / Synthwave",
+    "tip": "Use slow attack/release for ambient pads. Add chorus for width. Filter controls brightness. Reverb adds spaciousness."
+  },
+
+  "padCharacteristics": [
+    "Warm - vintage analog character",
+    "Bright - modern digital",
+    "Dark - filtered, muted",
+    "Lush - chorus, detuned",
+    "Evolving - LFO modulation"
+  ],
+
+  "tags": ["pad", "analog", "synth", "warm", "vintage", "ambient"]
+}

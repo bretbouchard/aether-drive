@@ -1,0 +1,82 @@
+{
+  "name": "Ghost Notes",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 95,
+  "key": "C",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "Funk groove with ghost notes on hi-hats and snare for subtle human feel",
+
+  "features": {
+    "primary": ["Ghost Note Technique", "Velocity Layering", "Funk Groove"],
+    "obscure": ["Probability Per-Step", "Velocity Feathering", "Micro-Dynamics"]
+  },
+
+  "kit": {
+    "name": "Funk Kit",
+    "voices": {
+      "kick": {"pitch": 0.5, "decay": 0.5, "click": 0.4},
+      "snare": {"tone": 0.6, "decay": 0.4, "snap": 0.5},
+      "hihat_closed": {"tone": 0.5, "decay": 0.25, "metal": 0.6},
+      "hihat_open": {"tone": 0.5, "decay": 0.4, "metal": 0.6}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.58,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.85,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 110}, {"step": 3, "active": true, "velocity": 100},
+          {"step": 6, "active": true, "velocity": 108}, {"step": 8, "active": true, "velocity": 105},
+          {"step": 10, "active": true, "velocity": 100}, {"step": 13, "active": true, "velocity": 98}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 100},
+          {"step": 5, "active": true, "velocity": 70, "probability": 0.7},
+          {"step": 6, "active": true, "velocity": 75, "probability": 0.6},
+          {"step": 12, "active": true, "velocity": 100},
+          {"step": 13, "active": true, "velocity": 68, "probability": 0.7},
+          {"step": 14, "active": true, "velocity": 72, "probability": 0.6}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pocket",
+        "volume": 0.6,
+        "steps": [
+          {"step": 2, "active": true, "velocity": 85},
+          {"step": 3, "active": true, "velocity": 65, "probability": 0.8},
+          {"step": 6, "active": true, "velocity": 82},
+          {"step": 7, "active": true, "velocity": 60, "probability": 0.7},
+          {"step": 10, "active": true, "velocity": 85},
+          {"step": 11, "active": true, "velocity": 63, "probability": 0.8},
+          {"step": 14, "active": true, "velocity": 80},
+          {"step": 15, "active": true, "velocity": 58, "probability": 0.7}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Funk groove with heavy ghost notes. Ghost notes are quieter (60-75 velocity) and have lower probability (0.6-0.8). Creates subtle human feel. Main hits are louder (100 velocity). Swing 0.58 adds funk.",
+    "technique": "Ghost notes should be 30-40% quieter than main hits. Use probability 0.6-0.8 so not all ghost notes trigger. This creates natural variation. Hi-hat ghost notes on offbeats.",
+    "genre": "Funk / R&B"
+  },
+
+  "tags": ["funk", "ghost notes", "velocity", "probability", "subtle", "human feel"]
+}

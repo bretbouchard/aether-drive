@@ -1,0 +1,60 @@
+{
+  "name": "Glissando Effects",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 110,
+  "key": "A min",
+  "duration": "4:00",
+  "difficulty": "Intermediate",
+
+  "description": "Glissando and portamento effects using physical modeling transitions",
+
+  "features": {
+    "primary": ["Glissando", "Portamento", "Smooth Transitions"],
+    "obscure": ["Physical Glissando", "Transition Speed", "Pitch Smoothing"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "resonance_amount": 0.75,
+    "resonance_decay": 1.2,
+    "glissando_enabled": true,
+    "glissando_speed": 0.4,
+    "portamento_enabled": true,
+    "portamento_time": 0.15,
+    "pitch_smoothing": 0.7,
+    "string_tension": 0.55,
+    "brightness": 0.6
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 45, "velocity": 85, "duration": 1.0, "glissando_to": 57},
+      {"note": 57, "velocity": 82, "duration": 1.0},
+      {"note": 57, "velocity": 80, "duration": 1.0, "glissando_to": 69},
+      {"note": 69, "velocity": 85, "duration": 2.0},
+      {"note": 69, "velocity": 82, "duration": 1.0, "glissando_to": 57},
+      {"note": 57, "velocity": 80, "duration": 1.0},
+      {"note": 57, "velocity": 78, "duration": 1.0, "glissando_to": 45},
+      {"note": 45, "velocity": 85, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Glissando and portamento effects using physical modeling. Glissando enabled with speed (0.4) controlling transition speed. Portamento enabled with time (0.15s) for pitch slide. Pitch smoothing (0.7) creates smooth transitions. Resonance amount (0.75) for harmonic richness during slides. Resonance decay (1.2s) for singing tone. String tension (0.55) for stability. Brightness (0.6) for clarity. Medium velocities (78-85) for balanced tone. Notes include glissando targets for slides (45→57, 57→69, 69→57, 57→45). Creates expressive, sliding melodic lines characteristic of physical modeling.",
+    "technique": "Glissando speed = transition speed (0.0 = instant, 1.0 = slow). Portamento time = pitch slide duration. Pitch smoothing = smooth transitions. Resonance maintains harmonics during slides. Physical modeling = natural slide behavior.",
+    "genre": "Contemporary / Expressive / Slide Guitar",
+    "tip": "Glissando speed: 0.0-0.3 = fast, 0.3-0.6 = medium, 0.6-1.0 = slow. Portamento time: 0.05-0.1s = quick, 0.1-0.2s = medium, 0.2-0.5s = slow. Pitch smoothing = natural slides."
+  },
+
+  "glissandoTechniques": [
+    "Fast glissando (0.0-0.3) - quick slides",
+    "Medium glissando (0.3-0.6) - balanced slides",
+    "Slow glissando (0.6-1.0) - long slides",
+    "Quick portamento (0.05-0.1s) - subtle",
+    "Medium portamento (0.1-0.2s) - expressive",
+    "Slow portamento (0.2-0.5s) - dramatic"
+  ],
+
+  "tags": ["glissando", "portamento", "slides", "physical modeling", "expressive"]
+}

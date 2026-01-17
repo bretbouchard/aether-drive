@@ -1,0 +1,192 @@
+{
+  "name": "Classic 808 Hip Hop",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine / Drum Synthesis",
+  "bpm": 95,
+  "key": "C",
+  "duration": "2:00",
+  "difficulty": "Beginner",
+
+  "description": "Iconic TR-808 drum machine sounds with classic boom-bap hip hop pattern",
+
+  "features": {
+    "primary": ["15-Voice Drum Synthesis", "Pattern Sequencer", "16-Track Step Sequencer"],
+    "obscure": ["Per-Track Probability", "Timing Roles (Pocket/Push/Pull)", "Velocity Accents"]
+  },
+
+  "kit": {
+    "name": "Classic 808",
+    "voices": {
+      "kick": {
+        "pitch": 0.5,
+        "decay": 0.6,
+        "click": 0.3,
+        "sweep": 0.4
+      },
+      "snare": {
+        "tone": 0.7,
+        "decay": 0.5,
+        "snap": 0.6,
+        "noise": 0.5
+      },
+      "hihat_closed": {
+        "tone": 0.6,
+        "decay": 0.3,
+        "metal": 0.7
+      },
+      "hihat_open": {
+        "tone": 0.6,
+        "decay": 0.7,
+        "metal": 0.7
+      },
+      "clap": {
+        "tone": 0.5,
+        "decay": 0.4,
+        "attack": 0.3
+      }
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.55,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.85,
+        "pan": 0.0,
+        "pitch": 0,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120, "probability": 1.0},
+          {"step": 1, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 2, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 3, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 4, "active": true, "velocity": 115, "probability": 1.0},
+          {"step": 5, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 6, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 7, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 8, "active": true, "velocity": 120, "probability": 1.0},
+          {"step": 9, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 10, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 11, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 12, "active": true, "velocity": 118, "probability": 1.0},
+          {"step": 13, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 14, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 15, "active": false, "velocity": 0, "probability": 0.0}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.75,
+        "pan": 0.0,
+        "pitch": 0,
+        "steps": [
+          {"step": 0, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 1, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 2, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 3, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 4, "active": true, "velocity": 110, "probability": 1.0},
+          {"step": 5, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 6, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 7, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 8, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 9, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 10, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 11, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 12, "active": true, "velocity": 112, "probability": 1.0},
+          {"step": 13, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 14, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 15, "active": false, "velocity": 0, "probability": 0.0}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pocket",
+        "volume": 0.6,
+        "pan": -0.3,
+        "pitch": 0,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 90, "probability": 1.0},
+          {"step": 1, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 2, "active": true, "velocity": 85, "probability": 1.0},
+          {"step": 3, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 4, "active": true, "velocity": 90, "probability": 1.0},
+          {"step": 5, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 6, "active": true, "velocity": 85, "probability": 1.0},
+          {"step": 7, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 8, "active": true, "velocity": 90, "probability": 1.0},
+          {"step": 9, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 10, "active": true, "velocity": 85, "probability": 1.0},
+          {"step": 11, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 12, "active": true, "velocity": 90, "probability": 1.0},
+          {"step": 13, "active": false, "velocity": 0, "probability": 0.0},
+          {"step": 14, "active": true, "velocity": 85, "probability": 1.0},
+          {"step": 15, "active": false, "velocity": 0, "probability": 0.0}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Classic 808 sounds with boom-bap pattern. Kick on 1, 5, 9, 13 (four-on-the-floor). Snare on 4 and 12. Hi-hat on every offbeat. Timing role 'Pocket' keeps everything centered and steady. Use velocity variation for human feel.",
+    "technique": "808 kick has long decay and deep pitch sweep. Snare has snap and noise layer. Hi-hats are metallic and short. Adjust swing (0.55) for hip-hop groove.",
+    "automation": [
+      {"parameter": "swing", "start": 0.55, "end": 0.60, "duration": "16 bars"}
+    ]
+  },
+
+  "audioCharacteristics": {
+    "frequencyRange": "30 Hz (kick) - 12 kHz (hi-hats)",
+    "steoPlacement": "Kick/Snare center, hi-hats slightly left",
+    "dynamics": "Punchy transients, medium sustain",
+    "timbre": "Synthetic, clean, classic 808"
+  },
+
+  "whyThisSong": {
+    "educational": "Demonstrates Drum Machine's core 15-voice synthesis",
+    "showcase": "Shows pattern sequencer and timing roles",
+    "obscure": "Per-step probability for human feel and variation"
+  },
+
+  "implementation": {
+    "swift": "let assignment = InstrumentAssignment(\n    name: \"808 Drums\",\n    type: .drums,\n    channel: 10,\n    plugin: PluginInfo(\n        id: \"DrumMachine\",\n        name: \"Schill Drum Machine\",\n        manufacturer: \"Schillinger Ecosystem\",\n        parameters: [\n            \"tempo\": 95.0,\n            \"swing\": 0.55\n        ]\n    )\n)\n\ntry manager.assignInstrument(trackId: \"drums\", instrument: assignment)\n\n// Load pattern\nif let juceInstrument = manager.getJUCEInstrument(trackId: \"drums\") {\n    try juceInstrument.loadPreset(\"01_Classic_808_HipHop\")\n}",
+    "midi": "Channel 10: Drum machine pattern. Plays automatically via internal sequencer."
+  },
+
+  "drumVoices": [
+    "Kick - Deep pitch sweep, long decay",
+    "Snare - Tonal + noise layers, snap",
+    "HiHat Closed - Short, metallic",
+    "HiHat Open - Longer decay",
+    "Clap - Multiple layers",
+    "Tom Low/Mid/High - Tuned drums",
+    "Crash/Ride - Cymbals",
+    "Cowbell - Metallic tone",
+    "Shaker/Tambourine - Percussion",
+    "Special - FX drums"
+  ],
+
+  "tips": [
+    "Use timing roles to groove: Pocket (steady), Push (aggressive), Pull (laid back)",
+    "Probability per step adds human feel without full randomness",
+    "Velocity accents create rhythmic interest",
+    "Adjust decay per voice for longer/shorter sounds"
+  ],
+
+  "advancedFeatures": [
+    "15 independent drum voices with synthesis",
+    "16-track pattern sequencer (16 steps per track)",
+    "Per-step probability, flam, and roll",
+    "Timing roles: Pocket/Push/Pull for groove",
+    "Swing per pattern",
+    "Pattern length independent of bar length",
+    "Velocity accents and human feel"
+  ],
+
+  "tags": ["drums", "808", "hip hop", "boom bap", "pattern", "sequencer", "classic"]
+}

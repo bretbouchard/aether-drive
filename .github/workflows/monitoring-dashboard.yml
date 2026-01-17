@@ -1,0 +1,393 @@
+name: Real-Time Monitoring Dashboard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run every 5 minutes
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      check_type:
+        description: 'Type of health check to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - health
+          - metrics
+          - sla
+
+env:
+  SWIFT_VERSION: '5.9'
+  XCODE_VERSION: '15.0'
+
+jobs:
+  # Health Check Job
+  health-check:
+    name: System Health Check
+    runs-on: macos-13
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Cache Swift Packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            swift_frontend/WhiteRoomiOS/.build
+            ~/Library/Caches/org.swift.swiftpm
+          key: ${{ runner.os }}-swift-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-swift-
+
+      - name: Build Monitoring Tools
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          swift build -c release --product HealthCheckCLI
+
+      - name: Run Health Checks
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Run comprehensive health checks
+          .build/release/HealthCheckCLI run > health-check-report.json
+
+          # Check exit code
+          EXIT_CODE=${PIPESTATUS[0]}
+
+          # Parse and display results
+          echo "### Health Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat health-check-report.json | jq '.' >> $GITHUB_STEP_SUMMARY
+
+          # Fail if any health check failed
+          exit $EXIT_CODE
+
+      - name: Upload Health Check Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: health-check-report
+          path: swift_frontend/WhiteRoomiOS/health-check-report.json
+          retention-days: 30
+
+      - name: Create Health Check Badge
+        if: always()
+        run: |
+          # Create badge based on health status
+          STATUS=$(cat swift_frontend/WhiteRoomiOS/health-check-report.json | jq -r '.status')
+          COLOR="red"
+
+          if [ "$STATUS" = "pass" ]; then
+            COLOR="green"
+          elif [ "$STATUS" = "degrade" ]; then
+            COLOR="yellow"
+          fi
+
+          echo "Health Check: $STATUS" >> $GITHUB_STEP_SUMMARY
+          echo "![Health Check](https://img.shields.io/badge/health-$STATUS-$COLOR)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Send Health Alert on Failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: '⚠️ System health check failed. Please investigate: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+
+  # Metrics Collection Job
+  metrics-collection:
+    name: Collect System Metrics
+    runs-on: macos-13
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Collect Performance Metrics
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Build metrics collector
+          swift build -c release --product MetricsCollector
+
+          # Collect metrics
+          .build/release/MetricsCollector collect > metrics-report.json
+
+      - name: Analyze Metrics Trends
+        run: |
+          # Compare with previous metrics
+          PREVIOUS_METRICS=$(curl -s "${{ secrets.METRICS_API_URL }}/previous" || echo "{}")
+
+          # Analyze trends
+          swift_frontend/WhiteRoomiOS/.build/release/MetricsAnalyzer \
+            compare \
+            --current metrics-report.json \
+            --previous <(echo "$PREVIOUS_METRICS") \
+            --output trend-analysis.json
+
+      - name: Generate Metrics Dashboard
+        run: |
+          # Create dashboard HTML
+          cat > metrics-dashboard.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>White Room Metrics Dashboard</title>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          </head>
+          <body>
+            <h1>System Metrics Dashboard</h1>
+            <canvas id="metricsChart"></canvas>
+            <script>
+              // Load metrics data
+              const metrics = $(cat swift_frontend/WhiteRoomiOS/metrics-report.json);
+
+              // Create chart
+              new Chart(document.getElementById('metricsChart'), {
+                type: 'line',
+                data: {
+                  labels: metrics.timestamps,
+                  datasets: [{
+                    label: 'Response Time',
+                    data: metrics.responseTime,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                  }]
+                }
+              });
+            </script>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload Metrics Dashboard
+        uses: actions/upload-artifact@v3
+        with:
+          name: metrics-dashboard
+          path: metrics-dashboard.html
+          retention-days: 30
+
+      - name: Upload Metrics Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: metrics-report
+          path: swift_frontend/WhiteRoomiOS/metrics-report.json
+          retention-days: 30
+
+      - name: Comment PR with Metrics
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const metrics = JSON.parse(fs.readFileSync('swift_frontend/WhiteRoomiOS/metrics-report.json', 'utf8'));
+
+            const comment = `## 📊 Metrics Report
+
+            | Metric | Value | Trend |
+            |--------|-------|-------|
+            | Test Execution Time | ${metrics.testExecutionTime}s | ${metrics.testExecutionTimeTrend} |
+            | Build Time | ${metrics.buildTime}s | ${metrics.buildTimeTrend} |
+            | Response Time | ${metrics.responseTime}ms | ${metrics.responseTimeTrend} |
+            | Coverage | ${metrics.coverage}% | ${metrics.coverageTrend} |
+
+            [View Full Dashboard](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  # SLA Monitoring Job
+  sla-monitoring:
+    name: SLA Compliance Check
+    runs-on: macos-13
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Check SLA Compliance
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Build SLA monitor
+          swift build -c release --product SLAMonitor
+
+          # Check all SLAs
+          .build/release/SLAMonitor check-all > sla-report.json
+
+          # Check for violations
+          VIOLATIONS=$(cat sla-report.json | jq '.violations | length')
+
+          if [ "$VIOLATIONS" -gt 0 ]; then
+            echo "⚠️ SLA violations detected: $VIOLATIONS"
+            cat sla-report.json | jq '.violations[]'
+            exit 1
+          fi
+
+      - name: Generate SLA Report
+        run: |
+          # Create comprehensive SLA report
+          cat > sla-summary.md << 'EOF'
+          # SLA Compliance Report
+
+          ## Overall Compliance
+          $(cat swift_frontend/WhiteRoomiOS/sla-report.json | jq -r '.overallCompliance * 100')%
+
+          ## SLA Details
+
+          | SLA | Compliance | Status | Trend |
+          |-----|-----------|--------|-------|
+          $(cat swift_frontend/WhiteRoomiOS/sla-report.json | jq -r '.slas[] | "- \(.name) | \(.complianceRate * 100)% | \(.status) | \(.trend)"')
+          EOF
+
+      - name: Upload SLA Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: sla-report
+          path: |
+            swift_frontend/WhiteRoomiOS/sla-report.json
+            sla-summary.md
+          retention-days: 30
+
+      - name: Send SLA Violation Alerts
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: '🚨 SLA violations detected. View report: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+
+  # Dashboard Update Job
+  update-dashboard:
+    name: Update Monitoring Dashboard
+    runs-on: macos-13
+    needs: [health-check, metrics-collection, sla-monitoring]
+    if: always()
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download All Reports
+        uses: actions/download-artifact@v3
+        with:
+          path: reports/
+
+      - name: Generate Comprehensive Dashboard
+        run: |
+          # Create unified dashboard
+          python3 Scripts/generate_dashboard.py \
+            --health-report reports/health-check-report/health-check-report.json \
+            --metrics-report reports/metrics-report/metrics-report.json \
+            --sla-report reports/sla-report/sla-report.json \
+            --output monitoring-dashboard.html
+
+      - name: Deploy Dashboard to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          keep_files: true
+          destination_dir: monitoring
+
+      - name: Comment Dashboard Link
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = `## 📊 Monitoring Dashboard Updated
+
+            The monitoring dashboard has been updated with the latest metrics.
+
+            [View Dashboard](https://${{ github.repository.owner }}.github.io/${{ github.repository }}/monitoring/monitoring-dashboard.html)
+
+            ### Summary
+            - Health Check: ${{ needs.health-check.result }}
+            - Metrics Collection: ${{ needs.metrics-collection.result }}
+            - SLA Compliance: ${{ needs.sla-monitoring.result }}
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  # Notification Job
+  notify-status:
+    name: Send Monitoring Notifications
+    runs-on: macos-13
+    needs: [health-check, metrics-collection, sla-monitoring]
+    if: always()
+
+    steps:
+      - name: Determine Overall Status
+        id: status
+        run: |
+          STATUS="success"
+
+          if [ "${{ needs.health-check.result }}" = "failure" ]; then
+            STATUS="failure"
+          elif [ "${{ needs.metrics-collection.result }}" = "failure" ]; then
+            STATUS="failure"
+          elif [ "${{ needs.sla-monitoring.result }}" = "failure" ]; then
+            STATUS="failure"
+          fi
+
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+      - name: Send Success Notification
+        if: steps.status.outputs.status == 'success'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          text: '✅ All monitoring checks passed'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_MONITORING }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_MONITORING }}
+
+      - name: Send Failure Notification
+        if: steps.status.outputs.status == 'failure'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: '❌ Monitoring checks failed. Please investigate: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_MONITORING }}
+        env:
+          SLACK_WEBFLOW_URL: ${{ secrets.SLACK_WEBHOOK_MONITORING }}

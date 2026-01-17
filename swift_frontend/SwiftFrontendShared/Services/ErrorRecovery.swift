@@ -277,18 +277,18 @@ public class ErrorRecovery: Sendable {
     ) async -> Bool {
         let recoveryAction = getRecoveryAction(for: error)
 
-        return await withTimeout(timeout) {
-            do {
+        do {
+            let result: Bool = try await withTimeout(timeout) {
                 try await recoveryAction()
-                ErrorLogger.shared.info("Recovery successful for error: \(error.code)")
                 return true
-            } catch {
-                ErrorLogger.shared.warning("Recovery failed: \(error.localizedDescription)", context: [
-                    "error_code": error.code,
-                    "recovery_action": "error_recovery"
-                ])
-                return false
             }
+            return result
+        } catch let recoveryError {
+            ErrorLogger.shared.warning("Recovery failed: \(recoveryError.localizedDescription)", context: [
+                "error_code": error.code,
+                "recovery_action": "error_recovery"
+            ])
+            return false
         }
     }
 
@@ -423,7 +423,10 @@ public extension ErrorRecovery {
                 return (error as NSError).domain == "NSURLErrorDomain"
 
             case .ffi:
-                return error is WhiteRoomError && (error as? WhiteRoomError)?.category == "FFI" ?? false
+                if let whiteRoomError = error as? WhiteRoomError {
+                    return whiteRoomError.category == "FFI"
+                }
+                return false
 
             case .temporary:
                 // Retry on temporary/transient errors

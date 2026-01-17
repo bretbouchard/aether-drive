@@ -234,7 +234,7 @@ public struct SweepControlView: View {
             }
         }
         .padding(isCompactWidth ? 12 : 16)
-        .background(Color(nsColor: .controlBackgroundColor))
+        .background(Color(UIColor.systemBackground))
         .cornerRadius(isCompactWidth ? 16 : 12)
         .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
     }

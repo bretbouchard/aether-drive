@@ -70,7 +70,18 @@ export interface SongMetadata {
   genre?: string;
   duration?: number; // seconds
   key?: string;
+  tags?: string[];
   custom?: Record<string, unknown>;
+
+  // NEW FIELDS - Extended metadata
+  mood?: string;
+  difficulty?: string;
+  rating?: number; // 1-5 stars
+  comments?: string;
+  arranger?: string;
+  copyright?: string;
+  isrc?: string;
+  practiceMode?: boolean;
 }
 
 // =============================================================================
@@ -120,6 +131,16 @@ export interface Section_v1 {
   end: RealizationTime;
   roles: string[]; // role IDs active in this section
   realizationHints?: Record<string, unknown>;
+
+  // NEW FIELDS - Section annotations
+  color?: string; // hex color string
+  tags?: string[];
+  repeatCount?: number;
+  dynamicMarking?: string; // pp/p/mp/mf/f/ff
+  tempoChange?: number; // tempo multiplier
+  timeSignatureChange?: [number, number]; // [numerator, denominator]
+  rehearsalMarks?: string[];
+  performanceNotes?: string;
 }
 
 // =============================================================================
@@ -132,6 +153,16 @@ export interface Role_v1 {
   type: "bass" | "harmony" | "melody" | "rhythm" | "texture" | "ornament";
   generatorConfig: GeneratorConfig;
   parameters: RoleParameters;
+
+  // NEW FIELDS - Role configuration
+  enabled?: boolean;
+  color?: string; // hex color string
+  icon?: string; // icon identifier
+  notes?: string;
+  defaultInstrumentId?: string;
+  defaultVoiceId?: string;
+  midiProgram?: number;
+  required?: boolean;
 }
 
 export interface GeneratorConfig {
@@ -187,6 +218,24 @@ export interface TrackConfig {
   bus?: string;
   instrumentId?: string;
   custom?: Record<string, unknown>;
+
+  // NEW FIELDS - Instrument and voice assignment (CRITICAL)
+  voiceId?: string;
+  presetId?: string;
+
+  // NEW FIELDS - MIDI configuration
+  midiChannel?: number; // 0-15
+  midiProgram?: number; // 0-127
+  midiBankMsb?: number; // 0-127
+  midiBankLsb?: number; // 0-127
+
+  // NEW FIELDS - UI and organization
+  color?: string; // hex color string
+  icon?: string; // icon identifier
+  comments?: string;
+
+  mute?: boolean;
+  solo?: boolean;
 }
 
 export interface BusConfig {

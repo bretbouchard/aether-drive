@@ -1,0 +1,68 @@
+{
+  "name": "Orchestral Strings",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 80,
+  "key": "D min",
+  "duration": "4:00",
+  "difficulty": "Beginner",
+
+  "description": "Beautiful orchestral string ensemble with expressive vibrato and dynamics",
+
+  "features": {
+    "primary": ["SoundFont Loading", "Orchestral Samples", "Expressive Dynamics"],
+    "obscure": ["Round-Robin Sampling", "Velocity Layers", "Release Triggers"]
+  },
+
+  "soundfont": {
+    "file": "orchestral_strings.sf2",
+    "preset": "01 String Ensemble",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.15,
+    "amp_decay": 0.2,
+    "amp_sustain": 0.8,
+    "amp_release": 0.4,
+    "filter_enabled": true,
+    "filter_cutoff": 0.7,
+    "filter_resonance": 0.2,
+    "vibrato_enabled": true,
+    "vibrato_rate": 0.5,
+    "vibrato_depth": 0.4,
+    "round_robin_enabled": true,
+    "round_robin_count": 4
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 85, "duration": 2.0},
+      {"note": 53, "velocity": 80, "duration": 2.0},
+      {"note": 57, "velocity": 82, "duration": 2.0},
+      {"note": 62, "velocity": 90, "duration": 4.0},
+      {"note": 65, "velocity": 88, "duration": 2.0},
+      {"note": 62, "velocity": 85, "duration": 2.0},
+      {"note": 57, "velocity": 83, "duration": 2.0},
+      {"note": 53, "velocity": 80, "duration": 2.0},
+      {"note": 50, "velocity": 85, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Orchestral string ensemble loaded from SoundFont. Slow attack (0.15s) for smooth swell. High sustain (0.8) for sustained notes. Medium release (0.4) for natural decay. Vibrato adds warmth. Round-robin sampling prevents machine gun effect. Expressive dynamics through velocity.",
+    "technique": "Load orchestral SoundFont preset. Use slow attack/release for smooth strings. Enable vibrato for warmth. Round-robin sampling creates variation. Velocity controls dynamics. Filter can soften/harden sound.",
+    "genre": "Orchestral / Soundtrack / Classical",
+    "tip": "Use CC1 (mod wheel) for vibrato depth. Use CC11 (expression) for dynamics. Use CC64 (sustain pedal) for legato."
+  },
+
+  "soundfontFeatures": [
+    "Preset loading - select orchestral instruments",
+    "Velocity layers - dynamic sampling",
+    "Round-robin - alternating samples",
+    "Release triggers - natural decay tails",
+    "Key switching - articulation changes"
+  ],
+
+  "tags": ["orchestral", "strings", "soundfont", "expressive", "classical", "soundtrack"]
+}

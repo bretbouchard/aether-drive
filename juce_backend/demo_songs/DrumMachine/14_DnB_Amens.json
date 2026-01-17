@@ -1,0 +1,74 @@
+{
+  "name": "DnB Amens",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 175,
+  "key": "C",
+  "duration": "2:00",
+  "difficulty": "Advanced",
+
+  "description": "Amen break style drum and bass with chopped breaks and stutter edits",
+
+  "features": {
+    "primary": ["Amen Break Style", "Rapid Edits", "Chopped Breaks"],
+    "obscure": ["Gate Policy", "Grid Chaos", "Burst Dropout"]
+  },
+
+  "kit": {
+    "name": "Amen Kit",
+    "voices": {
+      "kick": {"pitch": 0.8, "decay": 0.3, "click": 0.7},
+      "snare": {"tone": 0.9, "decay": 0.15, "snap": 0.95},
+      "hihat_closed": {"tone": 0.8, "decay": 0.1, "metal": 0.9}
+    }
+  },
+
+  "drill": {
+    "enabled": true,
+    "amount": 0.9,
+    "mutationRate": 0.7,
+    "gridDensity": 0.9,
+    "gridChaos": 0.6,
+    "burstSizeMin": 16,
+    "burstSizeMax": 32,
+    "burstDecay": 0.3,
+    "burstDropout": 0.2
+  },
+
+  "gate_policy": {
+    "enabled": true,
+    "silenceChance": 0.3,
+    "burstChance": 0.8,
+    "minSilentSteps": 2,
+    "maxSilentSteps": 4
+  },
+
+  "pattern": {
+    "length": 8,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Push",
+        "drill_override": {"use_override": true, "enabled": true, "gridChaos": 0.7, "burstDropout": 0.3}
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Amen break style with rapid edits. Grid density 0.9 = 64th notes. Grid chaos 0.6 = random stutter. Burst dropout 0.2 creates gaps. Gate policy: 30% silence, then burst. Creates chopped, edited feel.",
+    "technique": "High grid density for rapid-fire notes. Grid chaos adds randomness. Burst dropout creates natural gaps (like manual chopping). Gate policy for tension-release.",
+    "genre": "DnB / Breakbeat"
+  },
+
+  "amenTechniques": [
+    "Chops - Manual cut points",
+    "Stutters - Rapid repetition",
+    "Edits - Pattern variations",
+    "Reverses - Backward playback",
+    "Timestretch - Slow/fast sections"
+  ],
+
+  "tags": ["dnb", "amen", "breakbeat", "edits", "stutter", "grid chaos", "advanced"]
+}

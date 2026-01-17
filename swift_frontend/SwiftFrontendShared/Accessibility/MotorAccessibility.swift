@@ -108,7 +108,7 @@ public struct GestureAlternativeButtons: View {
 
     public var body: some View {
         VStack(spacing: 16) {
-            if let swipeLeft = swipeLeftAction || swipeRightAction != nil {
+            if swipeLeftAction != nil || swipeRightAction != nil {
                 HStack(spacing: 16) {
                     if let swipeLeft = swipeLeftAction {
                         Button("← Swipe Left") { swipeLeft() }
@@ -122,7 +122,7 @@ public struct GestureAlternativeButtons: View {
                 }
             }
 
-            if let swipeUp = swipeUpAction || swipeDownAction != nil {
+            if swipeUpAction != nil || swipeDownAction != nil {
                 HStack(spacing: 16) {
                     if let swipeUp = swipeUpAction {
                         Button("↑ Swipe Up") { swipeUp() }
@@ -274,10 +274,16 @@ public extension View {
      Optimize view for Switch Control navigation
      */
     func switchControlAccessible() -> some View {
-        self
-            .focusable()
-            .accessibilityElement(children: .contain)
-            .accessibilityLabel("Switch Control navigable")
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, *) {
+            return self
+                .focusable()
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Switch Control navigable")
+        } else {
+            return self
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Switch Control navigable")
+        }
     }
 
     /**
@@ -289,7 +295,7 @@ public extension View {
         _ name: String,
         action: @escaping () -> Void
     ) -> some View {
-        self.accessibilityAction(named) { _ in
+        self.accessibilityAction(.named(name)) {
             action()
         }
     }
@@ -298,10 +304,16 @@ public extension View {
      Make element auto-scan target for Switch Control
      */
     func autoScanTarget() -> some View {
-        self
-            .focusable()
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Auto-scan target")
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, *) {
+            return self
+                .focusable()
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Auto-scan target")
+        } else {
+            return self
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Auto-scan target")
+        }
     }
 }
 
@@ -337,7 +349,7 @@ public extension View {
         _ name: String,
         action: @escaping () -> Void
     ) -> some View {
-        self.accessibilityAction(named) { _ in
+        self.accessibilityAction(.named(name)) {
             action()
         }
     }

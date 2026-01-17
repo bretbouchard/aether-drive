@@ -43,7 +43,7 @@ public struct SchemaValidationError: Error, Sendable, Equatable {
  */
 public enum ValidationResult<T> {
     case valid(T)
-    case invalid([ValidationError])
+    case invalid([SchemaValidationError])
 
     /// Returns true if validation passed
     public var isValid: Bool {
@@ -58,7 +58,7 @@ public enum ValidationResult<T> {
     }
 
     /// Returns validation errors if invalid, empty array otherwise
-    public var errors: [ValidationError] {
+    public var errors: [SchemaValidationError] {
         if case .invalid(let errors) = self { return errors }
         return []
     }
@@ -92,15 +92,15 @@ public enum ValidationResult<T> {
  Helper class for accumulating validation errors
  */
 public class ValidationErrors {
-    private var errors: [ValidationError] = []
+    private var errors: [SchemaValidationError] = []
 
     /// Add a validation error
     public func add(field: String, message: String, value: Any? = nil) {
-        errors.append(ValidationError(fieldPath: field, message: message, value: value))
+        errors.append(SchemaValidationError(fieldPath: field, message: message, value: value))
     }
 
     /// Add multiple validation errors
-    public func addAll(_ newErrors: [ValidationError]) {
+    public func addAll(_ newErrors: [SchemaValidationError]) {
         errors.append(contentsOf: newErrors)
     }
 
@@ -119,7 +119,7 @@ public class ValidationErrors {
     }
 
     /// Get all accumulated errors
-    public var allErrors: [ValidationError] {
+    public var allErrors: [SchemaValidationError] {
         errors
     }
 }

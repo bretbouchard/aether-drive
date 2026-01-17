@@ -175,12 +175,12 @@ public class NavigationManager: ObservableObject {
 
         // Parse path
         guard let pathString = url.pathComponents.first,
-              let destination = NavigationDestination.from(path: pathString) else {
+              let initialDestination = NavigationDestination.from(path: pathString) else {
             return false
         }
 
         // Parse query parameters
-        var destination = destination
+        var destination = initialDestination
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
            let queryItems = components.queryItems {
             for item in queryItems {
@@ -241,12 +241,12 @@ public class NavigationManager: ObservableObject {
 
     /// Get all primary destinations for current platform
     public var primaryDestinations: [NavigationDestination] {
-        NavigationDestination.allCases.filter { $0.isPrimary(for: platform) }
+        [NavigationDestination].allCases.filter { $0.isPrimary(for: platform) }
     }
 
     /// Get all secondary destinations for current platform
     public var secondaryDestinations: [NavigationDestination] {
-        NavigationDestination.allCases.filter { $0.isSecondary(for: platform) }
+        [NavigationDestination].allCases.filter { $0.isSecondary(for: platform) }
     }
 }
 

@@ -1,0 +1,80 @@
+{
+  "name": "Dub Evolution",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 75,
+  "key": "C",
+  "duration": "6:00",
+  "difficulty": "Advanced",
+
+  "description": "Dub reggae with heavy use of fill policy, gate policy, and automation lane",
+
+  "features": {
+    "primary": ["Dub Reggae", "Heavy Fills", "Dynamic Evolution"],
+    "obscure": ["Automation Lane", "Fill Decay", "Gate Drops", "Song Structure"]
+  },
+
+  "kit": {
+    "name": "Dub Kit",
+    "voices": {
+      "kick": {"pitch": 0.5, "decay": 0.6, "sweep": 0.4},
+      "snare": {"tone": 0.5, "decay": 0.5, "snap": 0.4},
+      "hihat_open": {"tone": 0.4, "decay": 0.7, "metal": 0.5}
+    }
+  },
+
+  "drill": {
+    "enabled": true,
+    "amount": 0.3,
+    "automation": {
+      "points": [
+        {"bar": 8, "amount": 0.5},
+        {"bar": 16, "amount": 0.8},
+        {"bar": 24, "amount": 0.4},
+        {"bar": 32, "amount": 0.9},
+        {"bar": 40, "amount": 0.3}
+      ]
+    }
+  },
+
+  "fill_policy": {
+    "enabled": true,
+    "fillLengthSteps": 8,
+    "triggerChance": 0.7,
+    "fillAmount": 0.8,
+    "decayPerStep": 0.08
+  },
+
+  "gate_policy": {
+    "enabled": true,
+    "silenceChance": 0.4,
+    "burstChance": 0.7,
+    "minSilentSteps": 4,
+    "maxSilentSteps": 8
+  },
+
+  "performance": {
+    "notes": "Dub reggae with slow evolution. Automation lane controls drum amount over 40 bars. Fill policy adds long fills (8 steps) with slow decay. Gate policy creates drops (silence) then explosions. Great tension-release.",
+    "technique": "Automation lane creates song structure. Fill decay should be slow (0.08) for long fills. Gate silence chance (0.4) creates frequent drops. Perfect for dub's dynamic range.",
+    "genre": "Dub / Reggae"
+  },
+
+  "dubTechniques": [
+    "Drops - Silence sections",
+    "Explosions - Chaotic fills",
+    "Evolution - Slow changes",
+    "Space - Use silence",
+    "Dynamic - Quiet to loud"
+  ],
+
+  "songStructure": [
+    "Bars 1-8: Basic pattern",
+    "Bars 9-16: Introduce fills",
+    "Bars 17-24: Heavy gate drops",
+    "Bars 25-32: Maximum chaos",
+    "Bars 33-40: Return to basic",
+    "Bars 41-48: Fade out"
+  ],
+
+  "tags": ["dub", "reggae", "evolution", "automation", "fills", "gates", "dynamic"]
+}

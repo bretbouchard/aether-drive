@@ -6,43 +6,128 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		49CD9CE59E9BE62A5504472F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = B0761D621A6E9FC51B9A0C6D /* SnapshotTesting */; };
+		7BEA66F0B4E8ADD159059F59 /* InstrumentAssignmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A7E37D96E119BA25F7A4EB /* InstrumentAssignmentTests.swift */; };
+		931EE27C9D560F01948CEB3A /* TransportControlsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929B75B4A87404710518023F /* TransportControlsViewTests.swift */; };
+		96CB003A9CF9168B6C6D9B3E /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 08B4996BF3B3ED56569F3B48 /* SnapshotTesting */; };
+		A6DA0BE751BF2A9895C4AC48 /* AutoSaveManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D02037286F83B4B27D582 /* AutoSaveManagerTests.swift */; };
+		E3202C9276E7B75FDBD89982 /* FFIBridgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D325466518DDD583611041A0 /* FFIBridgeTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EA2658E09B9916BB6CA5A657 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49ECB2E390F6F5501E8A3FD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9BB1018F12E5B0889B1B41F7;
+			remoteInfo = WhiteRoomiOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1C1AB060B845903F77A0D97F /* SwiftFrontendCoreTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SwiftFrontendCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		43A7E37D96E119BA25F7A4EB /* InstrumentAssignmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentAssignmentTests.swift; sourceTree = "<group>"; };
+		929B75B4A87404710518023F /* TransportControlsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportControlsViewTests.swift; sourceTree = "<group>"; };
+		D325466518DDD583611041A0 /* FFIBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFIBridgeTests.swift; sourceTree = "<group>"; };
+		E42D02037286F83B4B27D582 /* AutoSaveManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSaveManagerTests.swift; sourceTree = "<group>"; };
 		E50E0F360C44DC26C9880539 /* WhiteRoomiOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = WhiteRoomiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01BB8C8D23E5FE1F79173D9B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49CD9CE59E9BE62A5504472F /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		117492AEC1159B0235A3450E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96CB003A9CF9168B6C6D9B3E /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		76B55A84EBBB050BB5584974 = {
 			isa = PBXGroup;
 			children = (
-				E96BE9AF2FDCF16389E8EF96 /* Sources */,
+				840A1567CAF094D88592016A /* WhiteRoomiOS */,
 				A62470678585228A27A70AB5 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		80D6F8E259ADF12721C831EF /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E42D02037286F83B4B27D582 /* AutoSaveManagerTests.swift */,
+				D325466518DDD583611041A0 /* FFIBridgeTests.swift */,
+				43A7E37D96E119BA25F7A4EB /* InstrumentAssignmentTests.swift */,
+				929B75B4A87404710518023F /* TransportControlsViewTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		840A1567CAF094D88592016A /* WhiteRoomiOS */ = {
+			isa = PBXGroup;
+			children = (
+				9C5CAB9F1DA67C1315E63C25 /* Sources */,
+				80D6F8E259ADF12721C831EF /* Tests */,
+			);
+			name = WhiteRoomiOS;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		9C5CAB9F1DA67C1315E63C25 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		A62470678585228A27A70AB5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				1C1AB060B845903F77A0D97F /* SwiftFrontendCoreTests.xctest */,
 				E50E0F360C44DC26C9880539 /* WhiteRoomiOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E96BE9AF2FDCF16389E8EF96 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Sources;
-			path = ../Sources;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6F1CE313F716B2D39909EE0B /* SwiftFrontendCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 796D26E877688A1557253D31 /* Build configuration list for PBXNativeTarget "SwiftFrontendCoreTests" */;
+			buildPhases = (
+				7FD40D28F41A42534706BF70 /* Sources */,
+				117492AEC1159B0235A3450E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				979935B68191D04E5DD459D4 /* PBXTargetDependency */,
+			);
+			name = SwiftFrontendCoreTests;
+			packageProductDependencies = (
+				08B4996BF3B3ED56569F3B48 /* SnapshotTesting */,
+			);
+			productName = SwiftFrontendCoreTests;
+			productReference = 1C1AB060B845903F77A0D97F /* SwiftFrontendCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9BB1018F12E5B0889B1B41F7 /* WhiteRoomiOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 216D8EC88E1EA1C1146FAC24 /* Build configuration list for PBXNativeTarget "WhiteRoomiOS" */;
 			buildPhases = (
 				1EE9ADFF26ADB8BFDFE330C3 /* Sources */,
+				01BB8C8D23E5FE1F79173D9B /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -50,6 +135,7 @@
 			);
 			name = WhiteRoomiOS;
 			packageProductDependencies = (
+				B0761D621A6E9FC51B9A0C6D /* SnapshotTesting */,
 			);
 			productName = WhiteRoomiOS;
 			productReference = E50E0F360C44DC26C9880539 /* WhiteRoomiOS.app */;
@@ -79,10 +165,15 @@
 			);
 			mainGroup = 76B55A84EBBB050BB5584974;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CA8395332D5C64254EE6278A /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				3B7529867D69D1BEC0A1319F /* XCRemoteSwiftPackageReference "swift-custom-dump" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				6F1CE313F716B2D39909EE0B /* SwiftFrontendCoreTests */,
 				9BB1018F12E5B0889B1B41F7 /* WhiteRoomiOS */,
 			);
 		};
@@ -96,7 +187,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7FD40D28F41A42534706BF70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6DA0BE751BF2A9895C4AC48 /* AutoSaveManagerTests.swift in Sources */,
+				E3202C9276E7B75FDBD89982 /* FFIBridgeTests.swift in Sources */,
+				7BEA66F0B4E8ADD159059F59 /* InstrumentAssignmentTests.swift in Sources */,
+				931EE27C9D560F01948CEB3A /* TransportControlsViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		979935B68191D04E5DD459D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9BB1018F12E5B0889B1B41F7 /* WhiteRoomiOS */;
+			targetProxy = EA2658E09B9916BB6CA5A657 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2A723AE2FEBAF50F13344B7B /* Debug */ = {
@@ -239,6 +349,48 @@
 			};
 			name = Release;
 		};
+		885CD52014DD2A62B3BE0A95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BASE_PATH = ../;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.whiteroom.SwiftFrontendCoreTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhiteRoomiOS.app/WhiteRoomiOS";
+			};
+			name = Debug;
+		};
+		B0CEDCB88C5254F9982FB2D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BASE_PATH = ../;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.whiteroom.SwiftFrontendCoreTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhiteRoomiOS.app/WhiteRoomiOS";
+			};
+			name = Release;
+		};
 		C8BD1111CC325E56DF21ADE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -274,6 +426,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		796D26E877688A1557253D31 /* Build configuration list for PBXNativeTarget "SwiftFrontendCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				885CD52014DD2A62B3BE0A95 /* Debug */,
+				B0CEDCB88C5254F9982FB2D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		7C5BA2D61CCB200BF75F09A4 /* Build configuration list for PBXProject "WhiteRoomiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -284,6 +445,38 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3B7529867D69D1BEC0A1319F /* XCRemoteSwiftPackageReference "swift-custom-dump" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-custom-dump";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		CA8395332D5C64254EE6278A /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		08B4996BF3B3ED56569F3B48 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA8395332D5C64254EE6278A /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		B0761D621A6E9FC51B9A0C6D /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA8395332D5C64254EE6278A /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 49ECB2E390F6F5501E8A3FD6 /* Project object */;
 }

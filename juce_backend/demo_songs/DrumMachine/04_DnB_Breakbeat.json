@@ -1,0 +1,57 @@
+{
+  "name": "DnB Breakbeat",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 174,
+  "key": "C",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "High-energy drum and bass breakbeat with rapid hi-hat rolls and amen-style cuts",
+
+  "features": {
+    "primary": ["Fast Tempo", "Hi-Hat Rolls", "Breakbeat Pattern"],
+    "obscure": ["Burst Generation", "Grid Density", "Micro-Timing"]
+  },
+
+  "kit": {
+    "name": "DnB Kit",
+    "voices": {
+      "kick": {"pitch": 0.8, "decay": 0.3, "click": 0.7},
+      "snare": {"tone": 0.8, "decay": 0.2, "snap": 0.9},
+      "hihat_closed": {"tone": 0.7, "decay": 0.15, "metal": 0.8}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Push",
+        "volume": 0.85,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120}, {"step": 3, "active": true, "velocity": 110},
+          {"step": 6, "active": true, "velocity": 115}, {"step": 10, "active": true, "velocity": 120}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Push",
+        "volume": 0.7,
+        "drill_override": {"use_override": true, "enabled": true, "burstSizeMin": 8, "burstSizeMax": 16, "gridDensity": 0.7}
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Fast DnB breakbeat. Kick syncopated (not four-on-the-floor). Hi-hats use burst generation for rapid rolls. Grid density 0.7 creates 32nd note rolls. Push timing role adds urgency.",
+    "technique": "Burst size 8-16 notes for rapid hi-hat rolls. Grid density controls subdivision. Push timing makes pattern feel ahead of the beat.",
+    "genre": "Drum and Bass"
+  },
+
+  "tags": ["dnb", "drum and bass", "breakbeat", "fast", "rolls", "bursts", "amen"]
+}

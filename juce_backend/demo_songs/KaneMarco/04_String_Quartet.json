@@ -1,0 +1,65 @@
+{
+  "name": "String Quartet",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 85,
+  "key": "Bb maj",
+  "duration": "5:30",
+  "difficulty": "Intermediate",
+
+  "description": "Intimate string quartet with four independent voices",
+
+  "features": {
+    "primary": ["String Quartet", "Four Voices", "Chamber Ensemble"],
+    "obscure": ["Independent Voices", "Polyphonic Physical Modeling", "Chamber Balance"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "bow_enabled": true,
+    "bow_pressure": 0.6,
+    "bow_position": 0.5,
+    "resonance_amount": 0.7,
+    "resonance_decay": 1.8,
+    "string_tension": 0.55,
+    "string_damping": 0.35,
+    "brightness": 0.6,
+    "vibrato_enabled": true,
+    "vibrato_rate": 0.55,
+    "vibrato_depth": 0.4,
+    "polyphony": 4,
+    "voice_balance": "equal"
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 54, "velocity": 78, "duration": 2.0},
+      {"note": 58, "velocity": 75, "duration": 2.0},
+      {"note": 62, "velocity": 72, "duration": 2.0},
+      {"note": 65, "velocity": 70, "duration": 2.0},
+      {"note": 69, "velocity": 75, "duration": 3.0},
+      {"note": 65, "velocity": 72, "duration": 2.0},
+      {"note": 62, "velocity": 70, "duration": 2.0},
+      {"note": 58, "velocity": 68, "duration": 2.0},
+      {"note": 54, "velocity": 70, "duration": 3.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Intimate string quartet using physical modeling. Four independent voices with polyphony set to 4. Equal voice balance for chamber ensemble. Bow pressure (0.6) for balanced tone. Bow position (0.5) for neutral character. Resonance amount (0.7) for warmth. Resonance decay (1.8s) for singing tone. String tension (0.55) for stability. Damping (0.35) for natural decay. Brightness (0.6) for clarity. Vibrato (rate 0.55, depth 0.4) adds warmth and ensemble feel. Velocities decrease with pitch (78 → 70) simulating natural balance (lower notes louder). Creates intimate, chamber string quartet.",
+    "technique": "Polyphony 4 = independent voices. Equal balance = chamber ensemble. Bow pressure = character. Resonance = warmth. Decay = singing tone. Vibrato = ensemble feel. Velocity balance = natural.",
+    "genre": "Classical / Chamber / Intimate",
+    "tip": "Polyphony 4 for quartet. Equal balance for ensemble. Lower notes louder = natural. Vibrato for ensemble feel. Bow position for character. Resonance for warmth."
+  },
+
+  "quartetTechniques": [
+    "Polyphony 4 - independent voices",
+    "Equal balance - chamber ensemble",
+    "Bow pressure (0.5-0.7) - balanced tone",
+    "Resonance (0.6-0.8) - warmth",
+    "Vibrato (0.4-0.5 depth) - ensemble",
+    "Velocity balance - lower louder"
+  ],
+
+  "tags": ["quartet", "strings", "chamber", "classical", "physical modeling"]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Choir Aahs",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 75,
+  "key": "Bb maj",
+  "duration": "4:30",
+  "difficulty": "Intermediate",
+
+  "description": "Lush choir ensemble with vowel morphing and formant filtering",
+
+  "features": {
+    "primary": ["Choir Ensemble", "Vowel Morphing", "Formant Filtering"],
+    "obscure": ["Polyphonic Legato", "Syllable Playback", "Blend Vibrato"]
+  },
+
+  "soundfont": {
+    "file": "choir_ensemble.sf2",
+    "preset": "02 Choir Aahs",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.3,
+    "amp_decay": 0.2,
+    "amp_sustain": 0.85,
+    "amp_release": 0.6,
+    "filter_enabled": true,
+    "filter_cutoff": 0.5,
+    "filter_resonance": 0.3,
+    "filter_type": "bandpass",
+    "vowel_morph": 0.5,
+    "formant_shift": 0.0,
+    "vibrato_enabled": true,
+    "vibrato_rate": 0.45,
+    "vibrato_depth": 0.35,
+    "polyphonic_legato": true
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 60, "velocity": 80, "duration": 4.0},
+      {"note": 64, "velocity": 75, "duration": 4.0},
+      {"note": 67, "velocity": 78, "duration": 4.0},
+      {"note": 72, "velocity": 82, "duration": 4.0},
+      {"note": 76, "velocity": 80, "duration": 4.0},
+      {"note": 72, "velocity": 78, "duration": 4.0},
+      {"note": 67, "velocity": 76, "duration": 4.0},
+      {"note": 64, "velocity": 75, "duration": 4.0},
+      {"note": 60, "velocity": 78, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Lush choir ensemble with vowel morphing. Slow attack (0.3s) for smooth swell. High sustain (0.85) for sustained notes. Long release (0.6s) for natural decay. Formant filtering shapes vowel sound. Vibrato adds warmth. Polyphonic legato for smooth voice leading. Creates heavenly pad.",
+    "technique": "Load choir SoundFont. Use bandpass filter for formant shaping. Adjust vowel morph for different vowels (A-E-I-O-U). Add vibrato for warmth. Use slow attack/release for pads. Polyphonic legato for smooth transitions.",
+    "genre": "Soundtrack / Ambient / Choral",
+    "tip": "Use slow attack/release for pads. Adjust formant for different vowels. Add reverb for spaciousness. Use vibrato for expressiveness."
+  },
+
+  "vowelPositions": [
+    "0.0 - A (as in cat)",
+    "0.25 - E (as in met)",
+    "0.5 - I (as in bit)",
+    "0.75 - O (as in hot)",
+    "1.0 - U (as in put)"
+  ],
+
+  "tags": ["choir", "vocal", "ensemble", "pad", "lush", "formant"]
+}

@@ -1,0 +1,109 @@
+{
+  "name": "Acid Burns",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Acid Synthesizer",
+  "bpm": 135,
+  "key": "E minor",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "Classic 303-style acid showcase featuring aggressive resonance and snappy envelopes",
+
+  "features": {
+    "primary": ["Feel Vector Bite", "Pattern Sequencer", "Probability"],
+    "obscure": ["Pattern Probability for Generative Lines", "Bite Controls Filter Resonance Envelope"]
+  },
+
+  "preset": {
+    "name": "Acid Burns Custom",
+    "feelVector": {
+      "rubber": 0.1,
+      "bite": 0.9,
+      "hollow": 0.3,
+      "growl": 0.4,
+      "wet": 0.0
+    },
+    "filter": {
+      "cutoff": 0.6,
+      "resonance": 0.8,
+      "envAmount": 0.9
+    },
+    "envelope": {
+      "attack": 0.05,
+      "decay": 0.3,
+      "sustain": 0.7,
+      "release": 0.2
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.57,
+    "steps": [
+      {"step": 0, "note": 36, "gate": true, "velocity": 0.9, "probability": 1.0},
+      {"step": 1, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 2, "note": 39, "gate": true, "velocity": 0.85, "probability": 1.0},
+      {"step": 3, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 4, "note": 41, "gate": true, "velocity": 0.8, "probability": 0.9},
+      {"step": 5, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 6, "note": 43, "gate": true, "velocity": 0.85, "probability": 0.95},
+      {"step": 7, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 8, "note": 36, "gate": true, "velocity": 0.9, "probability": 1.0},
+      {"step": 9, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 10, "note": 39, "gate": true, "velocity": 0.85, "probability": 0.85},
+      {"step": 11, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 12, "note": 44, "gate": true, "velocity": 0.8, "probability": 0.9},
+      {"step": 13, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0},
+      {"step": 14, "note": 43, "gate": true, "velocity": 0.85, "probability": 0.95},
+      {"step": 15, "note": 0, "gate": false, "velocity": 0.0, "probability": 0.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "High bite value (0.9) creates screaming resonance. Low rubber (0.1) produces snappy, percussive envelopes. Pattern probability (0.85-0.95) adds subtle variation without losing the groove.",
+    "technique": "Use the decay knob to open the filter. Bite controls both filter resonance and envelope brightness. Rubber affects glide timing - keep low for acid.",
+    "automation": [
+      {"parameter": "bite", "start": 0.7, "end": 0.95, "duration": "16 bars"},
+      {"parameter": "cutoff", "start": 0.5, "end": 0.8, "duration": "8 bars"}
+    ]
+  },
+
+  "musicalPattern": {
+    "style": "Acid Techno",
+    "structure": "16-bar pattern with variation",
+    "transcription": "E2 (36) → G#2 (39) → B2 (43) pattern classic 303 rhythm. Accented notes on beats 1, 5, 9, 13. Probability drops occasional notes for rhythmic interest."
+  },
+
+  "audioCharacteristics": {
+    "frequencyRange": "80 Hz - 1.2 kHz (bass-focused with harmonics)",
+    "stereoPlacement": "Center with slight width from resonance",
+    "dynamics": "Percussive attack, medium sustain",
+    "timbre": "Aggressive, metallic, squelchy"
+  },
+
+  "whyThisSong": {
+    "educational": "Demonstrates LOCAL_GAL's unique 'bite' parameter and pattern sequencer",
+    "showcase": "High bite + probability creates the classic acid techno sound",
+    "obscure": "Pattern probability is often overlooked - adds generative variation"
+  },
+
+  "implementation": {
+    "swift": "let assignment = InstrumentAssignment(\n    name: \"Acid Bass\",\n    type: .synth,\n    channel: 1,\n    plugin: PluginInfo(\n        id: \"LOCAL_GAL\",\n        name: \"Local Gal Acid Synth\",\n        manufacturer: \"Schillinger Ecosystem\",\n        parameters: [\n            \"rubber\": 0.1,\n            \"bite\": 0.9,\n            \"hollow\": 0.3,\n            \"growl\": 0.4\n        ]\n    )\n)\n\ntry manager.assignInstrument(trackId: \"acid-bass\", instrument: assignment)",
+    "midi": "Channel 1: E2-G#2-B2 pattern with accent on beats 1, 5, 9, 13"
+  },
+
+  "tips": [
+    "Increase bite gradually during the track for tension",
+    "Use pattern probability to add variation without losing the groove",
+    "Keep rubber low for authentic acid feel",
+    "Try automating cutoff filter for sweeps"
+  ],
+
+  "relatedPresets": [
+    "03_Lead_Init",
+    "04_Pad_Init",
+    "custom_acid_techno"
+  ],
+
+  "tags": ["acid", "techno", "303", "resonance", "aggressive", "pattern", "probability"]
+}

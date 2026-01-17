@@ -1,0 +1,67 @@
+{
+  "name": "Performance Expressions",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 95,
+  "key": "G maj",
+  "duration": "4:30",
+  "difficulty": "Intermediate",
+
+  "description": "Velocity and aftertouch mapping to feel vectors for expressive performance",
+
+  "features": {
+    "primary": ["Velocity Mapping", "Aftertouch Control", "Expressive Playing"],
+    "obscure": ["Velocity-to-Feel Vector", "Pressure Modulation", "Dynamic Timbre"]
+  },
+
+  "parameters": {
+    "osc1_waveform": "sawtooth",
+    "osc1_pitch": 0.5,
+    "osc2_detune": 0.1,
+    "filter_cutoff": 0.6,
+    "filter_resonance": 0.5,
+    "amp_env_attack": 0.05,
+    "amp_env_decay": 0.4,
+    "amp_env_sustain": 0.5,
+    "amp_env_release": 0.6,
+    "mod_matrix": [
+      {"source": "velocity", "destination": "bite", "amount": 0.8},
+      {"source": "velocity", "destination": "filter_cutoff", "amount": 0.6},
+      {"source": "aftertouch", "destination": "growl", "amount": 0.9},
+      {"source": "aftertouch", "destination": "rubber", "amount": 0.5},
+      {"source": "pitch_bend", "destination": "rubber", "amount": 0.7}
+    ]
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 55, "velocity": 60, "duration": 0.5, "aftertouch": [0.0, 0.0, 0.3, 0.5, 0.7, 0.9, 0.7, 0.5]},
+      {"note": 59, "velocity": 75, "duration": 0.5, "aftertouch": [0.0, 0.2, 0.4, 0.6, 0.8, 0.6, 0.4, 0.2]},
+      {"note": 62, "velocity": 90, "duration": 0.5, "aftertouch": [0.0, 0.3, 0.5, 0.7, 0.9, 0.7, 0.5, 0.3]},
+      {"note": 67, "velocity": 110, "duration": 1.0, "aftertouch": [0.0, 0.5, 0.8, 0.95, 1.0, 0.95, 0.8, 0.5, 0.3]},
+      {"note": 62, "velocity": 85, "duration": 0.5, "aftertouch": [0.0, 0.2, 0.4, 0.6, 0.8, 0.6, 0.4, 0.2]},
+      {"note": 59, "velocity": 70, "duration": 0.5, "aftertouch": [0.0, 0.1, 0.3, 0.5, 0.7, 0.5, 0.3, 0.1]},
+      {"note": 55, "velocity": 65, "duration": 0.5, "aftertouch": [0.0, 0.0, 0.2, 0.4, 0.6, 0.4, 0.2, 0.0]},
+      {"note": 50, "velocity": 100, "duration": 2.0, "aftertouch": [0.0, 0.3, 0.5, 0.7, 0.9, 0.7, 0.5, 0.3, 0.1]}
+    ]
+  },
+
+  "performance": {
+    "notes": "Velocity controls bite and filter - harder = brighter and punchier. Aftertouch controls growl and rubber - press = more aggression and pitch bend. Pitch bend also affects rubber. Creates highly expressive, responsive lead. Soft notes = warm, gentle. Hard notes = bright, aggressive. Aftertouch adds scream.",
+    "technique": "Map velocity to bite for dynamic attack. Map aftertouch to growl for real-time scream. Map pitch bend to rubber for elastic bends. These mappings make the synth feel alive and responsive to playing dynamics. Perfect for expressive solos.",
+    "genre": "Progressive Rock / Jazz Fusion / Neo-Soul",
+    "tip": "Use with MIDI keyboard for best results. Practice control with soft and hard playing. Use aftertouch for expressive swells. Combine with pitch bend for elastic vibrato."
+  },
+
+  "expressionMappings": [
+    "Velocity → Bite (dynamic attack)",
+    "Velocity → Filter Cutoff (brightness)",
+    "Velocity → Hollow (thin/thick)",
+    "Aftertouch → Growl (scream)",
+    "Aftertouch → Rubber (elasticity)",
+    "Pitch Bend → Rubber (pitch bend amount)",
+    "Mod Wheel → Filter (sweeps)"
+  ],
+
+  "tags": ["velocity", "aftertouch", "expression", "performance", "expressive", "dynamic"]
+}

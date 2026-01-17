@@ -1,0 +1,91 @@
+{
+  "name": "Micro-Timing Mastery",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 128,
+  "key": "C",
+  "duration": "2:30",
+  "difficulty": "Advanced",
+
+  "description": "Advanced micro-timing control for nuanced groove and human feel",
+
+  "features": {
+    "primary": ["Micro-Timing", "Timing Roles", "Groove Nuance"],
+    "obscure": ["Per-Step Timing Offset", "Micro-Timing Precision", "Pocket/Push/Pull"]
+  },
+
+  "kit": {
+    "name": "Micro-Timing Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.7, "decay": 0.3, "snap": 0.6},
+      "hihat_closed": {"tone": 0.6, "decay": 0.2, "metal": 0.7}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.55,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.85,
+        "timingOffset": 0,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120, "microTiming": 0},
+          {"step": 4, "active": true, "velocity": 118, "microTiming": -5},
+          {"step": 8, "active": true, "velocity": 120, "microTiming": 3},
+          {"step": 12, "active": true, "velocity": 119, "microTiming": -2}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Push",
+        "volume": 0.8,
+        "timingOffset": 10,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 115, "microTiming": 8},
+          {"step": 12, "active": true, "velocity": 115, "microTiming": 12}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pull",
+        "volume": 0.65,
+        "timingOffset": -5,
+        "steps": [
+          {"step": 2, "active": true, "velocity": 90, "microTiming": -8},
+          {"step": 6, "active": true, "velocity": 88, "microTiming": -5},
+          {"step": 10, "active": true, "velocity": 90, "microTiming": -10},
+          {"step": 14, "active": true, "velocity": 88, "microTiming": -7}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Micro-timing creates human feel. Kick timing varies slightly (-5 to +3 ticks). Snare is Push (ahead by +10 ticks offset). Hi-hats are Pull (behind by -5 ticks offset, individual notes -5 to -10). Creates natural, organic groove.",
+    "technique": "Micro-timing is in ticks (1280 ticks per beat). Positive = ahead, negative = behind. Timing role sets overall offset. Per-step micro-timing adds variation. Combine for realistic human feel.",
+    "genre": "Micro-Timing Showcase"
+  },
+
+  "microTimingValues": [
+    "0 = Perfect grid",
+    "±1-10 = Subtle humanization",
+    "±11-20 = Noticeable push/pull",
+    "±21-40 = Aggressive timing",
+    "±41+ = Extreme offset"
+  ],
+
+  "timingRoles": [
+    "Pocket = Centered (offset 0)",
+    "Push = Ahead (offset +10 to +20)",
+    "Pull = Behind (offset -10 to -20)"
+  ],
+
+  "tags": ["micro-timing", "timing", "groove", "human feel", "advanced", "precision"]
+}

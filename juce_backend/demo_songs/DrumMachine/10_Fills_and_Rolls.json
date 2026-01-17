@@ -1,0 +1,77 @@
+{
+  "name": "Fills and Rolls",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 140,
+  "key": "C",
+  "duration": "2:00",
+  "difficulty": "Advanced",
+
+  "description": "Comprehensive fill showcase with every type of drum fill and roll technique",
+
+  "features": {
+    "primary": ["Fill Policy System", "Roll Types", "Fill Length Control"],
+    "obscure": ["Fill Decay", "Fill Trigger Chance", "Roll Density Variation"]
+  },
+
+  "kit": {
+    "name": "Fill Showcase Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.7, "decay": 0.3, "snap": 0.7},
+      "hihat_closed": {"tone": 0.6, "decay": 0.2, "metal": 0.7}
+    }
+  },
+
+  "fill_policy": {
+    "enabled": true,
+    "fillLengthSteps": 4,
+    "triggerChance": 0.5,
+    "fillAmount": 0.9,
+    "decayPerStep": 0.1,
+    "fillTypes": ["snare_roll", "crescendo", "tom_fill", "crash_choke"]
+  },
+
+  "pattern": {
+    "length": 32,
+    "swing": 0.55,
+    "tracks": [
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.8,
+        "fill_policy": {
+          "enabled": true,
+          "fillLengthSteps": 4,
+          "fillChance": 0.5
+        },
+        "steps": [
+          {"step": 4, "active": true, "velocity": 110},
+          {"step": 12, "active": true, "velocity": 110},
+          {"step": 20, "active": true, "velocity": 110, "triggerFill": true},
+          {"step": 28, "active": true, "velocity": 110, "triggerFill": true}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Every 4 bars triggers a fill (50% chance). Fill length 4 steps. Fill amount 0.9 = aggressive. Decay 0.1 per step = later notes quieter. Fills include snare rolls, crescendos, tom fills, crash choke. Demonstrates complete fill system.",
+    "technique": "Fill trigger chance controls how often fills occur. Decay per step creates natural diminuendo. Fill amount controls fill intensity. Different fill types add variety.",
+    "genre": "Fill Showcase"
+  },
+
+  "fillTypes": [
+    "Snare roll - Rapid snare hits",
+    "Crescendo - Volume swell",
+    "Tom fill - Melodic toms",
+    "Crash choke - Stop crash cymbal",
+    "Hi-hat roll - Rapid hats",
+    "Kick roll - Rapid kicks",
+    "Full kit - Everything at once",
+    "Build-up - Long crescendo"
+  ],
+
+  "tags": ["fills", "rolls", "fills policy", "decay", "showcase", "advanced"]
+}

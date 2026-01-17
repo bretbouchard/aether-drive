@@ -1,385 +1,339 @@
-# Contributing Guide
+# Choral Ensemble Engine - Contributing Guide
 
-Thank you for your interest in contributing to White Room! This guide will help you understand how to contribute effectively.
+**Guidelines for contributing to Choral development**
+
+---
 
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Code Style Guidelines](#code-style-guidelines)
+2. [Code Style Guide](#code-style-guide)
 3. [Pull Request Process](#pull-request-process)
-4. [Code Review Standards](#code-review-standards)
-5. [Testing Requirements](#testing-requirements)
-6. [Documentation Standards](#documentation-standards)
-7. [Community Guidelines](#community-guidelines)
+4. [Testing Requirements](#testing-requirements)
+5. [Documentation Standards](#documentation-standards)
+6. [Release Workflow](#release-workflow)
 
 ---
 
 ## Getting Started
 
-### First-Time Setup
+### Development Environment
+
+#### Required Tools
+
+- **CMake** 3.16+
+- **C++ Compiler** with C++17 support
+  - Clang 10+ (recommended)
+  - GCC 9+
+  - MSVC 2019+
+- **JUCE** 7.0.0+
+- **Git** for version control
+- **Python** 3.8+ (for control engine)
+
+#### Cloning the Repository
 
 ```bash
-# 1. Fork the repository
-# Click "Fork" on GitHub
+# Clone repository
+git clone https://github.com/white-room-audio/choral.git
+cd choral
 
-# 2. Clone your fork
-git clone https://github.com/YOUR_USERNAME/white_room.git
-cd white_room
+# Initialize submodules
+git submodule update --init --recursive
 
-# 3. Add upstream remote
-git remote add upstream https://github.com/original/white_room.git
-
-# 4. Install dependencies
-./scripts/setup_dev.sh
-
-# 5. Create development branch
-git checkout -b feature/my-feature-name
+# Create development branch
+git checkout -b feature/my-feature
 ```
 
-### Development Workflow
+#### Building
 
 ```bash
-# 1. Sync with upstream
-git fetch upstream
-git rebase upstream/main
+# Configure build
+cmake -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
 
-# 2. Create feature branch
-git checkout -b feature/your-feature
+# Build
+cmake --build build
 
-# 3. Make changes and commit
-git add .
-git commit -m "feat: Add your feature description"
+# Run tests
+ctest --test-dir build --output-on-failure
+```
 
-# 4. Run tests
-./scripts/test_all.sh
+### Project Structure
 
-# 5. Push to your fork
-git push origin feature/your-feature
-
-# 6. Create pull request on GitHub
+```
+choral/
+├── dsp/                    # DSP modules
+│   └── plugin/
+│       ├── SingerVoice.h/.cpp
+│       ├── FormantFilterBank.h/.cpp
+│       └── tests/
+├── control_engine/         # Control engine (Python)
+│   ├── harmony_router.py
+│   ├── curve_interpreter.py
+│   └── tests/
+├── src/                    # JUCE plugin wrapper
+│   ├── ChoirProcessor.h/.cpp
+│   └── ChoirEditor.h/.cpp
+├── shared/                 # Shared schemas
+│   └── schemas/
+├── docs/                   # Documentation
+│   ├── user/
+│   └── developer/
+├── infrastructure/         # Build/CI scripts
+└── testing/               # Test infrastructure
 ```
 
 ---
 
-## Code Style Guidelines
+## Code Style Guide
 
-### C++ Style (JUCE Backend)
+### C++ Style
 
-**Formatting:**
-- Use `clang-format` with provided config
-- 4 spaces for indentation
-- Maximum line length: 100 characters
-- Braces on same line for functions/methods
+#### Naming Conventions
 
-**Naming Conventions:**
 ```cpp
 // Classes: PascalCase
-class AudioProcessor { };
+class SingerVoice { };
 
-// Methods: camelCase
-void processAudio();
+// Functions: camelCase
+void processBlock();
 
 // Variables: camelCase
 float sampleRate;
-
-// Constants: UPPER_SNAKE_CASE
-const int MAX_VOICES = 16;
+int voiceCount;
 
 // Private members: trailing underscore
-class Processor {
+class VoiceBank {
 private:
-    float gain_;
+    int maxVoices_;
+    std::unique_ptr<SingerVoice[]> voices_;
 };
-```
-
-**Best Practices:**
-```cpp
-// Use auto for iterator types
-for (auto& plugin : plugins) {
-    plugin->process(buffer);
-}
-
-// Use nullptr not NULL
-void* ptr = nullptr;
-
-// Use const references
-void processBuffer(const juce::AudioBuffer<float>& buffer);
-
-// Use smart pointers
-std::unique_ptr<Plugin> plugin = std::make_unique<Plugin>();
-
-// Use RAII
-class AudioEngine {
-public:
-    AudioEngine() {
-        // Acquire resources
-    }
-    ~AudioEngine() {
-        // Release resources automatically
-    }
-};
-```
-
-**What to Avoid:**
-```cpp
-// DON'T: Raw pointers without ownership
-Plugin* plugin = new Plugin();  // BAD
-
-// DO: Smart pointers
-std::unique_ptr<Plugin> plugin = std::make_unique<Plugin>();  // GOOD
-
-// DON'T: C-style casts
-float value = (float)intValue;  // BAD
-
-// DO: C++ casts
-float value = static_cast<float>(intValue);  // GOOD
-```
-
-### Swift Style (Swift Frontend)
-
-**Formatting:**
-- Use Xcode's default formatter
-- 4 spaces for indentation
-- Maximum line length: 120 characters
-- Trailing commas in multi-line arrays/dictionaries
-
-**Naming Conventions:**
-```swift
-// Classes: PascalCase
-class JUCEEngine { }
-
-// Methods: camelCase
-func startEngine() { }
-
-// Variables: camelCase
-var sampleRate: Double
-
-// Constants: camelCase with let
-let maxVoices = 16
-
-// Private properties: camelCase (no underscore)
-private var engineHandle: OpaquePointer
-```
-
-**Best Practices:**
-```swift
-// Use guard for early exits
-guard let engine = engineHandle else {
-    return
-}
-
-// Use defer for cleanup
-func processFile() {
-    let file = openFile()
-    defer {
-        closeFile(file)
-    }
-    // Process file
-}
-
-// Use type inference
-let plugins = [Plugin]()  // Type is inferred
-
-// Use extensions for organization
-extension JUCEEngine {
-    // Engine methods
-}
-
-extension JUCEEngine {
-    // FFI methods
-}
-```
-
-**SwiftUI Specific:**
-```swift
-// Use @Published for reactive state
-class ViewModel: ObservableObject {
-    @Published var isPlaying: Bool = false
-}
-
-// Use @ViewBuilder for complex views
-@ViewBuilder
-var contentView: some View {
-    if isPlaying {
-        PlayingView()
-    } else {
-        StoppedView()
-    }
-}
-
-// Use modifiers consistently
-struct MyView: View {
-    var body: some View {
-        Text("Hello")
-            .font(.headline)
-            .foregroundColor(.primary)
-            .padding()
-    }
-}
-```
-
-### TypeScript Style (SDK)
-
-**Formatting:**
-- Use Prettier with provided config
-- 2 spaces for indentation
-- Maximum line length: 100 characters
-- Semicolons required
-
-**Naming Conventions:**
-```typescript
-// Interfaces/Types: PascalCase
-interface AudioConfig { }
-
-// Functions: camelCase
-function processAudio() { }
-
-// Variables: camelCase
-const sampleRate: number;
 
 // Constants: UPPER_SNAKE_CASE
-const MAX_VOICES = 16;
+constexpr int MAX_VOICES = 128;
+constexpr double DEFAULT_SAMPLE_RATE = 48000.0;
 
-// Enums: PascalCase
-enum ErrorSeverity { }
+// Enums: PascalCase for type, UPPER_SNAKE_CASE for values
+enum class VoiceState {
+    ACTIVE,
+    RELEASED,
+    STOLEN
+};
 ```
 
-**Best Practices:**
-```typescript
-// Use explicit types for public APIs
-function process(buffer: AudioBuffer): void {
-    // Implementation
+#### Formatting
+
+```cpp
+// Braces: Allman style (opening brace on new line)
+void processBlock(AudioBuffer<float>& buffer)
+{
+    // Indentation: 4 spaces
+    for (int i = 0; i < numSamples; ++i)
+    {
+        // Spaces around operators
+        float result = a + b * c;
+
+        // Spaces after commas
+        function(param1, param2, param3);
+    }
 }
 
-// Use type inference for internals
-const plugins = new Map<string, Plugin>();
+// Line length: 120 characters max
+void veryLongFunctionName(Type1 parameter1, Type2 parameter2, Type3 parameter3, Type4 parameter4);
 
-// Use union types for enums
-type Severity = 'info' | 'warning' | 'error' | 'critical';
-
-// Use readonly for immutable data
-interface Config {
-    readonly sampleRate: number;
-}
-
-// Use async/await not Promises
-async function loadFile(): Promise<string> {
-    const content = await fs.readFile('file.txt');
-    return content.toString();
-}
+// Templates: Space before angle brackets
+template<typename T, size_t Size>
+class FixedArray { };
 ```
 
-### Python Style (Scripts/Tools)
+#### Includes
 
-**Formatting:**
-- Use `black` formatter
-- 4 spaces for indentation
-- Maximum line length: 88 characters
+```cpp
+// 1. Corresponding header
+#include "SingerVoice.h"
 
-**Naming Conventions:**
+// 2. C standard library
+#include <cmath>
+#include <cstring>
+
+// 3. C++ standard library
+#include <algorithm>
+#include <array>
+#include <memory>
+
+// 4. JUCE headers
+#include <juce_audio_processors/juce_audio_processors.h>
+
+// 5. Project headers
+#include "FormantFilterBank.h"
+#include "VoiceBank.h"
+```
+
+#### Best Practices
+
+```cpp
+// ✅ GOOD: Use const references
+void processBuffer(const AudioBuffer<float>& buffer);
+
+// ❌ BAD: Unnecessary copy
+void processBuffer(AudioBuffer<float> buffer);
+
+// ✅ GOOD: Use constexpr for constants
+constexpr int MAX_VOICES = 128;
+
+// ❌ BAD: #define for constants
+#define MAX_VOICES 128
+
+// ✅ GOOD: Use smart pointers
+std::make_unique<SingerVoice>();
+
+// ❌ BAD: Raw pointers with manual delete
+SingerVoice* voice = new SingerVoice();
+// ... use voice ...
+delete voice;
+
+// ✅ GOOD: Range-based for loops
+for (auto& voice : voices) {
+    voice.process();
+}
+
+// ❌ BAD: Index-based loops when range-based works
+for (size_t i = 0; i < voices.size(); ++i) {
+    voices[i].process();
+}
+
+// ✅ GOOD: auto for type deduction
+auto iterator = map.find(key);
+
+// ❌ BAD: Explicit type when auto is clearer
+std::map<std::string, int>::iterator iterator = map.find(key);
+```
+
+### Python Style (Control Engine)
+
+#### Naming Conventions
+
 ```python
 # Classes: PascalCase
-class AudioEngine:
+class HarmonyRouter:
     pass
 
 # Functions: snake_case
-def process_audio():
+def generate_satb(chord):
     pass
 
 # Variables: snake_case
-sample_rate = 48000
+voice_count = 16
+formant_scale = 1.0
 
 # Constants: UPPER_SNAKE_CASE
-MAX_VOICES = 16
+MAX_VOICES = 128
+DEFAULT_SAMPLE_RATE = 48000.0
 ```
 
-**Best Practices:**
+#### Formatting
+
 ```python
-# Use type hints
-def process(buffer: AudioBuffer) -> None:
-    pass
+# Indentation: 4 spaces
+def function(param1, param2, param3):
+    # Spaces around operators
+    result = a + b * c
 
-# Use context managers
-with open('file.txt', 'r') as f:
-    content = f.read()
+    # Spaces after commas
+    function(param1, param2, param3)
 
-# Use list comprehensions
-samples = [process(s) for s in samples]
-
-# Use f-strings
-print(f"Sample rate: {sample_rate}")
+# Line length: 100 characters max
+# Use parentheses for implicit line continuation
+result = (very_long_function_name(parameter1, parameter2) +
+          another_function(parameter3))
 ```
 
 ---
 
 ## Pull Request Process
 
-### Before Creating PR
+### Workflow
 
-**Checklist:**
-- [ ] Code follows style guidelines
-- [ ] All tests pass (`./scripts/test_all.sh`)
-- [ ] New tests added for new features
-- [ ] Documentation updated
-- [ ] Commit messages follow conventions
-- [ ] No merge conflicts with upstream/main
+1. **Fork Repository**
+   ```bash
+   # Fork on GitHub
+   git clone https://github.com/YOUR_USERNAME/choral.git
+   ```
+
+2. **Create Branch**
+   ```bash
+   git checkout -b feature/my-feature
+   # or
+   git checkout -b fix/bug-description
+   ```
+
+3. **Make Changes**
+   - Follow code style guide
+   - Add tests
+   - Update documentation
+
+4. **Commit Changes**
+   ```bash
+   git add .
+   git commit -m "feat: Add feature description"
+   ```
+
+5. **Push to Fork**
+   ```bash
+   git push origin feature/my-feature
+   ```
+
+6. **Create Pull Request**
+   - Go to GitHub
+   - Click "New Pull Request"
+   - Fill out PR template
 
 ### Commit Message Format
 
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
 ```
-<type>(<scope>): <subject>
+<type>[optional scope]: <description>
 
-<body>
+[optional body]
 
-<footer>
+[optional footer]
 ```
 
-**Types:**
+**Types**:
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
 - `style`: Code style changes (formatting)
 - `refactor`: Code refactoring
-- `test`: Adding or updating tests
-- `chore`: Build process or auxiliary tool changes
+- `perf`: Performance improvement
+- `test`: Test additions/changes
+- `chore`: Build process, tooling
 
-**Examples:**
+**Examples**:
 
 ```
-feat(juce): Add FM synthesizer plugin
+feat(dsp): Add abyssal mode support
 
-Implement 5-operator FM synthesis with MPE support.
-- Add operator frequency modulation
-- Add modulation matrix
-- Add envelope generators
+Implement formant scaling below 1.0 for sub-harmonic content.
+Add parameter validation to prevent extreme values.
 
 Closes #123
 ```
 
 ```
-fix(swift): Resolve FFI bridge crash on iOS
+fix(control): Correct voice stealing logic
 
-The FFI bridge was crashing when engineQueue was nil.
-Added nil check and proper error handling.
+Previous implementation stole oldest voice regardless of amplitude.
+Now implements Oldest+Quietest strategy for better results.
 
 Fixes #456
 ```
 
-### PR Title Format
-
-Use the same format as commit messages:
-
-```
-feat(juce): Add FM synthesizer plugin
-fix(swift): Resolve FFI bridge crash
-docs(readme): Update build instructions
-```
-
-### PR Description Template
+### Pull Request Template
 
 ```markdown
 ## Description
-Brief description of changes (2-3 sentences)
+Brief description of changes.
 
 ## Type of Change
 - [ ] Bug fix
@@ -389,92 +343,18 @@ Brief description of changes (2-3 sentences)
 
 ## Testing
 - [ ] Unit tests added/updated
-- [ ] Integration tests added/updated
+- [ ] All tests passing
 - [ ] Manual testing completed
 
 ## Checklist
-- [ ] Code follows style guidelines
-- [ ] All tests pass
+- [ ] Code follows style guide
+- [ ] Self-review completed
 - [ ] Documentation updated
-- [ ] No merge conflicts
+- [ ] No new warnings generated
 
 ## Related Issues
-Fixes #123
-Related to #456
+Closes #(issue number)
 ```
-
----
-
-## Code Review Standards
-
-### Review Criteria
-
-**Code Quality:**
-- Follows style guidelines
-- No obvious bugs or issues
-- Efficient algorithms and data structures
-- Proper error handling
-- Real-time safe (for audio code)
-
-**Testing:**
-- Adequate test coverage
-- Tests are meaningful
-- Edge cases covered
-- No flaky tests
-
-**Documentation:**
-- Code is self-documenting
-- Complex logic has comments
-- Public APIs documented
-- Examples provided
-
-**Architecture:**
-- Fits existing architecture
-- Proper abstraction levels
-- Minimal coupling
-- High cohesion
-
-### Review Process
-
-**For Reviewers:**
-
-1. **Be Constructive**
-   - Provide specific feedback
-   - Explain reasoning
-   - Suggest improvements
-   - Ask questions
-
-2. **Be Timely**
-   - Review within 48 hours
-   - Communicate delays
-   - Prioritize critical fixes
-
-3. **Be Thorough**
-   - Check all files
-   - Run tests
-   - Verify documentation
-   - Test manually if needed
-
-**For Authors:**
-
-1. **Be Responsive**
-   - Address feedback promptly
-   - Explain decisions
-   - Make requested changes
-   - Ask for clarification
-
-2. **Be Open**
-   - Accept constructive criticism
-   - Consider alternatives
-   - Learn from feedback
-   - Improve code quality
-
-### Review Labels
-
-- `approved`: Ready to merge
-- `changes requested`: Needs revisions
-- `comment`: Non-blocking feedback
-- `wip`: Work in progress
 
 ---
 
@@ -482,314 +362,281 @@ Related to #456
 
 ### Unit Tests
 
-**C++ (Google Test):**
+#### DSP Tests
+
 ```cpp
-TEST(AudioProcessor, ProcessAudio) {
-    MyProcessor processor;
-    processor.prepareToPlay(48000.0, 256);
+// Location: dsp/plugin/tests/
+// File: test_SingerVoice.cpp
 
-    juce::AudioBuffer<float> buffer(2, 256);
-    juce::MidiBuffer midi;
+class SingerVoiceTest : public UnitTest {
+public:
+    SingerVoiceTest() : UnitTest("SingerVoice", "DSP") {}
 
-    processor.processBlock(buffer, midi);
+    void runTest() override {
+        beginTest("NoteOn starts voice");
+        {
+            SingerVoice voice;
+            voice.prepare(48000.0, 512);
+            voice.noteOn(60.0f, 0.8f);
+            expect(voice.isActive());
+            expectEquals(voice.getCurrentPitch(), 60.0f);
+        }
 
-    EXPECT_FALSE(buffer.hasBeenCleared());
-}
+        beginTest("NoteOff releases voice");
+        {
+            SingerVoice voice;
+            voice.prepare(48000.0, 512);
+            voice.noteOn(60.0f, 0.8f);
+            voice.noteOff(0.5f);
+
+            // Render release
+            float* outputs[2];
+            float buffer[512];
+            outputs[0] = buffer;
+            outputs[1] = buffer;
+
+            voice.process(outputs, 2, 512);
+
+            // Voice should be inactive after release
+            // (depending on release time)
+        }
+    }
+};
+
+static SingerVoiceTest singerVoiceTest;
 ```
 
-**Swift (XCTest):**
-```swift
-func testEngineInitialization() {
-    let engine = JUCEEngine.shared
-    XCTAssertNotNil(engine.engineHandle)
-}
+#### Control Engine Tests
 
-func testPerformanceBlend() {
-    let engine = JUCEEngine.shared
-    let perfA = PerformanceInfo(id: "test_a", name: "Test A", description: "")
-    let perfB = PerformanceInfo(id: "test_b", name: "Test B", description: "")
+```python
+# Location: control_engine/tests/
+# File: test_harmony_router.py
 
-    engine.setPerformanceBlend(perfA, perfB, blendValue: 0.5)
+import unittest
+from control_engine import HarmonyRouter, Chord, ChordQuality
 
-    XCTAssertEqual(engine.currentBlendValue, 0.5)
-}
-```
+class TestHarmonyRouter(unittest.TestCase):
+    def setUp(self):
+        self.router = HarmonyRouter()
 
-**TypeScript (Vitest):**
-```typescript
-describe('AudioConfig', () => {
-    it('should validate sample rate', () => {
-        const config: AudioConfig = {
-            sampleRate: 48000,
-            bufferSize: 256,
-            inputChannels: 0,
-            outputChannels: 2
-        };
+    def test_c_major_satb(self):
+        """Test C major chord generates correct SATB voicing"""
+        chord = Chord(
+            root=60,
+            quality=ChordQuality.MAJOR,
+            has_7th=False,
+            inversion=0
+        )
 
-        expect(validateAudioConfig(config)).toBe(true);
-    });
-});
+        voicing = self.router.generate_satb(chord)
+
+        # Check ranges
+        self.assertGreaterEqual(voicing.soprano, 60)
+        self.assertLessEqual(voicing.soprano, 84)
+
+        self.assertGreaterEqual(voicing.alto, 55)
+        self.assertLessEqual(voicing.alto, 79)
+
+        self.assertGreaterEqual(voicing.tenor, 48)
+        self.assertLessEqual(voicing.tenor, 72)
+
+        self.assertGreaterEqual(voicing.bass, 40)
+        self.assertLessEqual(voicing.bass, 64)
+
+    def test_voice_crossing(self):
+        """Test voice crossing detection"""
+        from control_engine import HarmonyRouter
+
+        # Good voicing (no crossing)
+        voicing_good = SATBVoicing(
+            soprano=67,
+            alto=64,
+            tenor=60,
+            bass=48
+        )
+        self.assertFalse(HarmonyRouter.has_voice_crossing(voicing_good))
+
+        # Bad voicing (crossing)
+        voicing_bad = SATBVoicing(
+            soprano=67,
+            alto=60,  # Below tenor!
+            tenor=64,
+            bass=48
+        )
+        self.assertTrue(HarmonyRouter.has_voice_crossing(voicing_bad))
+
+if __name__ == '__main__':
+    unittest.main()
 ```
 
 ### Integration Tests
 
 ```cpp
-// Test FFI bridge
-TEST(FFIBridge, CreateEngine) {
-    sch_engine_handle engine;
-    sch_result_t result = sch_engine_create(&engine);
+// Location: testing/integration/
+// File: test_full_render.cpp
 
-    EXPECT_EQ(result, SCH_OK);
-    EXPECT_NE(engine, nullptr);
+class FullRenderTest : public UnitTest {
+public:
+    FullRenderTest() : UnitTest("FullRender", "Integration") {}
 
-    sch_engine_destroy(engine);
-}
-```
+    void runTest() override {
+        beginTest("Render complete control stream");
+        {
+            // Load control stream
+            std::ifstream stream("test_streams/control_stream_abyssal.json");
+            std::string json((std::istreambuf_iterator<char>(stream)),
+                            std::istreambuf_iterator<char>());
 
-```swift
-// Test Swift to C++ communication
-func testFFICommunication() {
-    let engine = JUCEEngine.shared
-    engine.startEngine()
+            // Create processor
+            ChoirProcessor processor;
+            processor.prepareToPlay(48000.0, 512);
 
-    XCTAssertTrue(engine.isEngineRunning)
+            // Load stream
+            ControlStreamIngest ingest;
+            ingest.loadControlStream(json);
 
-    engine.stopEngine()
+            // Render 10 seconds
+            AudioBuffer<float> buffer(2, 48000 * 10);
+            processor.processBlock(buffer, MidiBuffer());
 
-    XCTAssertFalse(engine.isEngineRunning)
-}
-```
-
-### E2E Tests
-
-```bash
-# Test complete workflow
-./scripts/test_e2e.sh
-
-# Test plugin in DAW
-./scripts/test_plugin_in_daw.sh LocalGal
+            // Verify output
+            expect(buffer.getMagnitude(0, 0, buffer.getNumSamples()) > 0.0f);
+        }
+    }
+};
 ```
 
 ### Test Coverage
 
-**Minimum Requirements:**
-- C++: 80% coverage
-- Swift: 80% coverage
-- TypeScript: 90% coverage
+**Minimum Requirements**:
+- DSP modules: 80% coverage
+- Control engine: 80% coverage
+- Integration: 60% coverage
 
-**Check Coverage:**
+**Running Coverage**:
+
 ```bash
-# TypeScript
-cd sdk
-npm run test:coverage
-
-# View report
-open coverage/index.html
+# Generate coverage report
+cmake -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON
+cmake --build build
+ctest --test-dir build
+lcov --capture --directory build --output-file coverage.info
+genhtml coverage.info --output-directory coverage_html
 ```
 
 ---
 
 ## Documentation Standards
 
-### Code Documentation
+### Code Comments
 
-**C++ (Doxygen):**
 ```cpp
 /**
- * @brief Audio processor base class
+ * @brief Brief description of class/function
  *
- * Provides real-time audio processing with parameter automation.
- * All audio processing must be real-time safe (no blocking operations).
+ * Detailed description spanning multiple lines.
+ * Explain purpose, usage, and important details.
  *
- * @see PluginProcessor
+ * @param param1 Description of parameter 1
+ * @param param2 Description of parameter 2
+ * @return Description of return value
+ *
+ * Example:
+ * @code
+ * SingerVoice voice;
+ * voice.prepare(48000.0, 512);
+ * @endcode
  */
-class AudioProcessor {
-public:
-    /**
-     * @brief Process audio buffer
-     * @param buffer Audio buffer to process
-     * @param midiMessages MIDI messages to process
-     * @note Must be real-time safe
-     */
-    void processBlock(
-        juce::AudioBuffer<float>& buffer,
-        juce::MidiBuffer& midiMessages
-    );
-};
+void prepare(double sampleRate, int samplesPerBlock);
 ```
 
-**Swift:**
-```swift
-/// Manages JUCE audio engine lifecycle
-///
-/// The `JUCEEngine` class provides a Swift interface to the JUCE
-/// audio engine via the FFI bridge. All operations are thread-safe.
-///
-/// ```swift
-/// let engine = JUCEEngine.shared
-/// engine.startEngine()
-/// ```
-@MainActor
-public class JUCEEngine: ObservableObject {
-    /// Starts the audio engine
-    ///
-    /// - Throws: `WhiteRoomError.audio(.engineNotReady)` if engine fails to start
-    public func startEngine() throws {
-        // Implementation
-    }
-}
-```
+### README Updates
 
-**TypeScript (TSDoc):**
-```typescript
-/**
- * Audio configuration options
- *
- * @remarks
- * Sample rate should be 44100, 48000, or 96000 for best compatibility.
- *
- * @example
- * ```ts
- * const config: AudioConfig = {
- *     sampleRate: 48000,
- *     bufferSize: 256,
- *     inputChannels: 0,
- *     outputChannels: 2
- * };
- * ```
- */
-export interface AudioConfig {
-    /** Sample rate in Hz */
-    sampleRate: number;
-    /** Buffer size in samples */
-    bufferSize: number;
-    /** Number of input channels */
-    inputChannels: number;
-    /** Number of output channels */
-    outputChannels: number;
-}
-```
+When adding features:
+1. Update feature list in main README
+2. Add usage example
+3. Link to relevant documentation
 
-### README Documentation
+### API Documentation
 
-Every major component should have a README:
-
-```
-component_name/
-├── README.md        # Overview and usage
-├── INSTALL.md       # Installation instructions
-├── EXAMPLES.md      # Code examples
-└── API.md           # API reference
-```
-
-### Changelog
-
-Maintain `CHANGELOG.md` for user-visible changes:
-
-```markdown
-# Changelog
-
-## [1.2.0] - 2026-01-15
-### Added
-- FM synthesizer plugin with 5 operators
-- MPE support for all synthesizers
-- Performance blend undo/redo
-
-### Changed
-- Improved FFI bridge performance by 40%
-- Updated JUCE to version 7.0.1
-
-### Fixed
-- Fixed crash on iOS when engine not initialized
-- Fixed parameter zippering in real-time audio
-
-### Deprecated
-- Old parameter API (use new ParameterManager)
-```
+When adding APIs:
+1. Document in ARCHITECTURE.md
+2. Add API reference to API_REFERENCE.md
+3. Provide usage examples
+4. Document parameter ranges
 
 ---
 
-## Community Guidelines
+## Release Workflow
 
-### Be Respectful
+### Version Numbers
 
-- Treat everyone with respect
-- Welcome newcomers and help them learn
-- Focus on constructive feedback
-- Assume good intentions
+Follow [Semantic Versioning](https://semver.org/):
 
-### Be Inclusive
+```
+MAJOR.MINOR.PATCH
 
-- Use inclusive language
-- Welcome diverse perspectives
-- Make spaces welcoming for everyone
-- Accommodate different communication styles
+MAJOR: Breaking changes
+MINOR: New features (backwards compatible)
+PATCH: Bug fixes (backwards compatible)
+```
 
-### Be Collaborative
+### Release Checklist
 
-- Work together toward shared goals
-- Share knowledge freely
-- Give credit generously
-- Help others succeed
+- [ ] All tests passing
+- [ ] Documentation updated
+- [ ] CHANGELOG.md updated
+- [ ] Version number updated
+- [ ] Tagged in git
+- [ ] Release notes written
+- [ ] Binaries built
+- [ ] GitHub release created
 
-### Be Professional
+### Creating Release
 
-- Keep discussions focused
-- Stay on topic
-- Use appropriate channels
-- Respect time boundaries
+```bash
+# Update version
+# Edit CMakeLists.txt: VERSION "1.0.0" → "1.1.0"
 
-### Conflict Resolution
+# Commit changes
+git add .
+git commit -m "chore: Release v1.1.0"
 
-If you encounter issues:
+# Create tag
+git tag -a v1.1.0 -m "Release v1.1.0"
 
-1. **Try to resolve directly** - Have a private conversation
-2. **Seek mediation** - Ask maintainers for help
-3. **Report violations** - Contact project maintainers
-4. **Block if needed** - Protect yourself from harassment
+# Push
+git push origin main
+git push origin v1.1.0
+
+# GitHub Actions will build and release
+```
 
 ---
 
 ## Getting Help
 
-### Questions?
-
-- **GitHub Discussions** - Ask questions publicly
-- **Documentation** - Check docs first
-- **Issues** - Search for similar problems
-- **Maintainers** - Contact for critical issues
-
 ### Resources
 
-- [Getting Started](./getting-started.md)
-- [Architecture Overview](./architecture/overview.md)
-- [API Documentation](./api/)
-- [Troubleshooting](./troubleshooting/)
+- **Documentation**: [docs/](../docs/)
+- **Issues**: [GitHub Issues](https://github.com/white-room-audio/choral/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/white-room-audio/choral/discussions)
 
-### Recognition
+### Contact
 
-Contributors are recognized in:
-- `CONTRIBUTORS.md` - All contributors
-- Release notes - Specific contributions
-- Documentation - Major contributors
+- **Email**: dev@whiteroomaudio.com
+- **Discord**: [link to server]
 
 ---
 
-## License
-
-By contributing, you agree that your contributions will be licensed under the same license as the project (see LICENSE file).
+Thank you for contributing to Choral!
 
 ---
 
-## Thank You!
-
-Thank you for contributing to White Room! Your contributions make this project better for everyone.
-
-**Questions?** Open an issue or discussion on GitHub.
-
-**Ready to contribute?** Follow the [Getting Started](./getting-started.md) guide!
+**Version**: 1.0.0
+**Last Updated**: January 16, 2026
+**Author**: White Room Audio
 
 ---
 
-**Last Updated:** 2026-01-15
-**Version:** 1.0.0
+**Generated with [Claude Code](https://claude.com/claude-code)**

@@ -1,0 +1,75 @@
+{
+  "name": "Hollow Pad",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 85,
+  "key": "D maj",
+  "duration": "4:00",
+  "difficulty": "Intermediate",
+
+  "description": "Ethereal hollow feel vector for atmospheric pad sounds",
+
+  "features": {
+    "primary": ["Hollow Feel Vector", "Atmospheric Pad", "Phase Cancellation"],
+    "obscure": ["Hollow Detune Layers", "Slow Attack", "Sustained Ambience"]
+  },
+
+  "feelVector": {
+    "rubber": 0.2,
+    "bite": 0.1,
+    "hollow": 0.9,
+    "growl": 0.1
+  },
+
+  "parameters": {
+    "osc1_waveform": "sine",
+    "osc1_pitch": 0.5,
+    "osc2_waveform": "triangle",
+    "osc2_detune": 0.15,
+    "osc2_phase": 180,
+    "osc3_enabled": true,
+    "osc3_waveform": "sine",
+    "osc3_detune": 0.08,
+    "filter_cutoff": 0.4,
+    "filter_resonance": 0.2,
+    "amp_env_attack": 0.8,
+    "amp_env_decay": 0.2,
+    "amp_env_sustain": 0.9,
+    "amp_env_release": 2.0,
+    "mod_matrix": [
+      {"source": "hollow", "destination": "filter_cutoff", "amount": -0.3},
+      {"source": "lfo1", "destination": "osc2_phase", "amount": 0.4}
+    ]
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 80, "duration": 4.0},
+      {"note": 54, "velocity": 75, "duration": 4.0},
+      {"note": 57, "velocity": 78, "duration": 4.0},
+      {"note": 62, "velocity": 82, "duration": 4.0},
+      {"note": 57, "velocity": 80, "duration": 4.0},
+      {"note": 54, "velocity": 76, "duration": 4.0},
+      {"note": 50, "velocity": 78, "duration": 4.0},
+      {"note": 62, "velocity": 80, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Maximum hollow feel creates ethereal, phase-cancelled pad. Three oscillators with slight detune. Slow attack (0.8s) for gradual swell. Long release (2.0s) for ambient decay. LFO modulates phase for subtle movement. Creates heavenly atmosphere.",
+    "technique": "Hollow feel vector controls phase cancellation and detuning. High hollow (0.8+) = thin, ethereal, spacious sound. Use sine/triangle waves for purity. Slow attack/release = ambient pad. LFO phase modulation adds movement.",
+    "genre": "Ambient / Chillout / Soundtrack",
+    "tip": "Use polyphonic mode for rich chords. Add reverb for extra atmosphere. Reduce hollow for warmer pads."
+  },
+
+  "hollowValues": [
+    "0.0 - Full, rich sound",
+    "0.3 - Slightly thin",
+    "0.5 - Noticeable hollow",
+    "0.7 - Very thin, spacious",
+    "0.9 - Extremely hollow, ethereal",
+    "1.0 - Maximum phase cancellation"
+  ],
+
+  "tags": ["hollow", "pad", "ambient", "atmospheric", "ethereal", "slow"]
+}

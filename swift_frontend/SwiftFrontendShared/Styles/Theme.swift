@@ -213,7 +213,7 @@ public extension ThemeDefinition {
                 accent: .init(
                     primary: Color.orange,
                     secondary: Color.yellow,
-                    tertiary: Color.amber
+                    tertiary: Color(red: 1.0, green: 0.75, blue: 0.0) // Custom amber
                 ),
                 feedback: .init(
                     success: .green,
@@ -252,7 +252,7 @@ public extension ThemeDefinition {
                 accent: .init(
                     primary: Color.green,
                     secondary: Color.cyan,
-                    tertiary: Color.lime
+                    tertiary: Color(red: 0.75, green: 1.0, blue: 0.0) // Custom lime
                 ),
                 feedback: .init(
                     success: .green,
@@ -291,7 +291,7 @@ public extension ThemeDefinition {
                 accent: .init(
                     primary: .yellow,
                     secondary: .cyan,
-                    tertiary: .magenta
+                    tertiary: Color(red: 1.0, green: 0.0, blue: 1.0) // Custom magenta
                 ),
                 feedback: .init(
                     success: .green,

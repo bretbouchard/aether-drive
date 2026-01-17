@@ -57,7 +57,10 @@ public struct PlatformNavigationTV: View {
             }
             .tvTabViewStyle()
         }
-        .slideOverPanel(isPresented: $navigationManager.presentedSheet) {
+        .slideOverPanel(isPresented: Binding(
+            get: { navigationManager.presentedSheet != nil },
+            set: { if !$0 { navigationManager.presentedSheet = nil } }
+        )) {
             slideOverContent
         }
     }
@@ -129,7 +132,11 @@ public struct PlatformNavigationTV: View {
 // TabViewStyleConfiguration not available in current SDK version
 extension View {
     func tvTabViewStyle() -> some View {
-        self.tabViewStyle(.page)
+        if #available(iOS 17.0, tvOS 17.0, *) {
+            return self.tabViewStyle(.page)
+        } else {
+            return self.tabViewStyle(PageTabViewStyle())
+        }
     }
 }
 
@@ -144,6 +151,14 @@ struct SlideOverPanelModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .overlay(sheetOverlay)
+    }
+
+    private var backgroundMaterial: some ShapeStyle {
+        if #available(iOS 17.0, tvOS 17.0, *) {
+            return Color.ultraThickMaterial
+        } else {
+            return Color.black.opacity(0.8)
+        }
     }
 
     @ViewBuilder
@@ -163,7 +178,7 @@ struct SlideOverPanelModifier: ViewModifier {
                     // Slide over panel
                     content()
                         .frame(width: geometry.size.width * 0.7)
-                        .background(Color.ultraThickMaterial)
+                        .background(backgroundMaterial)
                         .transition(.move(edge: .trailing))
                 }
             }

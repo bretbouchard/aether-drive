@@ -1,0 +1,573 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run security scans daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+env:
+  # Disable homebrew auto-update to speed up builds
+  HOMEBREW_NO_AUTO_UPDATE: 1
+  # Set Python version for security tools
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  owasp-scan:
+    name: OWASP Vulnerability Scan
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for secret scanning
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install security scanning tools
+        run: |
+          pip install --upgrade pip
+          pip install bandit safety semgrep
+
+      - name: Run OWASP dependency check
+        run: |
+          echo "Running OWASP dependency check..."
+
+          # Check Python dependencies
+          if [ -f "requirements.txt" ]; then
+            pip install safety
+            safety check --json > owasp-safety-results.json || true
+            safety check || true
+          fi
+
+          # Check for vulnerable dependencies
+          pip install bandit
+          bandit -r . -f json -o owasp-bandit-results.json || true
+          bandit -r . || true
+
+      - name: Run OWASP static analysis
+        run: |
+          echo "Running OWASP static code analysis..."
+
+          # Check for common vulnerabilities in Swift code
+          find swift_frontend -name "*.swift" -exec grep -l "eval(" {} \; > owasp-eval-check.txt || true
+          find swift_frontend -name "*.swift" -exec grep -l "innerHTML" {} \; >> owasp-eval-check.txt || true
+          find . -name "*.swift" -exec grep -i "password\s*=" {} \; > owasp-password-check.txt || true
+
+          # Check for hardcoded secrets
+          grep -r "AKIA[0-9A-Z]{16}" . --exclude-dir=.git > owasp-aws-keys.txt || true
+          grep -r "ghp_[a-zA-Z0-9]{36}" . --exclude-dir=.git > owasp-github-tokens.txt || true
+
+          echo "Static analysis complete"
+
+      - name: Run semgrep security scan
+        run: |
+          pip install semgrep
+
+          # Run semgrep with security rules
+          semgrep --config=auto \
+            --json \
+            --output=owasp-semgrep-results.json \
+            swift_frontend/ || true
+
+          semgrep --config=auto \
+            swif_frontend/ || true
+
+      - name: Generate OWASP report
+        run: |
+          echo "Generating OWASP security report..."
+
+          cat > owasp-security-report.md << 'EOF'
+          # OWASP Security Scan Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref_name }}
+
+          ## Scan Summary
+
+          This report contains results from OWASP Top 10 vulnerability scanning.
+
+          ## Vulnerability Categories
+
+          ### A01:2021 – Broken Access Control
+          ### A02:2021 – Cryptographic Failures
+          ### A03:2021 – Injection
+          ### A04:2021 – Insecure Design
+          ### A05:2021 – Security Misconfiguration
+          ### A06:2021 – Vulnerable and Outdated Components
+          ### A07:2021 – Identification and Authentication Failures
+          ### A08:2021 – Software and Data Integrity Failures
+          ### A09:2021 – Security Logging and Monitoring Failures
+          ### A10:2021 – Server-Side Request Forgery
+
+          ## Scan Results
+
+          Detailed results are available in the uploaded artifacts.
+
+          EOF
+
+          cat owasp-security-report.md
+
+      - name: Upload OWASP results
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-results
+          path: |
+            owasp-safety-results.json
+            owasp-bandit-results.json
+            owasp-semgrep-results.json
+            owasp-security-report.md
+            owasp-eval-check.txt
+            owasp-password-check.txt
+            owasp-aws-keys.txt
+            owasp-github-tokens.txt
+          retention-days: 30
+
+      - name: Check for critical vulnerabilities
+        run: |
+          echo "Checking for critical vulnerabilities..."
+
+          # Check if any critical issues were found
+          critical_found=false
+
+          if [ -f "owasp-bandit-results.json" ]; then
+            if grep -q '"Confidence": "HIGH"' owasp-bandit-results.json; then
+              echo "⚠️ HIGH confidence issues found by Bandit"
+              critical_found=true
+            fi
+          fi
+
+          if [ -s "owasp-aws-keys.txt" ]; then
+            echo "🚨 CRITICAL: Possible AWS access keys detected!"
+            cat owasp-aws-keys.txt
+            critical_found=true
+          fi
+
+          if [ -s "owasp-github-tokens.txt" ]; then
+            echo "🚨 CRITICAL: Possible GitHub tokens detected!"
+            cat owasp-github-tokens.txt
+            critical_found=true
+          fi
+
+          if [ "$critical_found" = true ]; then
+            echo "::error::Critical security vulnerabilities detected!"
+            exit 1
+          else
+            echo "✅ No critical vulnerabilities detected"
+          fi
+
+  secret-scan:
+    name: Secret Scanning
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for secret scanning
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install truffleHog
+        run: |
+          pip install truffleHog
+
+      - name: Run truffleHog secret scan
+        run: |
+          echo "Running truffleHog secret scanner..."
+
+          trufflehog --json --output=trufflehog-results.json . || true
+
+          # Also run without JSON for human-readable output
+          trufflehog . > trufflehog-results.txt || true
+
+      - name: Scan git history for secrets
+        run: |
+          echo "Scanning git history for secrets..."
+
+          # Check for secrets in commit history
+          git log --all --full-history --source --pretty=format:"%H" | \
+          while read commit; do
+            git show "$commit" | grep -i "password\|secret\|api_key\|token" | \
+            head -n 1 && echo "Found in commit: $commit"
+          done > git-history-secrets.txt || true
+
+      - name: Check for common secret patterns
+        run: |
+          echo "Checking for common secret patterns..."
+
+          # AWS Keys
+          grep -r "AKIA[0-9A-Z]{16}" . --exclude-dir=.git > aws-keys-detected.txt || true
+
+          # GitHub Tokens
+          grep -r "ghp_[a-zA-Z0-9]{36}" . --exclude-dir=.git > github-tokens-detected.txt || true
+          grep -r "github_pat_[a-zA-Z0-9_]{82}" . --exclude-dir=.git >> github-tokens-detected.txt || true
+
+          # Slack Tokens
+          grep -r "xox[pbar]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-zA-Z0-9]{24}" . --exclude-dir=.git > slack-tokens-detected.txt || true
+
+          # Stripe Keys
+          grep -r "sk_live_[A-Za-z0-9]{24,}" . --exclude-dir=.git > stripe-keys-detected.txt || true
+
+          # Google API Keys
+          grep -r "AIza[A-Za-z0-9_\-]{35}" . --exclude-dir=.git > google-keys-detected.txt || true
+
+          # Private Keys
+          grep -r "-----BEGIN.*PRIVATE KEY-----" . --exclude-dir=.git > private-keys-detected.txt || true
+
+          echo "Pattern matching complete"
+
+      - name: Generate secret scan report
+        run: |
+          cat > secret-scan-report.md << 'EOF'
+          # Secret Scan Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+
+          ## Scan Summary
+
+          This report contains results from comprehensive secret scanning.
+
+          ## Secrets Detected
+
+          EOF
+
+          if [ -s "aws-keys-detected.txt" ]; then
+            echo "- ⚠️ AWS Access Keys detected" >> secret-scan-report.md
+          fi
+
+          if [ -s "github-tokens-detected.txt" ]; then
+            echo "- ⚠️ GitHub Tokens detected" >> secret-scan-report.md
+          fi
+
+          if [ -s "slack-tokens-detected.txt" ]; then
+            echo "- ⚠️ Slack Tokens detected" >> secret-scan-report.md
+          fi
+
+          if [ -s "stripe-keys-detected.txt" ]; then
+            echo "- ⚠️ Stripe Keys detected" >> secret-scan-report.md
+          fi
+
+          if [ -s "google-keys-detected.txt" ]; then
+            echo "- ⚠️ Google API Keys detected" >> secret-scan-report.md
+          fi
+
+          if [ -s "private-keys-detected.txt" ]; then
+            echo "- ⚠️ Private Keys detected" >> secret-scan-report.md
+          fi
+
+          cat secret-scan-report.md
+
+      - name: Upload secret scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: secret-scan-results
+          path: |
+            trufflehog-results.json
+            trufflehog-results.txt
+            git-history-secrets.txt
+            aws-keys-detected.txt
+            github-tokens-detected.txt
+            slack-tokens-detected.txt
+            stripe-keys-detected.txt
+            google-keys-detected.txt
+            private-keys-detected.txt
+            secret-scan-report.md
+          retention-days: 30
+
+      - name: Fail on detected secrets
+        run: |
+          echo "Checking for detected secrets..."
+
+          secrets_found=false
+
+          if [ -s "aws-keys-detected.txt" ]; then
+            echo "::error::AWS Access Keys detected!"
+            cat aws-keys-detected.txt
+            secrets_found=true
+          fi
+
+          if [ -s "github-tokens-detected.txt" ]; then
+            echo "::error::GitHub Tokens detected!"
+            cat github-tokens-detected.txt
+            secrets_found=true
+          fi
+
+          if [ -s "private-keys-detected.txt" ]; then
+            echo "::error::Private Keys detected!"
+            cat private-keys-detected.txt
+            secrets_found=true
+          fi
+
+          if [ "$secrets_found" = true ]; then
+            echo "::error::Secrets detected in codebase!"
+            exit 1
+          else
+            echo "✅ No secrets detected"
+          fi
+
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install security tools
+        run: |
+          npm install -g npm audit
+          pip install safety
+
+      - name: Scan Swift Package dependencies
+        run: |
+          echo "Scanning Swift Package dependencies..."
+
+          if [ -f "swift_frontend/Package.swift" ]; then
+            cd swift_frontend
+            swift package dump-package > package-dependencies.json || true
+
+            # Check for known vulnerabilities (simulated)
+            echo "Swift dependency scan complete" > swift-deps-scan.txt
+          fi
+
+      - name: Scan Node.js dependencies
+        run: |
+          echo "Scanning Node.js dependencies..."
+
+          if [ -f "package-lock.json" ]; then
+            npm audit --json > npm-audit-results.json || true
+            npm audit || true
+          fi
+
+      - name: Scan Python dependencies
+        run: |
+          echo "Scanning Python dependencies..."
+
+          if [ -f "requirements.txt" ]; then
+            safety check --json > python-safety-results.json || true
+            safety check || true
+          fi
+
+      - name: Check for outdated dependencies
+        run: |
+          echo "Checking for outdated dependencies..."
+
+          # Swift dependencies
+          if [ -f "swift_frontend/Package.swift" ]; then
+            echo "Checking Swift packages for updates..." > swift-outdated.txt
+          fi
+
+          # Node.js dependencies
+          if [ -f "package-lock.json" ]; then
+            npm outdated > npm-outdated.txt || true
+          fi
+
+          # Python dependencies
+          if [ -f "requirements.txt" ]; then
+            pip list --outdated > python-outdated.txt || true
+          fi
+
+      - name: Generate dependency report
+        run: |
+          cat > dependency-scan-report.md << 'EOF'
+          # Dependency Vulnerability Scan Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+
+          ## Summary
+
+          This report contains results from dependency vulnerability scanning.
+
+          ## Scanned Ecosystems
+
+          - Swift Package Manager
+          - Node.js/npm
+          - Python pip
+
+          ## Vulnerabilities Found
+
+          See detailed results in uploaded artifacts.
+
+          EOF
+
+          cat dependency-scan-report.md
+
+      - name: Upload dependency scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-scan-results
+          path: |
+            package-dependencies.json
+            npm-audit-results.json
+            python-safety-results.json
+            swift-outdated.txt
+            npm-outdated.txt
+            python-outdated.txt
+            dependency-scan-report.md
+          retention-days: 30
+
+  security-score:
+    name: Calculate Security Score
+    runs-on: macos-13
+    needs: [owasp-scan, secret-scan, dependency-scan]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all scan results
+        uses: actions/download-artifact@v4
+        with:
+          path: scan-results
+
+      - name: Calculate security score
+        run: |
+          echo "Calculating overall security score..."
+
+          score=100
+
+          # Deduct for critical vulnerabilities
+          if [ -f "scan-results/owasp-results/owasp-bandit-results.json" ]; then
+            if grep -q '"Confidence": "HIGH"' scan-results/owasp-results/owasp-bandit-results.json; then
+              score=$((score - 20))
+            fi
+          fi
+
+          # Deduct for secrets found
+          if [ -s "scan-results/secret-scan-results/aws-keys-detected.txt" ]; then
+            score=$((score - 30))
+          fi
+
+          if [ -s "scan-results/secret-scan-results/github-tokens-detected.txt" ]; then
+            score=$((score - 30))
+          fi
+
+          # Deduct for dependency vulnerabilities
+          if [ -f "scan-results/dependency-scan-results/npm-audit-results.json" ]; then
+            vulns=$(grep -o '"severity"' scan-results/dependency-scan-results/npm-audit-results.json | wc -l)
+            deduction=$((vulns * 5))
+            score=$((score - deduction))
+          fi
+
+          # Ensure score doesn't go below 0
+          if [ $score -lt 0 ]; then
+            score=0
+          fi
+
+          echo "SECURITY_SCORE=$score" >> $GITHUB_ENV
+          echo "Security Score: $score/100"
+
+          # Determine grade
+          if [ $score -ge 90 ]; then
+            echo "SECURITY_GRADE=excellent" >> $GITHUB_ENV
+          elif [ $score -ge 75 ]; then
+            echo "SECURITY_GRADE=good" >> $GITHUB_ENV
+          elif [ $score -ge 60 ]; then
+            echo "SECURITY_GRADE=fair" >> $GITHUB_ENV
+          elif [ $score -ge 40 ]; then
+            echo "SECURITY_GRADE=poor" >> $GITHUB_ENV
+          else
+            echo "SECURITY_GRADE=critical" >> $GITHUB_ENV
+          fi
+
+          echo "Security Grade: ${{ env.SECURITY_GRADE }}"
+
+      - name: Generate final security report
+        run: |
+          cat > final-security-report.md << EOF
+          # Final Security Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref_name }}
+
+          ## Overall Security Score
+
+          **Score:** ${{ env.SECURITY_SCORE }}/100
+          **Grade:** ${{ env.SECURITY_GRADE }}
+
+          ## Scan Results
+
+          ### OWASP Scan
+          - Status: ${{ needs.owasp-scan.result }}
+          - Details: See owasp-results artifact
+
+          ### Secret Scan
+          - Status: ${{ needs.secret-scan.result }}
+          - Details: See secret-scan-results artifact
+
+          ### Dependency Scan
+          - Status: ${{ needs.dependency-scan.result }}
+          - Details: See dependency-scan-results artifact
+
+          ## Recommendations
+
+          - Review all critical findings immediately
+          - Implement automated security scanning in CI/CD
+          - Conduct regular security audits
+          - Keep dependencies updated
+          - Use secret management services
+
+          EOF
+
+          cat final-security-report.md
+
+      - name: Upload final security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-security-report
+          path: final-security-report.md
+          retention-days: 90
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('final-security-report.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            })
+
+      - name: Check security threshold
+        run: |
+          echo "Checking if security score meets threshold..."
+
+          threshold=60
+
+          if [ ${{ env.SECURITY_SCORE }} -lt $threshold ]; then
+            echo "::error::Security score (${{ env.SECURITY_SCORE }}) below threshold ($threshold)"
+            exit 1
+          else
+            echo "✅ Security score (${{ env.SECURITY_SCORE }}) meets threshold ($threshold)"
+          fi

@@ -1,0 +1,65 @@
+{
+  "name": "Piano Grand",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 90,
+  "key": "C maj",
+  "duration": "3:30",
+  "difficulty": "Beginner",
+
+  "description": "Concert grand piano with realistic hammer action and sympathetic resonance",
+
+  "features": {
+    "primary": ["Acoustic Piano", "Velocity Layers", "Sympathetic Resonance"],
+    "obscure": ["Damper Pedal Noise", "Key Release Samples", "String Resonance"]
+  },
+
+  "soundfont": {
+    "file": "grand_piano.sf2",
+    "preset": "00 Grand Piano",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 0.3,
+    "amp_sustain": 0.0,
+    "amp_release": 0.8,
+    "filter_enabled": false,
+    "release_trigger_enabled": true,
+    "sympathetic_resonance": true,
+    "damper_pedal_noise": true,
+    "velocity_sensitivity": 1.0
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 48, "velocity": 70, "duration": 0.5},
+      {"note": 52, "velocity": 65, "duration": 0.5},
+      {"note": 55, "velocity": 68, "duration": 0.5},
+      {"note": 60, "velocity": 75, "duration": 1.0},
+      {"note": 64, "velocity": 72, "duration": 0.5},
+      {"note": 60, "velocity": 70, "duration": 0.5},
+      {"note": 55, "velocity": 68, "duration": 0.5},
+      {"note": 52, "velocity": 65, "duration": 0.5},
+      {"note": 48, "velocity": 70, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Concert grand piano with realistic samples. Instant attack (0.001s) for hammer strike. No sustain (0.0) for natural decay. Long release (0.8s) for sympathetic resonance. Release triggers add key-off noise. Sympathetic resonance adds richness when damper pedal is down. Velocity controls dynamics from pianissimo to fortissimo.",
+    "technique": "Load piano SoundFont with multiple velocity layers. Use release triggers for key-off samples. Enable sympathetic resonance for realistic resonance. Use damper pedal (CC64) for sustained notes. Velocity controls dynamic range.",
+    "genre": "All Genres / Piano",
+    "tip": "Use CC64 (sustain pedal) for legato playing. Use velocity for dynamics. Soft velocity = warm, mellow. Hard velocity = bright, powerful."
+  },
+
+  "pianoTechniques": [
+    "Legato - use sustain pedal",
+    "Staccato - short release",
+    "Crescendo - velocity increase",
+    "Diminuendo - velocity decrease",
+    "Pedal points - hold bass notes"
+  ],
+
+  "tags": ["piano", "grand", "acoustic", "realistic", "velocity", "expressive"]
+}

@@ -1,0 +1,123 @@
+{
+  "name": "Complete Drum Machine Showcase",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 140,
+  "key": "C",
+  "duration": "8:00",
+  "difficulty": "Advanced",
+
+  "description": "Ultimate demonstration combining all features: 15 voices, drill mode, fills, swing, timing roles, and automation",
+
+  "features": {
+    "primary": ["Complete Feature Set", "All Systems", "Full Capability"],
+    "obscure": ["Combination Techniques", "Advanced Integration", "Master Control"]
+  },
+
+  "kit": {
+    "name": "Master Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.7, "decay": 0.3, "snap": 0.6},
+      "hihat_closed": {"tone": 0.6, "decay": 0.2, "metal": 0.7},
+      "clap": {"tone": 0.5, "decay": 0.3, "attack": 0.4},
+      "crash": {"tone": 0.5, "decay": 0.9, "metal": 0.6}
+    }
+  },
+
+  "drill": {
+    "enabled": true,
+    "amount": 0.5,
+    "automation": {
+      "points": [
+        {"bar": 16, "amount": 0.3},
+        {"bar": 32, "amount": 0.8},
+        {"bar": 48, "amount": 0.4},
+        {"bar": 64, "amount": 0.0}
+      ]
+    }
+  },
+
+  "fill_policy": {
+    "enabled": true,
+    "fillLengthSteps": 4,
+    "triggerChance": 0.25
+  },
+
+  "gate_policy": {
+    "enabled": true,
+    "silenceChance": 0.2,
+    "burstChance": 0.6
+  },
+
+  "pattern": {
+    "length": 32,
+    "swing": 0.55,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.9,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120, "probability": 1.0},
+          {"step": 4, "active": true, "velocity": 115, "probability": 0.95},
+          {"step": 8, "active": true, "velocity": 120, "probability": 1.0},
+          {"step": 10, "active": true, "velocity": 112, "probability": 0.9},
+          {"step": 12, "active": true, "velocity": 118, "probability": 0.98},
+          {"step": 16, "active": true, "velocity": 120, "probability": 1.0}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Push",
+        "volume": 0.85,
+        "fill_policy": {"enabled": true, "triggerChance": 0.3},
+        "steps": [
+          {"step": 4, "active": true, "velocity": 115},
+          {"step": 12, "active": true, "velocity": 115, "triggerFill": true},
+          {"step": 20, "active": true, "velocity": 117},
+          {"step": 28, "active": true, "velocity": 113, "triggerFill": true}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pull",
+        "volume": 0.7,
+        "drill_override": {"use_override": true, "enabled": true, "burstSizeMin": 4, "burstSizeMax": 8},
+        "steps": [
+          {"step": 2, "active": true, "velocity": 90},
+          {"step": 6, "active": true, "velocity": 88},
+          {"step": 10, "active": true, "velocity": 90},
+          {"step": 14, "active": true, "velocity": 88}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Complete demonstration of all features. 15 voices available. Drill mode varies over 64 bars (0 → 0.8 → 0.4 → 0). Fill policy adds fills. Gate policy adds drops. Timing roles create groove. Swing adds shuffle. Probability adds human feel. Micro-timing adds nuance.",
+    "technique": "Layer multiple systems for complexity. Drill + fills + gates = chaos. Use automation lane to control evolution. Per-track timing roles = groove foundation. Swing and probability = human feel. Micro-timing = nuance.",
+    "structure": "Bars 1-16: Basic groove. Bars 17-32: Introduce drill. Bars 33-48: Heavy drill + fills. Bars 49-64: Gate drops. Bars 65-80: Return to basic.",
+    "genre": "Complete Showcase"
+  },
+
+  "featureCombination": [
+    "Drill mode (13 parameters)",
+    "Fill policy (fills + decay)",
+    "Gate policy (silence + bursts)",
+    "Timing roles (Pocket/Push/Pull)",
+    "Swing (groove feel)",
+    "Probability (human feel)",
+    "Micro-timing (nuance)",
+    "Flam strength (expression)",
+    "Burst generation (rolls)",
+    "Automation (evolution)"
+  ],
+
+  "masteryLevel": "Uses all 50+ drum machine parameters in cohesive arrangement",
+
+  "tags": ["complete", "showcase", "master", "all features", "advanced", "ultimate"]
+}

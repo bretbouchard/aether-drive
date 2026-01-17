@@ -1,0 +1,70 @@
+{
+  "name": "Flam Strength",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 110,
+  "key": "C",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "Showcase of flam strength and flam decay for creating expressive drum hits",
+
+  "features": {
+    "primary": ["Flam Technique", "Flam Strength", "Flam Decay"],
+    "obscure": ["Per-Step Flam", "Flam Velocity Curve", "Flam Timing"]
+  },
+
+  "kit": {
+    "name": "Flam Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.7, "decay": 0.3, "snap": 0.6},
+      "hihat_closed": {"tone": 0.6, "decay": 0.2, "metal": 0.7}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.55,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.85,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120, "flam_strength": 0.0},
+          {"step": 4, "active": true, "velocity": 115, "flam_strength": 0.3},
+          {"step": 8, "active": true, "velocity": 120, "flam_strength": 0.0},
+          {"step": 12, "active": true, "velocity": 118, "flam_strength": 0.4}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.8,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 115, "flam_strength": 0.5, "flam_decay": 0.2},
+          {"step": 12, "active": true, "velocity": 115, "flam_strength": 0.6, "flam_decay": 0.15}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Flam strength controls the second hit volume. 0.0 = no flam. 0.5 = equal volume. >0.5 = flam louder than main hit. Flam decay controls timing between hits. Short decay (0.15) = tight flam. Long decay (0.3) = spread flam.",
+    "technique": "Use flams sparingly for accent. Flam strength 0.5-0.6 on snare backbeat adds punch. Flam decay 0.15-0.2 for tight, 0.25-0.3 for loose. Can flam kicks too (0.3-0.4 strength).",
+    "genre": "Flam Showcase"
+  },
+
+  "flamTechniques": [
+    "Tight flam - Short decay (0.1-0.15)",
+    "Loose flam - Long decay (0.25-0.3)",
+    "Strong flam - High strength (0.6-0.7)",
+    "Kick flam - Subtle strength (0.3-0.4)",
+    "Snare flam - Accent strength (0.5-0.6)"
+  ],
+
+  "tags": ["flam", "technique", "expression", "accents", "drum rudiments"]
+}

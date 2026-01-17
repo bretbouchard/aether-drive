@@ -1,0 +1,67 @@
+{
+  "name": "Rubber Banding",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 110,
+  "key": "F min",
+  "duration": "3:30",
+  "difficulty": "Intermediate",
+
+  "description": "Extreme rubber feel vector demonstration - elastic pitch modulation",
+
+  "features": {
+    "primary": ["Rubber Feel Vector", "Pitch Elasticity", "Modulation Matrix"],
+    "obscure": ["LFO-to-Rubber Routing", "Elastic Modulation Depth", "Feel Vector Interaction"]
+  },
+
+  "feelVector": {
+    "rubber": 0.95,
+    "bite": 0.1,
+    "hollow": 0.3,
+    "growl": 0.2
+  },
+
+  "parameters": {
+    "osc1_pitch": 0.5,
+    "osc1_pulse_width": 0.6,
+    "osc2_detune": 0.7,
+    "lfo1_rate": 0.8,
+    "lfo1_depth": 0.9,
+    "lfo1_destination": "pitch",
+    "mod_matrix": [
+      {"source": "lfo1", "destination": "rubber", "amount": 0.8},
+      {"source": "velocity", "destination": "rubber", "amount": 0.6}
+    ]
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 65, "velocity": 100, "duration": 0.5, "rubber": 0.9},
+      {"note": 65, "velocity": 90, "duration": 0.5, "rubber": 0.85},
+      {"note": 68, "velocity": 105, "duration": 0.5, "rubber": 0.95},
+      {"note": 68, "velocity": 95, "duration": 0.5, "rubber": 0.9},
+      {"note": 72, "velocity": 110, "duration": 1.0, "rubber": 0.98},
+      {"note": 68, "velocity": 100, "duration": 0.5, "rubber": 0.92},
+      {"note": 65, "velocity": 95, "duration": 0.5, "rubber": 0.88},
+      {"note": 60, "velocity": 105, "duration": 1.0, "rubber": 0.94}
+    ]
+  },
+
+  "performance": {
+    "notes": "Maximum rubber feel creates elastic pitch modulation. Every note bends and stretches like rubber. LFO modulates rubber amount for dynamic elasticity. Velocity affects rubber - harder = more stretch. Creates bizarre, animated lead sounds.",
+    "technique": "Rubber feel vector controls pitch elasticity. High rubber (0.9+) = extreme pitch bend and vibrato. LFO1 routed to rubber for modulation. Modulation matrix allows velocity to affect rubber. Combine with low bite for pure elasticity.",
+    "genre": "IDM / Glitch / Experimental",
+    "tip": "Use monophonic mode for controlled elastic leads. Polyphonic creates chaos. Experiment with LFO rates for different stretch speeds."
+  },
+
+  "rubberValues": [
+    "0.0 - No elasticity, normal pitch",
+    "0.3 - Subtle rubber",
+    "0.5 - Noticeable elasticity",
+    "0.7 - Heavy rubber",
+    "0.9 - Extreme pitch stretching",
+    "0.95+ - Maximum elastic chaos"
+  ],
+
+  "tags": ["rubber", "elastic", "modulation", "lfo", "experimental", "lead"]
+}

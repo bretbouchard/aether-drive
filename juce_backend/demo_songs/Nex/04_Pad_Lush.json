@@ -1,0 +1,75 @@
+{
+  "name": "Pad Lush",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 80,
+  "key": "D min",
+  "duration": "6:00",
+  "difficulty": "Intermediate",
+
+  "description": "Lush evolving pad using algorithm 4 with complex modulation matrix",
+
+  "features": {
+    "primary": ["FM Pad", "Algorithm 4", "Evolving Texture"],
+    "obscure": ["Slow Modulation", "LFO Integration", "Chorus Effect"]
+  },
+
+  "algorithm": 4,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+    {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 4, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 5.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true},
+    {"index": 6, "frequency_ratio": 7.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true}
+  ],
+
+  "modulation_matrix": [
+    {"source": 3, "destination": 1, "amount": 4},
+    {"source": 4, "destination": 2, "amount": 4},
+    {"source": 5, "destination": 1, "amount": 2},
+    {"source": 6, "destination": 2, "amount": 2},
+    {"source": 3, "destination": 4, "amount": 3},
+    {"source": 4, "destination": 3, "amount": 3}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.8,
+    "amp_decay": 0.5,
+    "amp_sustain": 0.85,
+    "amp_release": 2.0,
+    "lfo1_enabled": true,
+    "lfo1_rate": 0.2,
+    "lfo1_depth": 0.4,
+    "lfo1_destination": "modulation_index",
+    "chorus_enabled": true,
+    "chorus_rate": 0.3,
+    "chorus_depth": 0.5
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 75, "duration": 4.0},
+      {"note": 53, "velocity": 72, "duration": 4.0},
+      {"note": 57, "velocity": 78, "duration": 4.0},
+      {"note": 62, "velocity": 80, "duration": 4.0},
+      {"note": 65, "velocity": 78, "duration": 4.0},
+      {"note": 62, "velocity": 76, "duration": 4.0},
+      {"note": 57, "velocity": 74, "duration": 4.0},
+      {"note": 53, "velocity": 72, "duration": 4.0},
+      {"note": 50, "velocity": 75, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Lush evolving pad using Algorithm 4 (complex parallel). All 6 operators active with harmonic ratios (1, 1, 2, 3, 5, 7). Complex modulation matrix creates rich interactions. Slow attack (0.8s) for swell. High sustain (0.85) for sustained pad. Very long release (2.0s) for ambient decay. LFO modulates modulation index for subtle movement. Chorus adds width. Creates heavenly, evolving pad.",
+    "technique": "Algorithm 4 = complex parallel structure. Use many operators for richness. Harmonic ratios create musical tone. Slow LFO for subtle evolution. Chorus for stereo width. Perfect for ambient and chillout.",
+    "genre": "Ambient / Chillout / Soundtrack",
+    "tip": "Use slow attack/release for pads. Many operators = richer tone. LFO adds movement. Chorus adds width. Reverb adds spaciousness."
+  },
+
+  "algorithmDescription": "Algorithm 4: Complex parallel structure with feedback",
+
+  "tags": ["pad", "fm", "lush", "evolving", "ambient", "algorithm 4"]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "All Instruments Showcase",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 110,
+  "key": "C maj",
+  "duration": "5:00",
+  "difficulty": "Beginner",
+
+  "description": "Complete demonstration of all 5 instruments in Giant playing together",
+
+  "features": {
+    "primary": ["All 5 Instruments", "Multi-Instrument", "Simultaneous Playback"],
+    "obscure": ["Instrument Layers", "Mix Balance", "Individual Controls"]
+  },
+
+  "instruments": {
+    "piano": {
+      "enabled": true,
+      "volume": 0.7,
+      "pan": -0.3,
+      "preset": "Grand Piano"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.6,
+      "pan": 0.3,
+      "preset": "String Ensemble"
+    },
+    "brass": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": -0.15,
+      "preset": "Trumpet Section"
+    },
+    "woodwind": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.15,
+      "preset": "Flute Section"
+    },
+    "choir": {
+      "enabled": true,
+      "volume": 0.4,
+      "pan": 0.0,
+      "preset": "Choir Aahs"
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.8,
+    "reverb_enabled": true,
+    "reverb_amount": 0.4,
+    "delay_enabled": false
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 60, "velocity": 85, "duration": 2.0},
+      {"note": 64, "velocity": 82, "duration": 2.0},
+      {"note": 67, "velocity": 85, "duration": 2.0},
+      {"note": 72, "velocity": 90, "duration": 3.0},
+      {"note": 67, "velocity": 86, "duration": 2.0},
+      {"note": 64, "velocity": 82, "duration": 2.0},
+      {"note": 60, "velocity": 85, "duration": 3.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "All 5 instruments playing simultaneously. Piano provides foundation (panned left). Strings add warmth (panned right). Brass adds punch (slightly left). Woodwinds add brightness (slightly right). Choir adds atmosphere (center). All volumes balanced for cohesive sound. Reverb adds spaciousness. Creates massive, orchestral wall of sound.",
+    "technique": "Enable all 5 instruments for full orchestra. Balance volumes for mix. Pan instruments for stereo width. Use reverb to glue together. Piano = foundation. Strings = warmth. Brass = punch. Woodwinds = brightness. Choir = atmosphere.",
+    "genre": "Orchestral / Soundtrack / Epic",
+    "tip": "Balance volumes carefully. Pan for stereo width. Reverb = essential. Use EQ to prevent mud. Highpass all except piano/bass."
+  },
+
+  "instrumentRoles": [
+    "Piano - Foundation, chords",
+    "Strings - Warmth, pads",
+    "Brass - Punch, accents",
+    "Woodwinds - Brightness, countermelody",
+    "Choir - Atmosphere, pads"
+  ],
+
+  "tags": ["showcase", "all instruments", "orchestral", "multi", "complete"]
+}

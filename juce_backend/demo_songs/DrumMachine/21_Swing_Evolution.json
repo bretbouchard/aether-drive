@@ -1,0 +1,76 @@
+{
+  "name": "Swing Evolution",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 120,
+  "key": "C",
+  "duration": "4:00",
+  "difficulty": "Intermediate",
+
+  "description": "Demonstration of swing from straight (0.5) to heavy (0.7) and its effect on groove",
+
+  "features": {
+    "primary": ["Swing Control", "Groove Feel", "Swing Evolution"],
+    "obscure": ["Swing Override Per Track", "Triplet Feel", "Shuffle"]
+  },
+
+  "kit": {
+    "name": "Swing Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.7, "decay": 0.3, "snap": 0.6},
+      "hihat_closed": {"tone": 0.6, "decay": 0.2, "metal": 0.7}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.85,
+        "swingOverride": null,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120},
+          {"step": 4, "active": true, "velocity": 118},
+          {"step": 8, "active": true, "velocity": 120},
+          {"step": 12, "active": true, "velocity": 119}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pocket",
+        "volume": 0.65,
+        "swingOverride": 0.6,
+        "steps": [
+          {"step": 2, "active": true, "velocity": 90},
+          {"step": 6, "active": true, "velocity": 88},
+          {"step": 10, "active": true, "velocity": 90},
+          {"step": 14, "active": true, "velocity": 88}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Swing evolution from straight to heavy. Global swing 0.55 = moderate shuffle. Hi-hat swing override 0.6 = heavier swing on hats only. Swing affects timing grid - delays offbeats. Creates triplet feel.",
+    "technique": "Swing 0.5 = straight, no shuffle. Swing 0.55-0.6 = light shuffle. Swing 0.65 = heavy triplet. Swing 0.7 = extreme swing. Per-track swing override allows different swing per voice.",
+    "swingEvolution": "Bars 1-8: 0.50 (straight). Bars 9-16: 0.55 (light). Bars 17-24: 0.60 (moderate). Bars 25-32: 0.65 (heavy)."
+  },
+
+  "swingValues": [
+    "0.50 - Straight, no swing",
+    "0.52 - Very subtle shuffle",
+    "0.55 - Light shuffle (hip-hop)",
+    "0.58 - Moderate shuffle (funk)",
+    "0.60 - Heavy shuffle (soul)",
+    "0.63 - Very heavy shuffle",
+    "0.65 - Triplet feel",
+    "0.70 - Extreme swing"
+  ],
+
+  "tags": ["swing", "shuffle", "triplet", "groove", "evolution", "feel"]
+}

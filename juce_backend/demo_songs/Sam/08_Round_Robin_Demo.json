@@ -1,0 +1,71 @@
+{
+  "name": "Round Robin Demo",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 130,
+  "key": "C",
+  "duration": "1:30",
+  "difficulty": "Advanced",
+
+  "description": "Demonstration of round-robin sampling preventing machine gun effect on rapid repeats",
+
+  "features": {
+    "primary": ["Round-Robin Sampling", "Sample Variation", "Human Feel"],
+    "obscure": ["Round-Robin Count", "Anti-Machine Gun", "Sample Randomization"]
+  },
+
+  "soundfont": {
+    "file": "round_robin_demo.sf2",
+    "preset": "00 RR Percussion",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 0.3,
+    "amp_sustain": 0.0,
+    "amp_release": 0.2,
+    "round_robin_enabled": true,
+    "round_robin_count": 16,
+    "sample_randomization": 0.0,
+    "velocity_tolerance": 0.05
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1},
+      {"note": 60, "velocity": 100, "duration": 0.1}
+    ]
+  },
+
+  "performance": {
+    "notes": "Demonstration of round-robin sampling. Same note repeated 16 times at same velocity. Round-robin count is 16, so each repeat plays a different sample variation. This prevents 'machine gun effect' where the same sample repeats identically. Creates human feel with natural variation.",
+    "technique": "Enable round-robin for percussive instruments. Set round-robin count to number of variations. Sam automatically cycles through samples. Creates human feel. Essential for drums, percussion, shakers, tambourines.",
+    "genre": "All Genres / Percussion",
+    "roundRobinExplanation": "Without round-robin: Same sample repeats = machine gun effect. With round-robin: Alternating samples = natural variation. The more variations, the more natural.",
+    "tip": "Use round-robin count of 4-8 for hi-hats. Use 8-16 for shakers and tambourines. Use 2-4 for snares and kicks."
+  },
+
+  "roundRobinCounts": [
+    "2-4 - subtle variation",
+    "4-8 - good for hi-hats",
+    "8-16 - shakers, tambourines",
+    "16+ - maximum variation"
+  ],
+
+  "tags": ["round-robin", "variation", "human feel", "percussion", "demo", "advanced"]
+}

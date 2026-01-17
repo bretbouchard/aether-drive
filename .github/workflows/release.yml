@@ -1,0 +1,187 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - name: macOS VST3
+            os: macos-latest
+            format: VST3
+            arch: x64
+          - name: macOS AU
+            os: macos-latest
+            format: AU
+            arch: x64
+          - name: macOS ARM64
+            os: macos-latest
+            format: VST3
+            arch: arm64
+          - name: Windows VST3
+            os: windows-latest
+            format: VST3
+            arch: x64
+          - name: Linux VST3
+            os: ubuntu-latest
+            format: VST3
+            arch: x64
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup macOS
+      if: runner.os == 'macOS'
+      run: |
+        brew install cmake
+        brew install juce
+
+    - name: Setup Windows
+      if: runner.os == 'Windows'
+      run: |
+        choco install cmake
+        # JUCE setup manually
+
+    - name: Setup Linux
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libfreetype6-dev
+
+    - name: Configure
+      run: |
+        cmake -B build \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_FORMAT=${{ matrix.config.format }} \
+          -DCMAKE_OSX_ARCHITECTURES=${{ matrix.config.arch == 'arm64' && 'arm64' || 'x86_64' }}
+
+    - name: Build
+      run: |
+        cmake --build build --config Release --parallel
+
+    - name: Sign macOS (notarization)
+      if: runner.os == 'macOS'
+      env:
+        APPLE_CERT: ${{ secrets.APPLE_CERT }}
+        APPLE_CERT_PASS: ${{ secrets.APPLE_CERT_PASS }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASS: ${{ secrets.APPLE_PASS }}
+        APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      run: |
+        # Import certificate
+        echo $APPLE_CERT | base64 --decode > certificate.p12
+        security create-keychain -p "" build.keychain
+        security import certificate.p12 -k ~/Library/Keychains/build.keychain -P $APPLE_CERT_PASS -T /usr/bin/codesign
+        security list-keychains -s ~/Library/Keychains/build.keychain
+        security default-keychain -s ~/Library/Keychains/build.keychain
+        security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+
+        # Sign plugin
+        codesign --force --deep --sign "Developer ID Application: White Room Audio" build/Choral_artefacts/Release/VST3/Choral.vst3
+
+        # Notarize
+        xcrun notarytool submit build/Choral_artefacts/Release/VST3/Choral.vst3 \
+          --apple-id "$APPLE_ID" \
+          --password "$APPLE_PASS" \
+          --team-id "$APPLE_TEAM_ID" \
+          --wait
+
+    - name: Package
+      shell: bash
+      run: |
+        VERSION=${GITHUB_REF_NAME#v}
+        if [ -z "$VERSION" ]; then
+          VERSION=${{ github.event.inputs.version }}
+        fi
+        
+        DIST_DIR="Choral-${{ matrix.config.name }}-${VERSION}"
+        mkdir -p $DIST_DIR
+
+        if [ "${{ runner.os }}" == "macOS" ]; then
+          cp -R build/Choral_artefacts/Release/VST3/Choral.vst3 $DIST_DIR/
+          cp -R build/Choral_artefacts/Release/AU/Choral.component $DIST_DIR/ || true
+        elif [ "${{ runner.os }}" == "Windows" ]; then
+          cp -R build/Choral_artefacts/Release/VST3/Choral.vst3 $DIST_DIR/
+        elif [ "${{ runner.os }}" == "Linux" ]; then
+          cp -R build/Choral_artefacts/Release/VST3/Choral.vst3 $DIST_DIR/
+        fi
+
+        # Copy documentation
+        cp -R docs $DIST_DIR/
+        cp README.md $DIST_DIR/
+        cp LICENSE $DIST_DIR/
+
+        # Create archive
+        if [ "${{ runner.os }}" == "Windows" ]; then
+          7z a "${DIST_DIR}.zip" $DIST_DIR
+        else
+          tar -czf "${DIST_DIR}.tar.gz" $DIST_DIR
+        fi
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Choral-${{ matrix.config.name }}
+        path: Choral-*.tar.gz
+        path: Choral-*.zip
+
+  create-release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Generate Changelog
+      id: changelog
+      run: |
+        VERSION=${GITHUB_REF_NAME#v}
+        if [ -z "$VERSION" ]; then
+          VERSION=${{ github.event.inputs.version }}
+        fi
+        
+        # Generate changelog from commits
+        echo "## What's Changed" > changelog.md
+        git log --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD^)..HEAD >> changelog.md
+        
+        echo "changelog<<EOF" >> $GITHUB_OUTPUT
+        cat changelog.md >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.ref_name }}
+        name: Choral ${{ github.ref_name }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        draft: false
+        prerelease: false
+        files: artifacts/**/*
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

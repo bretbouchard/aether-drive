@@ -1,0 +1,82 @@
+{
+  "name": "Orchestral Hits Trailer",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 140,
+  "key": "C min",
+  "duration": "2:00",
+  "difficulty": "Beginner",
+
+  "description": "Powerful trailer hits using brass, strings, and percussion",
+
+  "features": {
+    "primary": ["Trailer Hits", "Orchestral Impact", "Percussive Ensemble"],
+    "obscure": ["Accent Layers", "Impact Transients", "Stereo Width"]
+  },
+
+  "instruments": {
+    "brass": {
+      "enabled": true,
+      "volume": 0.9,
+      "pan": -0.2,
+      "preset": "Heavy Brass"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.8,
+      "pan": 0.2,
+      "preset": "Aggressive Strings"
+    },
+    "piano": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    },
+    "woodwind": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    },
+    "choir": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.9,
+    "reverb_enabled": true,
+    "reverb_amount": 0.3,
+    "reverb_decay": 1.5,
+    "compression_enabled": true,
+    "compression_threshold": 0.5,
+    "compression_ratio": 4.0
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 48, "velocity": 127, "duration": 0.1},
+      {"note": 48, "velocity": 127, "duration": 0.1},
+      {"note": 48, "velocity": 127, "duration": 0.1},
+      {"note": 36, "velocity": 127, "duration": 0.5}
+    ]
+  },
+
+  "performance": {
+    "notes": "Powerful trailer hits using brass and strings. Brass provides punch (panned left, volume 0.9). Strings add impact (panned right, volume 0.8). Heavy compression (4:1 ratio) glues sound and adds punch. Reverb (0.3) with medium decay (1.5s) adds space without mud. Maximum velocity (127) for impact. Short duration for staccato hits. Sub bass (note 36) adds low-frequency impact. Creates epic trailer punctuation.",
+    "technique": "Use brass + strings for trailer hits. Compression = essential for punch. Reverb = space without mud. Maximum velocity = impact. Short duration = staccato. Sub = low-frequency impact.",
+    "genre": "Trailer / Epic / Action",
+    "tip": "Compression is essential for punch. Brass = main impact. Strings = add weight. Reverb lightly. Maximum velocity. Sub for low end."
+  },
+
+  "trailerTechniques": [
+    "Compression - glue and punch",
+    "Maximum velocity - impact",
+    "Short duration - staccato",
+    "Stereo width - big sound",
+    "Sub bass - low-frequency impact"
+  ],
+
+  "tags": ["trailer", "hits", "orchestral", "epic", "impact", "percussive"]
+}

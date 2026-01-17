@@ -99,7 +99,11 @@ public extension View {
     func macOS<Content: View>(
         _ transform: (Self) -> Content
     ) -> some View {
-        PlatformDetector.ismacOS ? transform(self) : self
+        if PlatformDetector.ismacOS {
+            transform(self)
+        } else {
+            self
+        }
     }
 
     /**
@@ -110,7 +114,11 @@ public extension View {
     func tvOS<Content: View>(
         _ transform: (Self) -> Content
     ) -> some View {
-        PlatformDetector.istvOS ? transform(self) : self
+        if PlatformDetector.istvOS {
+            transform(self)
+        } else {
+            self
+        }
     }
 }
 

@@ -236,7 +236,9 @@ public extension View {
      - Parameter spacing: Spacing value
      */
     func standardSpacing(_ spacing: CGFloat = Spacing.medium) -> some View {
-        self.spacing(spacing)
+        // Note: .spacing() is only available on HStack, VStack, etc.
+        // For general views, we use padding instead
+        self.padding(.vertical(spacing / 2))
     }
 }
 

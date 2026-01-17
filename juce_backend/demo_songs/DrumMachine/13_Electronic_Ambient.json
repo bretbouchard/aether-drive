@@ -1,0 +1,76 @@
+{
+  "name": "Electronic Ambient",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 80,
+  "key": "C",
+  "duration": "5:00",
+  "difficulty": "Intermediate",
+
+  "description": "Sparse ambient drums with long reverb and subtle textures",
+
+  "features": {
+    "primary": ["Sparse Pattern", "Long Decay", "Ambient Textures"],
+    "obscure": ["Special Voice", "FX Processing", "Reverse Cymbals"]
+  },
+
+  "kit": {
+    "name": "Ambient Kit",
+    "voices": {
+      "kick": {"pitch": 0.4, "decay": 0.8, "sweep": 0.3},
+      "special": {"type": "texture", "tone": 0.5, "decay": 2.0, "metal": 0.3},
+      "crash": {"tone": 0.3, "decay": 2.5, "metal": 0.4}
+    }
+  },
+
+  "pattern": {
+    "length": 32,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pull",
+        "volume": 0.7,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 95},
+          {"step": 16, "active": true, "velocity": 90}
+        ]
+      },
+      {
+        "index": 9,
+        "type": "Special",
+        "timing_role": "Pull",
+        "volume": 0.5,
+        "steps": [
+          {"step": 8, "active": true, "velocity": 70}
+        ]
+      },
+      {
+        "index": 11,
+        "type": "Crash",
+        "timing_role": "Pull",
+        "volume": 0.4,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 60, "reverse": true}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Minimal ambient drums. Kick only on beat 1 of 2 bars. Long decay (0.8) creates boom. Special voice adds texture. Reverse crash creates swelling cymbal. Everything spaced out for atmosphere.",
+    "technique": "Use long decay on all voices. Special voice can create textures, pads, noise. Reverse cymbals add dreamy quality. Low velocities keep things subtle.",
+    "genre": "Ambient / Electronic"
+  },
+
+  "specialVoices": [
+    "Texture - Ambient pads",
+    "Noise - White/pink noise",
+    "FX - Glitches, sweeps",
+    "Bass - Sub bass tones",
+    "Pad - Synth pads"
+  ],
+
+  "tags": ["ambient", "sparse", "long decay", "texture", "reverse", "minimal"]
+}

@@ -1,4 +1,18 @@
 name: WhiteRoomiOS
+options:
+  bundleIdPrefix: com.whiteroom
+  developmentLanguage: en
+  createIntermediateGroups: true
+  defaultConfig: Debug
+
+packages:
+  SnapshotTesting:
+    url: https://github.com/pointfreeco/swift-snapshot-testing.git
+    from: 1.15.0
+  swift-custom-dump:
+    url: https://github.com/pointfreeco/swift-custom-dump
+    from: 1.0.0
+
 targets:
   WhiteRoomiOS:
     type: application
@@ -7,6 +21,9 @@ targets:
     sources:
       - path: ../Sources
         includes: [ "*.swift" ]
+    dependencies:
+      - package: SnapshotTesting
+        product: SnapshotTesting
     settings:
       BASE_PATH: ../
       PRODUCT_BUNDLE_IDENTIFIER: com.whiteroom.ios
@@ -18,3 +35,21 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CURRENT_PROJECT_VERSION: "1"
       MARKETING_VERSION: "1.0"
+
+  SwiftFrontendCoreTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: ../Tests
+        includes: [ "*.swift" ]
+    dependencies:
+      - target: WhiteRoomiOS
+        link: false
+      - package: SnapshotTesting
+        product: SnapshotTesting
+    settings:
+      BASE_PATH: ../
+      SWIFT_VERSION: "5.9"
+      ENABLE_TESTABILITY: YES
+      GENERATE_INFOPLIST_FILE: YES

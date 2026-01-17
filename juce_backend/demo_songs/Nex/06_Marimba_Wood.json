@@ -1,0 +1,64 @@
+{
+  "name": "Marimba Wood",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 110,
+  "key": "G maj",
+  "duration": "2:00",
+  "difficulty": "Beginner",
+
+  "description": "Wooden marimba using simple FM with low modulation",
+
+  "features": {
+    "primary": ["FM Percussion", "Marimba", "Simple Modulation"],
+    "obscure": ["Low Modulation Index", "Harmonic Ratios", "Fast Decay"]
+  },
+
+  "algorithm": 1,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.8, "enabled": true},
+    {"index": 2, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 3, "frequency_ratio": 10.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true},
+    {"index": 4, "frequency_ratio": 0.0, "modulation_index": 0.0, "output_level": 0.0, "enabled": false},
+    {"index": 5, "frequency_ratio": 0.0, "modulation_index": 0.0, "output_level": 0.0, "enabled": false},
+    {"index": 6, "frequency_ratio": 0.0, "modulation_index": 0.0, "output_level": 0.0, "enabled": false}
+  ],
+
+  "modulation_matrix": [
+    {"source": 2, "destination": 1, "amount": 2},
+    {"source": 3, "destination": 1, "amount": 1}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 0.4,
+    "amp_sustain": 0.0,
+    "amp_release": 0.3,
+    "velocity_sensitivity": 0.8
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 64, "velocity": 100, "duration": 0.3},
+      {"note": 67, "velocity": 95, "duration": 0.3},
+      {"note": 71, "velocity": 98, "duration": 0.3},
+      {"note": 74, "velocity": 100, "duration": 0.6},
+      {"note": 71, "velocity": 96, "duration": 0.3},
+      {"note": 67, "velocity": 95, "duration": 0.3},
+      {"note": 64, "velocity": 98, "duration": 0.3},
+      {"note": 60, "velocity": 100, "duration": 0.6}
+    ]
+  },
+
+  "performance": {
+    "notes": "Wooden marimba using simple FM. Algorithm 1 (simple stack). Operator 2 (ratio 4) adds bright harmonics. Operator 3 (ratio 10) adds click attack. Low modulation indices (2, 1) for subtle brightness. Fast attack (0.001s) for percussive strike. Fast decay (0.4s) for wood character. No sustain for percussive sound. Velocity sensitivity for dynamic playing.",
+    "technique": "Simple FM for percussion. Low modulation = subtle. High ratios (4, 10) add harmonics. Fast decay = percussive. Velocity = dynamics. Classic FM percussion technique.",
+    "genre": "All Genres / Percussion",
+    "tip": "Low modulation for subtle sounds. High ratios for brightness. Fast decay for percussion. Velocity for dynamics."
+  },
+
+  "algorithmDescription": "Algorithm 1: Op3 → Op2 → Op1 → Output (simple stack)",
+
+  "tags": ["marimba", "fm", "percussion", "wood", "simple", "algorithm 1"]
+}

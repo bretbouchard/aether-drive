@@ -1,0 +1,106 @@
+{
+  "name": "Morphing Dreams",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Acid Synthesizer",
+  "bpm": 100,
+  "key": "C major",
+  "duration": "3:45",
+  "difficulty": "Advanced",
+
+  "description": "Real-time parameter morphing transforms soft pads into aggressive leads using the morph position system",
+
+  "features": {
+    "primary": ["Parameter Morphing", "Feel Vector Interpolation", "Atmospheric Pads"],
+    "obscure": ["Morph Position Interpolates All Feel Vector Parameters Simultaneously", "Morph Can Transform Between Any Two States"]
+  },
+
+  "morphPresets": {
+    "presetA": {
+      "name": "Soft Ambient Pad",
+      "feelVector": {
+        "rubber": 0.8,
+        "bite": 0.2,
+        "hollow": 0.9,
+        "growl": 0.1,
+        "wet": 0.0
+      },
+      "description": "Warm, mellow pad with slow glide and open filter"
+    },
+    "presetB": {
+      "name": "Aggressive Lead",
+      "feelVector": {
+        "rubber": 0.1,
+        "bite": 0.9,
+        "hollow": 0.2,
+        "growl": 0.8,
+        "wet": 0.0
+      },
+      "description": "Sharp, biting lead with fast envelopes and distortion"
+    }
+  },
+
+  "performance": {
+    "notes": "Start at morph position 0.0 (soft pad). Gradually increase to 1.0 (aggressive lead) over 32 bars. Return to 0.0 for the fade-out. The morph transforms ALL parameters simultaneously, creating dramatic timbral evolution.",
+    "technique": "The morph position is a single value that interpolates between two complete feel vector states. Rubbery glide transforms into snappy attack. Warm mellow tones become aggressive and distorted. Open filter closes and becomes resonant.",
+    "automation": [
+      {"parameter": "morphPosition", "start": 0.0, "end": 1.0, "duration": "32 bars", "curve": "exponential"},
+      {"parameter": "reverbMix", "start": 0.6, "end": 0.2, "duration": "32 bars"}
+    ],
+    "morphStages": [
+      {"position": 0.0, "description": "Soft ambient pad with slow glide"},
+      {"position": 0.25, "description": "Beginning to brighten, slight attack"},
+      {"position": 0.5, "description": "Mid-range balance, interesting hybrid"},
+      {"position": 0.75, "description": "Getting aggressive, more bite"},
+      {"position": 1.0, "description": "Full aggressive lead, maximum bite and growl"}
+    ]
+  },
+
+  "pattern": {
+    "type": "Arpeggiated pad",
+    "notes": "C3 - E3 - G3 - B3 (Cmaj7) spread across 4 octaves",
+    "rhythm": "Slow whole notes with sustain pedal",
+    "voicing": "Closed voicing in morph A, open voicing in morph B"
+  },
+
+  "audioCharacteristics": {
+    "frequencyRange": "100 Hz - 8 kHz (full spectrum)",
+    "stereoPlacement": "Wide stereo with reverb",
+    "dynamics": "Evolving from soft (0.0) to aggressive (1.0)",
+    "timbre": "Transforms from warm/watery to sharp/metallic"
+  },
+
+  "whyThisSong": {
+    "educational": "Demonstrates LOCAL_GAL's most powerful feature: parameter morphing",
+    "showcase": "Single morph control creates complex multi-parameter transformations",
+    "obscure": "Most users don't realize morph interpolates ALL feel vector parameters at once",
+    "creative": "Shows how to create dramatic evolution with one automation lane"
+  },
+
+  "implementation": {
+    "swift": "let instrument = JUCEInstrument(pluginId: \"LOCAL_GAL\")\n\n// Set up morph states\ninstrument.setMorphPresetA(\n    rubber: 0.8, bite: 0.2,\n    hollow: 0.9, growl: 0.1\n)\n\ninstrument.setMorphPresetB(\n    rubber: 0.1, bite: 0.9,\n    hollow: 0.2, growl: 0.8\n)\n\n// Automate morph position\ninstrument.setMorphPosition(0.0)  // Start soft\n\n// Gradually morph to aggressive\nfor i in 0..<32 {\n    let position = Float(i) / 32.0\n    instrument.setMorphPosition(position)\n    // Play notes at each morph stage\n}",
+    "midi": "Hold Cmaj7 chord (C3-E3-G3-B3) with sustain pedal. Automate morph position from 0.0 to 1.0 over 32 bars."
+  },
+
+  "tips": [
+    "Use exponential curve for morph automation - more dramatic in upper range",
+    "The morph is most effective when preset A and preset B are very different",
+    "Try morphing during breakdowns for maximum impact",
+    "Combine with filter automation for even more dramatic changes",
+    "The morph parameter can be controlled by MIDI CC for real-time performance"
+  ],
+
+  "advancedTechniques": [
+    "Morph while holding chord notes for evolving pad texture",
+    "Use morph to transition between song sections (verse → chorus)",
+    "Rapid morph LFO creates stuttering glitch effect",
+    "Morph position can follow envelope follower for dynamic response"
+  ],
+
+  "relatedPresets": [
+    "02_Bass_Init",
+    "04_Pad_Init",
+    "custom_morph_pad"
+  ],
+
+  "tags": ["morph", "feel vector", "atmospheric", "evolving", "pad", "lead", "transformation", "advanced"]
+}

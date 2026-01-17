@@ -1,0 +1,88 @@
+{
+  "name": "Cinematic Underscore",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 75,
+  "key": "D min",
+  "duration": "6:00",
+  "difficulty": "Intermediate",
+
+  "description": "Emotional film underscore using piano, strings, and choir",
+
+  "features": {
+    "primary": ["Film Score", "Emotional Underscore", "Layered Instruments"],
+    "obscure": ["Dynamic Layering", "Expressive Playing", "Atmospheric Blend"]
+  },
+
+  "instruments": {
+    "piano": {
+      "enabled": true,
+      "volume": 0.75,
+      "pan": 0.0,
+      "preset": "Intimate Piano"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.65,
+      "pan": -0.2,
+      "preset": "Slow Strings"
+    },
+    "choir": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.2,
+      "preset": "Ethereal Choir"
+    },
+    "brass": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    },
+    "woodwind": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.8,
+    "reverb_enabled": true,
+    "reverb_amount": 0.6,
+    "reverb_decay": 2.5,
+    "delay_enabled": true,
+    "delay_time": 0.8,
+    "delay_feedback": 0.3
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 70, "duration": 4.0},
+      {"note": 53, "velocity": 65, "duration": 4.0},
+      {"note": 57, "velocity": 68, "duration": 4.0},
+      {"note": 62, "velocity": 72, "duration": 4.0},
+      {"note": 65, "velocity": 70, "duration": 4.0},
+      {"note": 62, "velocity": 68, "duration": 4.0},
+      {"note": 57, "velocity": 66, "duration": 4.0},
+      {"note": 53, "velocity": 65, "duration": 4.0},
+      {"note": 50, "velocity": 68, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Emotional film underscore using 3 instruments. Piano provides intimate melody (center). Strings add warm pad (slightly left). Choir adds ethereal atmosphere (slightly right). Heavy reverb (0.6) with long decay (2.5s) creates cinematic space. Delay adds depth and echo. Slow tempo (75 BPM) for reflective mood. Low velocities for soft, emotional feel. Creates touching, cinematic underscore.",
+    "technique": "Use 3 instruments for emotional underscore. Piano = melody. Strings = warmth. Choir = atmosphere. Heavy reverb = cinematic space. Delay = depth. Slow tempo = reflection. Soft playing = emotion.",
+    "genre": "Soundtrack / Film Score / Dramatic",
+    "tip": "Heavy reverb = cinematic. Long delay = depth. Soft playing = emotion. Slow tempo = reflection. Piano + strings + choir = classic film trio."
+  },
+
+  "emotionalTechniques": [
+    "Soft dynamics - intimacy",
+    "Slow tempo - reflection",
+    "Heavy reverb - cinematic space",
+    "Long notes - sustain",
+    "Simple harmony - clarity"
+  ],
+
+  "tags": ["cinematic", "underscore", "film", "emotional", "atmospheric"]
+}

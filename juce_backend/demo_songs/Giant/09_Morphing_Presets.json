@@ -1,0 +1,117 @@
+{
+  "name": "Morphing Presets",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 100,
+  "key": "F min",
+  "duration": "6:00",
+  "difficulty": "Advanced",
+
+  "description": "Smooth preset morphing transitioning between different instrument combinations",
+
+  "features": {
+    "primary": ["Preset Morphing", "Smooth Transitions", "Sound Evolution"],
+    "obscure": ["Crossfading Presets", "Automated Morphing", "Timbral Evolution"]
+  },
+
+  "instruments": {
+    "piano": {
+      "enabled": true,
+      "volume": 0.7,
+      "pan": 0.0,
+      "preset": "Grand Piano"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.6,
+      "pan": -0.2,
+      "preset": "String Ensemble"
+    },
+    "brass": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.2,
+      "preset": "Brass Section"
+    },
+    "woodwind": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.0,
+      "preset": "Woodwind Section"
+    },
+    "choir": {
+      "enabled": true,
+      "volume": 0.4,
+      "pan": 0.0,
+      "preset": "Choir Pad"
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.8,
+    "reverb_enabled": true,
+    "reverb_amount": 0.45,
+    "reverb_decay": 2.2
+  },
+
+  "presets": [
+    {
+      "name": "Piano + Strings",
+      "bars": [1, 12],
+      "instruments": {"piano": 0.7, "strings": 0.6, "brass": 0.0, "woodwind": 0.0, "choir": 0.0}
+    },
+    {
+      "name": "Strings + Choir",
+      "bars": [13, 24],
+      "instruments": {"piano": 0.0, "strings": 0.6, "brass": 0.0, "woodwind": 0.0, "choir": 0.6}
+    },
+    {
+      "name": "Brass + Woodwind",
+      "bars": [25, 36],
+      "instruments": {"piano": 0.0, "strings": 0.0, "brass": 0.7, "woodwind": 0.6, "choir": 0.0}
+    },
+    {
+      "name": "All Instruments",
+      "bars": [37, 48],
+      "instruments": {"piano": 0.5, "strings": 0.5, "brass": 0.5, "woodwind": 0.5, "choir": 0.5}
+    },
+    {
+      "name": "Return to Piano + Strings",
+      "bars": [49, 60],
+      "instruments": {"piano": 0.7, "strings": 0.6, "brass": 0.0, "woodwind": 0.0, "choir": 0.0}
+    }
+  ],
+
+  "pattern": {
+    "notes": [
+      {"note": 53, "velocity": 80, "duration": 3.0},
+      {"note": 56, "velocity": 78, "duration": 3.0},
+      {"note": 60, "velocity": 82, "duration": 3.0},
+      {"note": 65, "velocity": 85, "duration": 4.0},
+      {"note": 68, "velocity": 83, "duration": 3.0},
+      {"note": 65, "velocity": 80, "duration": 3.0},
+      {"note": 60, "velocity": 78, "duration": 3.0},
+      {"note": 56, "velocity": 76, "duration": 3.0},
+      {"note": 53, "velocity": 78, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Smooth preset morphing between instrument combinations. Bars 1-12: Piano + Strings (classical duo). Bars 13-24: Morph to Strings + Choir (ethereal pad). Piano fades out, choir fades in. Bars 25-36: Morph to Brass + Woodwind (wind ensemble). Strings/choir fade out, brass/woodwind fade in. Bars 37-48: Morph to All Instruments (full orchestra). All instruments equal volume (0.5). Bars 49-60: Return to Piano + Strings. Others fade out, piano/strings return. Smooth crossfades create evolving timbre. Each preset has different character. Demonstrates morphing capabilities.",
+    "technique": "Define presets with instrument volumes. Morph between presets using crossfades. Smooth transitions = 8-16 bars. Fade out old instruments, fade in new instruments. Each preset = different character. Cycle through presets for variety.",
+    "structure": "Bars 1-12: Piano + Strings (classical). Bars 13-24: Strings + Choir (ethereal). Bars 25-36: Brass + Woodwind (wind). Bars 37-48: All Instruments (full). Bars 49-60: Return to Piano + Strings.",
+    "genre": "Soundtrack / Ambient / Evolution",
+    "tip": "8-16 bars = smooth morph. Fade out old, fade in new. Each preset = unique character. Cycle through presets = evolution. Return to start = resolution."
+  },
+
+  "morphingTechniques": [
+    "Define presets - instrument combinations",
+    "Smooth transitions - 8-16 bars",
+    "Crossfade instruments - out and in",
+    "Unique characters - different combos",
+    "Cycle through - variety",
+    "Return to start - resolution"
+  ],
+
+  "tags": ["morphing", "presets", "evolution", "transition", "crossfade", "advanced"]
+}

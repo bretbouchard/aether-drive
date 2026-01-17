@@ -1,0 +1,70 @@
+{
+  "name": "Resonance Modulation",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 85,
+  "key": "F# min",
+  "duration": "5:30",
+  "difficulty": "Advanced",
+
+  "description": "LFO modulation of resonance parameters for evolving textures",
+
+  "features": {
+    "primary": ["Resonance Modulation", "LFO Evolution", "Parameter Modulation"],
+    "obscure": ["LFO to Resonance", "Modulation Matrix", "Evolving Textures"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "resonance_amount": 0.8,
+    "resonance_decay": 2.2,
+    "lfo1_enabled": true,
+    "lfo1_rate": 0.25,
+    "lfo1_depth": 0.7,
+    "lfo1_waveform": "sine",
+    "lfo1_destination": "resonance_amount",
+    "lfo2_enabled": true,
+    "lfo2_rate": 0.18,
+    "lfo2_depth": 0.5,
+    "lfo2_waveform": "triangle",
+    "lfo2_destination": "brightness",
+    "modulation_matrix": [
+      {"source": "lfo1", "destination": "resonance_amount", "amount": 0.6},
+      {"source": "lfo2", "destination": "brightness", "amount": 0.4},
+      {"source": "velocity", "destination": "resonance_decay", "amount": 0.5}
+    ],
+    "string_tension": 0.5,
+    "string_damping": 0.3,
+    "brightness": 0.55
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 54, "velocity": 75, "duration": 6.0},
+      {"note": 58, "velocity": 72, "duration": 6.0},
+      {"note": 62, "velocity": 78, "duration": 6.0},
+      {"note": 66, "velocity": 80, "duration": 7.0},
+      {"note": 62, "velocity": 76, "duration": 6.0},
+      {"note": 58, "velocity": 73, "duration": 6.0},
+      {"note": 54, "velocity": 75, "duration": 7.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "LFO modulation of resonance parameters for evolving textures. LFO1 modulates resonance amount (rate 0.25, depth 0.7) causing harmonic richness to breathe. LFO2 modulates brightness (rate 0.18, depth 0.5) adding tonal evolution. Modulation matrix connects LFOs to parameters. Velocity affects resonance decay (amount 0.5) adding dynamic control. High resonance (0.8 base) for rich harmonics. Long decay (2.2s) for sustained tone. String tension (0.5) for stability. Damping (0.3) for sustain. Medium velocities (72-80) for balanced tone. Very long notes (6-7 bars) for evolution. Creates slowly evolving, breathing textures.",
+    "technique": "LFO1 modulates resonance = breathing harmonics. LFO2 modulates brightness = tonal evolution. Slow rates (0.15-0.3) = subtle evolution. Medium depths (0.4-0.7) = noticeable modulation. Long notes = evolution time. Modulation matrix = flexibility.",
+    "genre": "Ambient / Texture / Evolution",
+    "tip": "Slow LFO rates (0.1-0.3) = subtle evolution. Medium depths (0.4-0.7) = noticeable. Fast rates (0.5+) = vibrato/tremolo. Long notes = time to hear modulation."
+  },
+
+  "modulationTechniques": [
+    "Slow LFO (0.1-0.3) - subtle evolution",
+    "Medium LFO (0.3-0.6) - moderate movement",
+    "Fast LFO (0.6-1.0) - vibrato/tremolo",
+    "Resonance modulation - breathing harmonics",
+    "Brightness modulation - tonal evolution",
+    "Long notes - evolution time"
+  ],
+
+  "tags": ["modulation", "lfo", "evolution", "resonance", "texture", "advanced"]
+}

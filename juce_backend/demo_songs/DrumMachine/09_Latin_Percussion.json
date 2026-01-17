@@ -1,0 +1,72 @@
+{
+  "name": "Latin Percussion",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 120,
+  "key": "C",
+  "duration": "3:15",
+  "difficulty": "Intermediate",
+
+  "description": "Afro-Cuban rhythm with congas, bongos, timbales, and claves",
+
+  "features": {
+    "primary": ["Latin Percussion", "Clave Pattern", "Polyrhythmic Feel"],
+    "obscure": ["Percussion Voice Tuning", "Cowbell Pitch", "Timbale Cascara"]
+  },
+
+  "kit": {
+    "name": "Latin Kit",
+    "voices": {
+      "conga_low": {"pitch": 0.3, "decay": 0.4, "tone": 0.5},
+      "conga_high": {"pitch": 0.6, "decay": 0.3, "tone": 0.6},
+      "bongo": {"pitch": 0.8, "decay": 0.2, "tone": 0.7},
+      "timbale": {"pitch": 0.7, "decay": 0.25, "tone": 0.8},
+      "cowbell": {"pitch": 0.5, "decay": 0.6, "metal": 0.9},
+      "claves": {"pitch": 0.9, "decay": 0.1, "tone": 0.4}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 12,
+        "type": "Claves",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 110}, {"step": 3, "active": true, "velocity": 105},
+          {"step": 6, "active": true, "velocity": 110}, {"step": 10, "active": true, "velocity": 108}
+        ]
+      },
+      {
+        "index": 10,
+        "type": "Cowbell",
+        "timing_role": "Pocket",
+        "volume": 0.6,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 95}, {"step": 12, "active": true, "velocity": 92}
+        ]
+      },
+      {
+        "index": 13,
+        "type": "Conga Low",
+        "timing_role": "Pull",
+        "volume": 0.65,
+        "steps": [
+          {"step": 2, "active": true, "velocity": 90}, {"step": 6, "active": true, "velocity": 88},
+          {"step": 10, "active": true, "velocity": 90}, {"step": 14, "active": true, "velocity": 87}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Afro-Cuban rhythm with 3-2 clave. Claves establish pulse. Congas play syncopated pattern. Cowbell accents on 2 and 3. Tuning is critical - congas low pitch (0.3), bongos high (0.8). Cowbell needs metallic tone (0.9).",
+    "technique": "Percussion voices should be tuned to specific pitches. Congas: low (0.3) and high (0.6). Bongos: high (0.8). Cowbell: mid (0.5) with high metal (0.9) for ring.",
+    "genre": "Latin / Afro-Cuban"
+  },
+
+  "tags": ["latin", "afro-cuban", "percussion", "congas", "bongos", "cowbell", "clave"]
+}

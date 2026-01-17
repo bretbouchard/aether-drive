@@ -362,6 +362,7 @@ extension UIViewController {
 // =============================================================================
 
 #if DEBUG
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, *)
 struct KeyboardNavigation_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {

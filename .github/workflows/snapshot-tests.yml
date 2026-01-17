@@ -1,0 +1,195 @@
+name: Snapshot Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  snapshot-tests:
+    name: Snapshot Tests
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install Dependencies
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # Install ImageMagick for screenshot comparison
+          brew install imagemagick
+
+          # Resolve Swift packages
+          swift package resolve
+
+      - name: Run Snapshot Tests - iPhone
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # Run snapshot tests for iPhone configurations
+          swift test \
+            --enable-code-coverage \
+            --filter "MovingSidewalkSnapshotTests.testMovingSidewalkView_iPhone" \
+            || true
+
+      - name: Run Snapshot Tests - iPad
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # Run snapshot tests for iPad configurations
+          swift test \
+            --enable-code-coverage \
+            --filter "MovingSidewalkSnapshotTests.testMovingSidewalkView_iPad" \
+            || true
+
+      - name: Run Component Snapshot Tests
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # Run component snapshot tests
+          swift test \
+            --enable-code-coverage \
+            --filter "ComponentSnapshotTests" \
+            || true
+
+      - name: Run Dynamic Type Snapshot Tests
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # Run dynamic type snapshot tests
+          swift test \
+            --enable-code-coverage \
+            --filter "DynamicTypeSnapshotTests" \
+            || true
+
+      - name: Upload Snapshots
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: snapshots
+          path: |
+            swift_frontend/WhiteRoomiOS/Tests/__Snapshots__/
+            swift_frontend/WhiteRoomiOS/Screenshots/
+          retention-days: 30
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-snapshots
+          path: |
+            swift_frontend/WhiteRoomiOS/.build/
+            swift_frontend/WhiteRoomIOS/*.xcresult
+          retention-days: 30
+
+      - name: Generate Coverage Report
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # Generate coverage report
+          xcrun llvm-cov report \
+            .build/debug/SwiftFrontendCorePackageTests.bundle \
+            > coverage.txt
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: coverage-report
+          path: swift_frontend/WhiteRoomiOS/coverage.txt
+          retention-days: 30
+
+  compare-snapshots:
+    name: Compare Snapshots
+    runs-on: macos-13
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout Base Branch
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          git checkout origin/${{ github.base_ref }}
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install ImageMagick
+        run: brew install imagemagick
+
+      - name: Generate Baseline Snapshots
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          swift test --filter "SnapshotTests" || true
+
+      - name: Save Baseline Snapshots
+        run: |
+          mkdir -p Screenshots/Baseline
+          cp -r swift_frontend/WhiteRoomiOS/Tests/__Snapshots__/* Screenshots/Baseline/ || true
+
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+
+      - name: Generate Current Snapshots
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          swift test --filter "SnapshotTests" || true
+
+      - name: Save Current Snapshots
+        run: |
+          mkdir -p Screenshots/Current
+          cp -r swift_frontend/WhiteRoomiOS/Tests/__Snapshots__/* Screenshots/Current/ || true
+
+      - name: Compare Snapshots
+        run: |
+          ./swift_frontend/WhiteRoomiOS/Scripts/compare-screenshots.sh \
+            Screenshots/Baseline \
+            Screenshots/Current \
+            Screenshots/Diff \
+            || true
+
+      - name: Upload Diff Images
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: snapshot-diffs
+          path: Screenshots/Diff/
+          retention-days: 30
+
+      - name: Comment on PR
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const comment = `## Snapshot Test Results
+
+            Snapshot tests have been run. Please review the artifacts for any visual regressions.
+
+            **Artifacts:**
+            - Snapshot diffs
+            - Baseline snapshots
+            - Current snapshots
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

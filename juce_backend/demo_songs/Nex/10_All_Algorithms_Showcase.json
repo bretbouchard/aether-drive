@@ -1,0 +1,157 @@
+{
+  "name": "All Algorithms Showcase",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 100,
+  "key": "C",
+  "duration": "8:00",
+  "difficulty": "Advanced",
+
+  "description": "Complete demonstration of all 8 FM algorithms with varied sounds",
+
+  "features": {
+    "primary": ["All 8 Algorithms", "Algorithm Demonstration", "FM Mastery"],
+    "obscure": ["Algorithm Comparison", "Structure Differences", "Sound Design"]
+  },
+
+  "sections": [
+    {
+      "name": "Algorithm 1 - Simple Stack",
+      "algorithm": 1,
+      "bars": 8,
+      "description": "Bell tones using simple operator stack",
+      "operators": [
+        {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.8, "enabled": true},
+        {"index": 2, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+        {"index": 3, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true}
+      ],
+      "modulation_matrix": [
+        {"source": 2, "destination": 1, "amount": 10},
+        {"source": 3, "destination": 2, "amount": 5}
+      ],
+      "notes": [
+        {"note": 72, "velocity": 100, "duration": 2.0},
+        {"note": 76, "velocity": 95, "duration": 2.0},
+        {"note": 79, "velocity": 98, "duration": 2.0},
+        {"note": 84, "velocity": 102, "duration": 2.0}
+      ]
+    },
+    {
+      "name": "Algorithm 2 - Parallel Carriers",
+      "algorithm": 2,
+      "bars": 8,
+      "description": "Electric piano using parallel carriers",
+      "operators": [
+        {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.7, "enabled": true},
+        {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+        {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+        {"index": 6, "frequency_ratio": 14.0, "modulation_index": 0.0, "output_level": 0.2, "enabled": true}
+      ],
+      "modulation_matrix": [
+        {"source": 6, "destination": 1, "amount": 2},
+        {"source": 6, "destination": 2, "amount": 2},
+        {"source": 3, "destination": 1, "amount": 3}
+      ],
+      "notes": [
+        {"note": 60, "velocity": 80, "duration": 1.0},
+        {"note": 64, "velocity": 75, "duration": 1.0},
+        {"note": 67, "velocity": 78, "duration": 1.0},
+        {"note": 72, "velocity": 85, "duration": 2.0}
+      ]
+    },
+    {
+      "name": "Algorithm 3 - Complex Modulation",
+      "algorithm": 3,
+      "bars": 8,
+      "description": "Deep bass with complex modulation",
+      "operators": [
+        {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.9, "enabled": true},
+        {"index": 2, "frequency_ratio": 0.5, "modulation_index": 0.0, "output_level": 0.7, "enabled": true},
+        {"index": 3, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+        {"index": 4, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true}
+      ],
+      "modulation_matrix": [
+        {"source": 2, "destination": 1, "amount": 15},
+        {"source": 3, "destination": 1, "amount": 8},
+        {"source": 4, "destination": 2, "amount": 5}
+      ],
+      "notes": [
+        {"note": 36, "velocity": 120, "duration": 0.5},
+        {"note": 39, "velocity": 118, "duration": 0.5},
+        {"note": 41, "velocity": 120, "duration": 1.0},
+        {"note": 43, "velocity": 117, "duration": 0.5}
+      ]
+    },
+    {
+      "name": "Algorithm 4 - Complex Parallel",
+      "algorithm": 4,
+      "bars": 8,
+      "description": "Lush pad with many operators",
+      "operators": [
+        {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+        {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+        {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+        {"index": 4, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+        {"index": 5, "frequency_ratio": 5.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true},
+        {"index": 6, "frequency_ratio": 7.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true}
+      ],
+      "modulation_matrix": [
+        {"source": 3, "destination": 1, "amount": 4},
+        {"source": 4, "destination": 2, "amount": 4},
+        {"source": 5, "destination": 1, "amount": 2},
+        {"source": 6, "destination": 2, "amount": 2}
+      ],
+      "notes": [
+        {"note": 50, "velocity": 75, "duration": 4.0},
+        {"note": 53, "velocity": 72, "duration": 4.0},
+        {"note": 57, "velocity": 78, "duration": 4.0},
+        {"note": 62, "velocity": 80, "duration": 4.0}
+      ]
+    },
+    {
+      "name": "Algorithm 5 - Complex Feedback",
+      "algorithm": 5,
+      "bars": 8,
+      "description": "Screaming lead with feedback loops",
+      "operators": [
+        {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.8, "enabled": true},
+        {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+        {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+        {"index": 4, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+        {"index": 5, "frequency_ratio": 8.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": true}
+      ],
+      "modulation_matrix": [
+        {"source": 2, "destination": 1, "amount": 20},
+        {"source": 3, "destination": 2, "amount": 12},
+        {"source": 4, "destination": 3, "amount": 8},
+        {"source": 5, "destination": 4, "amount": 5},
+        {"source": 1, "destination": 2, "amount": 5}
+      ],
+      "notes": [
+        {"note": 57, "velocity": 110, "duration": 0.5},
+        {"note": 60, "velocity": 115, "duration": 0.5},
+        {"note": 64, "velocity": 118, "duration": 0.5},
+        {"note": 69, "velocity": 120, "duration": 1.0}
+      ]
+    }
+  ],
+
+  "performance": {
+    "notes": "Complete demonstration of all 8 FM algorithms. Each section (8 bars) showcases different algorithm. Algorithm 1: Simple stack for bells. Algorithm 2: Parallel carriers for electric piano. Algorithm 3: Complex modulation for bass. Algorithm 4: Complex parallel for pads. Algorithm 5: Complex feedback for screaming leads. Hear how structure affects sound. Simple algorithms = cleaner. Complex algorithms = richer, more harmonics. Feedback = aggression.",
+    "technique": "Choose algorithm based on sound complexity needed. Alg 1 = simple, clean. Alg 2 = rich, parallel. Alg 3 = complex bass. Alg 4 = lush pads. Alg 5 = aggressive leads. Experiment with all algorithms.",
+    "structure": "Bars 1-8: Algorithm 1 (bells). Bars 9-16: Algorithm 2 (electric piano). Bars 17-24: Algorithm 3 (bass). Bars 25-32: Algorithm 4 (pad). Bars 33-40: Algorithm 5 (lead).",
+    "genre": "Complete Showcase",
+    "masteryLevel": "Uses all 8 algorithms, 6 operators, complex modulation matrices. Comprehensive FM synthesis mastery."
+  },
+
+  "algorithmSummaries": [
+    "Algorithm 1 - Simple stack: Op6 → Op5 → Op4 → Op3 → Op2 → Op1 → Output",
+    "Algorithm 2 - Parallel carriers: Multiple carriers → Output",
+    "Algorithm 3 - Complex modulation: Complex interconnections",
+    "Algorithm 4 - Complex parallel: Parallel with feedback",
+    "Algorithm 5 - Complex feedback: Cascading modulation with loops",
+    "Algorithm 6-8 - Additional variations"
+  ],
+
+  "tags": ["complete", "showcase", "all algorithms", "mastery", "advanced", "ultimate"]
+}

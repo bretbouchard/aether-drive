@@ -147,7 +147,7 @@ public class JUCEEngine: ObservableObject {
 
                 if startResult == SCH_OK {
                     DispatchQueue.main.async {
-                        self?.isEngineRunning = true
+                        self.isEngineRunning = true
                         NSLog("[JUCEEngine] Engine started successfully")
                     }
                 } else {
@@ -171,7 +171,7 @@ public class JUCEEngine: ObservableObject {
 
             if result == SCH_OK {
                 DispatchQueue.main.async {
-                    self?.isEngineRunning = false
+                    self.isEngineRunning = false
                     NSLog("[JUCEEngine] Engine stopped successfully")
                 }
             } else {
@@ -186,7 +186,7 @@ public class JUCEEngine: ObservableObject {
             throw JUCEEngineError.engineNotInitialized
         }
 
-        json.withCString { cString in
+        try json.withCString { cString in
             let result = sch_engine_load_song(handle, cString)
 
             if result != SCH_OK {
@@ -240,13 +240,13 @@ public class JUCEEngine: ObservableObject {
         let ffiState: sch_transport_state_t
         switch state {
         case .stopped:
-            ffiState = SCH_TRANSPORT_STOPPED
+            ffiState = .stopped
         case .playing:
-            ffiState = SCH_TRANSPORT_PLAYING
+            ffiState = .playing
         case .recording:
-            ffiState = SCH_TRANSPORT_RECORDING
+            ffiState = .recording
         case .paused:
-            ffiState = SCH_TRANSPORT_PAUSED
+            ffiState = .paused
         }
 
         let result = sch_engine_set_transport(handle, ffiState)
@@ -309,38 +309,9 @@ public enum TransportState {
     case paused
 }
 
-public struct PerformanceInfo {
-    public let id: String
-    public let name: String
-    public let description: String
+// MARK: - FFI Constants
 
-    public init(id: String, name: String, description: String) {
-        self.id = id
-        self.name = name
-        self.description = description
-    }
-}
-
-// MARK: - FFI Declarations (C Bridge)
-
-/// FFI Result codes
-enum SchResult: Int32 {
-    case ok = 0
-    case invalidArg = 1
-    case notFound = 2
-    case rejected = 3
-    case deferred = 4
-    case notImplemented = 5
-    case engineNull = 6
-    case invalidState = 7
-    case internal = 100
-    case engineFailed = 11
-    case audioFailed = 12
-    case outOfMemory = 13
-    case notSupported = 8
-    case parseFailed = 9
-    case validationFailed = 10
-}
+let SCH_OK = SchResult.ok
 
 /// FFI Audio configuration
 struct sch_audio_config_t {
@@ -357,7 +328,7 @@ struct sch_string_t {
 }
 
 /// FFI Transport state
-enum sch_transport_state_t: Int32 {
+enum sch_transport_state_t: UInt32 {
     case stopped = 0
     case playing = 1
     case recording = 2

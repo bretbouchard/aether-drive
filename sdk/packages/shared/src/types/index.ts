@@ -295,6 +295,9 @@ export * from "./realization";
 // Export SongModel_v1 types
 export * from "./song-model";
 
+// Export Performance Model types
+export * from "./performance-model";
+
 // Export ScheduledEvent types
 export * from "./scheduled-event";
 

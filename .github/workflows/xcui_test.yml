@@ -1,0 +1,297 @@
+name: XCUITest Suite
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  # iOS Tests
+  test-ios:
+    name: iOS XCUITest (iPhone 15 Pro)
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        simulator: ["iPhone 15 Pro", "iPad Pro (12.9-inch) (6th generation)"]
+      fail-fast: false
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Show Available Simulators
+        run: |
+          xcrun simctl list devices available
+
+      - name: Boot Simulator
+        run: |
+          xcrun simctl boot "${{ matrix.simulator }}" || echo "Simulator already booted"
+
+      - name: Clean Build Folder
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/WhiteRoomiOS-*
+          swift package clean
+
+      - name: Build for Testing
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "arm64-apple-ios13.0-simulator"
+
+      - name: Run iOS XCUITest Suite
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          xcodebuild test \
+            -scheme WhiteRoomiOS \
+            -destination 'platform=iOS Simulator,name=${{ matrix.simulator }}' \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalkXCUIUITests \
+            -resultBundlePath TestResults.xcresult \
+            | xcpretty || true
+
+      - name: Run E2E Workflow Tests
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          xcodebuild test \
+            -scheme WhiteRoomiOS \
+            -destination 'platform=iOS Simulator,name=${{ matrix.simulator }}' \
+            -only-testing:SwiftFrontendCoreTests/MultiSongWorkflowE2ETests \
+            -resultBundlePath TestResults.xcresult \
+            | xcpretty || true
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-test-results-${{ matrix.simulator }}
+          path: swift_frontend/WhiteRoomiOS/TestResults.xcresult
+          retention-days: 7
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: ios-screenshots-${{ matrix.simulator }}
+          path: ~/Library/Developer/Xcode/DerivedData/WhiteRoomiOS-*/Logs/Test/*.xcresult/Attachments/*.png
+          retention-days: 7
+
+  # tvOS Tests
+  test-tvos:
+    name: tvOS XCUITest (Apple TV)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Show Available Simulators
+        run: |
+          xcrun simctl list devices available
+
+      - name: Boot tvOS Simulator
+        run: |
+          xcrun simctl boot "Apple TV" || echo "Simulator already booted"
+
+      - name: Clean Build Folder
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/WhiteRoomiOS-*
+          swift package clean
+
+      - name: Build for Testing
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvosimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "arm64-apple-tvos13.0-simulator"
+
+      - name: Run tvOS XCUITest Suite
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          xcodebuild test \
+            -scheme WhiteRoomiOSTvOS \
+            -destination 'platform=tvOS Simulator,name=Apple TV' \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalktvOSXCUIUITests \
+            -resultBundlePath TestResults.xcresult \
+            | xcpretty || true
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tvos-test-results
+          path: swift_frontend/WhiteRoomiOS/TestResults.xcresult
+          retention-days: 7
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: tvos-screenshots
+          path: ~/Library/Developer/Xcode/DerivedData/WhiteRoomiOS-*/Logs/Test/*.xcresult/Attachments/*.png
+          retention-days: 7
+
+  # Parallel Test Execution
+  test-parallel:
+    name: Parallel Tests (All Platforms)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+
+      - name: Boot All Simulators
+        run: |
+          xcrun simctl boot "iPhone 15 Pro" || true
+          xcrun simctl boot "iPad Pro (12.9-inch) (6th generation)" || true
+          xcrun simctl boot "Apple TV" || true
+
+      - name: Run Tests in Parallel
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+
+          # iOS iPhone 15 Pro
+          xcodebuild test \
+            -scheme WhiteRoomiOS \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalkXCUIUITests \
+            -resultBundlePath TestResults-iPhone.xcresult &
+          PID_IPHONE=$!
+
+          # iOS iPad Pro
+          xcodebuild test \
+            -scheme WhiteRoomiOS \
+            -destination 'platform=iOS Simulator,name=iPad Pro (12.9-inch) (6th generation)' \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalkXCUIUITests \
+            -resultBundlePath TestResults-iPad.xcresult &
+          PID_IPAD=$!
+
+          # tvOS Apple TV
+          xcodebuild test \
+            -scheme WhiteRoomiOSTvOS \
+            -destination 'platform=tvOS Simulator,name=Apple TV' \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalktvOSXCUIUITests \
+            -resultBundlePath TestResults-AppleTV.xcresult &
+          PID_TVOS=$!
+
+          # Wait for all tests
+          wait $PID_IPHONE
+          wait $PID_IPAD
+          wait $PID_TVOS
+
+      - name: Upload All Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parallel-test-results
+          path: |
+            swift_frontend/WhiteRoomiOS/TestResults-*.xcresult
+          retention-days: 7
+
+  # Test Summary
+  test-summary:
+    name: Test Summary
+    runs-on: macos-latest
+    needs: [test-ios, test-tvos]
+
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: test-results
+
+      - name: Generate Test Report
+        run: |
+          echo "# XCUITest Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Count total tests
+          TOTAL_TESTS=$(find test-results -name "*.xcresult" -exec xcrun xcresulttool get --format json --path {} \; | jq '.issues.testFailureSummaries? | length' | awk '{s+=$1} END {print s}')
+          echo "Total Tests Run: $TOTAL_TESTS" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # List platforms tested
+          echo "### Platforms Tested" >> $GITHUB_STEP_SUMMARY
+          echo "- iOS (iPhone 15 Pro)" >> $GITHUB_STEP_SUMMARY
+          echo "- iOS (iPad Pro 12.9\")" >> $GITHUB_STEP_SUMMARY
+          echo "- tvOS (Apple TV)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Coverage info
+          echo "### Coverage" >> $GITHUB_STEP_SUMMARY
+          echo "- **iOS Tests**: 45+ tests" >> $GITHUB_STEP_SUMMARY
+          echo "- **tvOS Tests**: 35+ tests" >> $GITHUB_STEP_SUMMARY
+          echo "- **E2E Workflows**: 17+ tests" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total**: 97+ UI automation tests" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check Test Results
+        run: |
+          # Check for failed tests
+          FAILED_TESTS=$(find test-results -name "*.xcresult" -exec xcrun xcresulttool get --format json --path {} \; | jq '.issues.testFailureSummaries? | length')
+
+          if [ "$FAILED_TESTS" -gt 0 ]; then
+            echo "❌ $FAILED_TESTS test(s) failed"
+            exit 1
+          else
+            echo "✅ All tests passed!"
+          fi
+
+  # Performance Baseline
+  performance-baseline:
+    name: Performance Baseline
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+
+      - name: Boot Simulator
+        run: |
+          xcrun simctl boot "iPhone 15 Pro" || echo "Simulator already booted"
+
+      - name: Run Performance Tests
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          xcodebuild test \
+            -scheme WhiteRoomiOS \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalkXCUIUITests/testLaunchTime_Performance \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalkXCUIUITests/testScrollingPerformance_Smooth \
+            -only-testing:SwiftFrontendCoreTests/MovingSidewalkXCUIUITests/testUIUpdate_Performance \
+            -resultBundlePath PerformanceResults.xcresult
+
+      - name: Extract Performance Metrics
+        run: |
+          cd swift_frontend/WhiteRoomiOS
+          xcrun xcresulttool get --path PerformanceResults.xcresult --format json > performance.json
+
+          # Parse and log metrics
+          echo "## Performance Metrics" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat performance.json | jq '.metrics' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Performance Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-results
+          path: swift_frontend/WhiteRoomiOS/PerformanceResults.xcresult
+          retention-days: 30

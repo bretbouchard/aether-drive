@@ -129,7 +129,7 @@ struct ContentView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(Color.accentColor.opacity(0.1))
-                .foregroundStyle(.accent)
+                .foregroundStyle(Color.accentColor)
                 .cornerRadius(12)
             }
             .padding(.horizontal)
@@ -165,7 +165,9 @@ struct ContentView: View {
             Text("Auto-save settings coming soon!")
         }
         .sheet(isPresented: $showDemoSongs) {
-            DemoSongBrowserView()
+            // DemoSongBrowserView()
+            Text("Demo song browser coming soon!")
+                .padding()
         }
         .overlay(crashRecoveryOverlay)
     }

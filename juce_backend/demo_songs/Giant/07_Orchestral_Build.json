@@ -1,0 +1,102 @@
+{
+  "name": "Orchestral Build",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 95,
+  "key": "C min",
+  "duration": "5:00",
+  "difficulty": "Advanced",
+
+  "description": "Gradual orchestral build adding instruments layer by layer for cinematic tension",
+
+  "features": {
+    "primary": ["Orchestral Build", "Cinematic Tension", "Layer Additions"],
+    "obscure": ["Dynamic Layering", "Crescendo Automation", "Instrument Entrance"]
+  },
+
+  "instruments": {
+    "piano": {
+      "enabled": true,
+      "volume": 0.6,
+      "pan": 0.0,
+      "preset": "Orchestral Piano"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": -0.2,
+      "preset": "Cinematic Strings"
+    },
+    "choir": {
+      "enabled": true,
+      "volume": 0.4,
+      "pan": 0.2,
+      "preset": "Epic Choir"
+    },
+    "brass": {
+      "enabled": true,
+      "volume": 0.6,
+      "pan": -0.1,
+      "preset": "Orchestral Brass"
+    },
+    "woodwind": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.1,
+      "preset": "Orchestral Woodwinds"
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.8,
+    "reverb_enabled": true,
+    "reverb_amount": 0.5,
+    "reverb_decay": 2.5,
+    "compression_enabled": true,
+    "compression_threshold": 0.6,
+    "compression_ratio": 3.0
+  },
+
+  "automation": [
+    {"bar": 1, "piano_volume": 0.6, "strings_volume": 0.0, "choir_volume": 0.0, "brass_volume": 0.0, "woodwind_volume": 0.0},
+    {"bar": 8, "strings_volume": 0.3},
+    {"bar": 16, "choir_volume": 0.2},
+    {"bar": 24, "woodwind_volume": 0.3},
+    {"bar": 32, "brass_volume": 0.4},
+    {"bar": 40, "master_volume": 0.9},
+    {"bar": 48, "all_volumes": 0.7}
+  ],
+
+  "pattern": {
+    "notes": [
+      {"note": 48, "velocity": 70, "duration": 4.0},
+      {"note": 48, "velocity": 72, "duration": 4.0},
+      {"note": 50, "velocity": 75, "duration": 4.0},
+      {"note": 52, "velocity": 78, "duration": 4.0},
+      {"note": 53, "velocity": 80, "duration": 4.0},
+      {"note": 55, "velocity": 82, "duration": 4.0},
+      {"note": 57, "velocity": 85, "duration": 4.0},
+      {"note": 60, "velocity": 90, "duration": 6.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Cinematic orchestral build adding instruments gradually. Piano starts alone (bars 1-8). Strings enter softly at bar 8. Choir adds atmosphere at bar 16. Woodwinds enter at bar 24. Brass adds power at bar 32. Master volume increases to 0.9 at bar 40 for climax. All instruments balanced at bar 48. Crescendo creates tension and release. Heavy reverb (0.5) with long decay (2.5s) adds cinematic space. Compression (3:1) glues ensemble. Velocity increases from 70 to 90 for crescendo. Creates epic cinematic build.",
+    "technique": "Add instruments gradually for build. Piano = start. Strings = warmth. Choir = atmosphere. Woodwinds = brightness. Brass = power. Increase master volume = climax. Crescendo velocity = tension. Compression = glue. Reverb = space.",
+    "structure": "Bars 1-8: Piano solo. Bars 9-16: Add strings. Bars 17-24: Add choir. Bars 25-32: Add woodwinds. Bars 33-40: Add brass, volume up. Bars 41-48: Climax. Bars 49+: Resolution.",
+    "genre": "Soundtrack / Cinematic / Epic",
+    "tip": "Gradual additions = tension. Master volume automation = power. Crescendo velocity = intensity. Compression = glue. Reverb = space."
+  },
+
+  "buildTechniques": [
+    "Piano solo - introduction",
+    "Strings enter - warmth",
+    "Choir enter - atmosphere",
+    "Woodwinds enter - brightness",
+    "Brass enter - power",
+    "Volume up - climax",
+    "All balanced - resolution"
+  ],
+
+  "tags": ["build", "orchestral", "cinematic", "tension", "crescendo", "epic"]
+}

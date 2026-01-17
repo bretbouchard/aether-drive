@@ -53,6 +53,35 @@ public struct PerformanceState_v1: Codable, Sendable, Identifiable {
     /// Per-role or per-track gain/pan targets
     public let mixTargets: [String: MixTarget]
 
+    // MARK: - NEW FIELDS - Performance Enhancements
+
+    /// Effects chain for this performance
+    public let effectsChain: [EffectPreset]?
+
+    /// Mix console state
+    public let mixSettings: MixSettings?
+
+    /// Automation data for parameters
+    public let automationPoints: [AutomationPoint]?
+
+    /// Markers and loop points
+    public let markers: [PerformanceMarker]?
+
+    /// Tempo changes over time
+    public let tempoMap: [TempoChange]?
+
+    /// Time signature changes over time
+    public let timeSignatureMap: [TimeSignatureChange]?
+
+    /// Last play timestamp
+    public let lastPlayedAt: Date?
+
+    /// Play count
+    public let playCount: Int?
+
+    /// Practice notes
+    public let practiceNotes: String?
+
     /// ISO 8601 creation timestamp
     public let createdAt: Date?
 
@@ -74,6 +103,15 @@ public struct PerformanceState_v1: Codable, Sendable, Identifiable {
         instrumentationMap: [String: PerformanceInstrumentAssignment],
         consoleXProfileId: String = "default",
         mixTargets: [String: MixTarget],
+        effectsChain: [EffectPreset]? = nil,
+        mixSettings: MixSettings? = nil,
+        automationPoints: [AutomationPoint]? = nil,
+        markers: [PerformanceMarker]? = nil,
+        tempoMap: [TempoChange]? = nil,
+        timeSignatureMap: [TimeSignatureChange]? = nil,
+        lastPlayedAt: Date? = nil,
+        playCount: Int? = nil,
+        practiceNotes: String? = nil,
         createdAt: Date? = nil,
         modifiedAt: Date? = nil,
         metadata: [String: String]? = nil
@@ -87,6 +125,15 @@ public struct PerformanceState_v1: Codable, Sendable, Identifiable {
         self.instrumentationMap = instrumentationMap
         self.consoleXProfileId = consoleXProfileId
         self.mixTargets = mixTargets
+        self.effectsChain = effectsChain
+        self.mixSettings = mixSettings
+        self.automationPoints = automationPoints
+        self.markers = markers
+        self.tempoMap = tempoMap
+        self.timeSignatureMap = timeSignatureMap
+        self.lastPlayedAt = lastPlayedAt
+        self.playCount = playCount
+        self.practiceNotes = practiceNotes
         self.createdAt = createdAt ?? Date()
         self.modifiedAt = modifiedAt ?? Date()
         self.metadata = metadata
@@ -104,6 +151,15 @@ public struct PerformanceState_v1: Codable, Sendable, Identifiable {
         case instrumentationMap
         case consoleXProfileId
         case mixTargets
+        case effectsChain
+        case mixSettings
+        case automationPoints
+        case markers
+        case tempoMap
+        case timeSignatureMap
+        case lastPlayedAt
+        case playCount
+        case practiceNotes
         case createdAt
         case modifiedAt
         case metadata
@@ -145,6 +201,176 @@ public struct PerformanceState_v1: Codable, Sendable, Identifiable {
         )
     }
 }
+
+// =============================================================================
+// MARK: - Effect Preset
+// =============================================================================
+
+/**
+ Effect preset for performance effects chain
+ */
+public struct EffectPreset: Codable, Sendable, Identifiable {
+    public var id: String
+    public var name: String
+    public var effectType: String
+    public var parameters: [String: Double]
+    public var enabled: Bool
+    public var position: Int
+
+    public init(
+        id: String,
+        name: String,
+        effectType: String,
+        parameters: [String: Double],
+        enabled: Bool = true,
+        position: Int = 0
+    ) {
+        self.id = id
+        self.name = name
+        self.effectType = effectType
+        self.parameters = parameters
+        self.enabled = enabled
+        self.position = position
+    }
+}
+
+// =============================================================================
+// MARK: - Mix Settings
+// NOTE: MixSettings is defined in ProjectionModels.swift to avoid duplication
+// =============================================================================
+
+// =============================================================================
+// MARK: - Automation Point
+// =============================================================================
+
+/**
+ Automation point for parameter automation
+ */
+public struct AutomationPoint: Codable, Sendable, Identifiable {
+    public var id: String
+    public var parameterId: String
+    public var trackId: String?
+    public var beatPosition: Double
+    public var value: Double
+    public var interpolationType: String
+
+    public init(
+        id: String,
+        parameterId: String,
+        trackId: String? = nil,
+        beatPosition: Double,
+        value: Double,
+        interpolationType: String = "linear"
+    ) {
+        self.id = id
+        self.parameterId = parameterId
+        self.trackId = trackId
+        self.beatPosition = beatPosition
+        self.value = value
+        self.interpolationType = interpolationType
+    }
+}
+
+// =============================================================================
+// MARK: - Performance Marker
+// =============================================================================
+
+/**
+ Performance marker (section markers, loop points, rehearsal marks)
+ */
+public struct PerformanceMarker: Codable, Sendable, Identifiable {
+    public var id: String
+    public var name: String
+    public var beatPosition: Double
+    public var color: String?
+    public var type: MarkerType
+    public var loopStart: Bool?
+    public var loopEnd: Bool?
+
+    public init(
+        id: String,
+        name: String,
+        beatPosition: Double,
+        color: String? = nil,
+        type: MarkerType = .marker,
+        loopStart: Bool? = nil,
+        loopEnd: Bool? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.beatPosition = beatPosition
+        self.color = color
+        self.type = type
+        self.loopStart = loopStart
+        self.loopEnd = loopEnd
+    }
+}
+
+/**
+ Marker type enumeration
+ */
+public enum MarkerType: String, Codable {
+    case marker
+    case section
+    case rehearsal
+    case cue
+}
+
+// =============================================================================
+// MARK: - Tempo Change
+// =============================================================================
+
+/**
+ Tempo change event
+ */
+public struct TempoChange: Codable, Sendable {
+    public var beatPosition: Double
+    public var tempo: Double
+    public var transition: TempoTransition
+
+    public init(
+        beatPosition: Double,
+        tempo: Double,
+        transition: TempoTransition = .immediate
+    ) {
+        self.beatPosition = beatPosition
+        self.tempo = tempo
+        self.transition = transition
+    }
+}
+
+/**
+ Tempo transition type
+ */
+public enum TempoTransition: String, Codable {
+    case immediate
+    case ramp
+    case gradual
+}
+
+// =============================================================================
+// MARK: - Time Signature Change
+// =============================================================================
+
+/**
+ Time signature change event
+ */
+public struct TimeSignatureChange: Codable, Sendable {
+    public var beatPosition: Double
+    public var numerator: Int
+    public var denominator: Int
+
+    public init(
+        beatPosition: Double,
+        numerator: Int,
+        denominator: Int
+    ) {
+        self.beatPosition = beatPosition
+        self.numerator = numerator
+        self.denominator = denominator
+    }
+}
+
 
 // =============================================================================
 // MARK: - Arrangement Style

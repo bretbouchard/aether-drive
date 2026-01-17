@@ -1,0 +1,56 @@
+{
+  "name": "Trap Hi-Hat Rolls",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 140,
+  "key": "C",
+  "duration": "2:15",
+  "difficulty": "Intermediate",
+
+  "description": "Modern trap beat with rapid hi-hat rolls and 808-style kick",
+
+  "features": {
+    "primary": ["Hi-Hat Rolls", "808 Kick", "Half-Time Snare"],
+    "obscure": ["Burst Decay", "Velocity Chaos", "Flam Strength"]
+  },
+
+  "kit": {
+    "name": "Trap Kit",
+    "voices": {
+      "kick": {"pitch": 0.3, "decay": 0.8, "sweep": 0.7},
+      "snare": {"tone": 0.6, "decay": 0.3, "snap": 0.5},
+      "hihat_closed": {"tone": 0.8, "decay": 0.1, "metal": 0.9}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.6,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.95,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120}, {"step": 8, "active": true, "velocity": 115}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pocket",
+        "volume": 0.75,
+        "drill_override": {"use_override": true, "enabled": true, "burstSizeMin": 4, "burstSizeMax": 32, "burstDecay": 0.6, "velocityChaos": 0.4}
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Trap hi-hat rolls with variable length. Burst size 4-32 notes creates short rolls to long runs. Burst decay 0.6 makes later notes quieter. Velocity chaos 0.4 adds random variation. 808 kick has long decay and deep sweep.",
+    "technique": "Hi-hat bursts should accelerate into snare hits. Use burst decay to create crescendo. Velocity chaos prevents machine-gun repetition.",
+    "genre": "Trap / Hip Hop"
+  },
+
+  "tags": ["trap", "hi-hat rolls", "808", "half-time", "bursts", "modern"]
+}

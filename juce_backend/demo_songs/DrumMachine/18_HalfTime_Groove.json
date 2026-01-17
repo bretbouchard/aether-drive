@@ -1,0 +1,76 @@
+{
+  "name": "Half-Time Groove",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 70,
+  "key": "C",
+  "duration": "2:00",
+  "difficulty": "Beginner",
+
+  "description": "Modern half-time DAW beat with slow snare and sparse hi-hats",
+
+  "features": {
+    "primary": ["Half-Time Feel", "Slow Snare", "Minimal Hi-Hats"],
+    "obscure": ["Timing Role Combinations", "Half-Time Techniques"]
+  },
+
+  "kit": {
+    "name": "Half-Time Kit",
+    "voices": {
+      "kick": {"pitch": 0.5, "decay": 0.6, "sweep": 0.6},
+      "snare": {"tone": 0.6, "decay": 0.4, "snap": 0.5},
+      "hihat_closed": {"tone": 0.5, "decay": 0.2, "metal": 0.6}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.55,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Push",
+        "volume": 0.85,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120},
+          {"step": 8, "active": true, "velocity": 115}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pull",
+        "volume": 0.8,
+        "steps": [
+          {"step": 8, "active": true, "velocity": 110}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pocket",
+        "volume": 0.6,
+        "steps": [
+          {"step": 8, "active": true, "velocity": 85}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Modern half-time groove. Kick on 1 and 3 (like two half-time kicks). Snare only on 3 (the 'half-time' snare). One hi-hat on snare hit. Sparse arrangement creates space. Push kick = ahead, pull snare = behind.",
+    "technique": "Half-time means snare on beat 3 instead of 2 and 4. Kick pattern adapts to hit on 1 and 3. Keep everything else minimal. This is the modern trap/hip-hop sound.",
+    "genre": "Half-Time / Trap / Modern"
+  },
+
+  "halfTimeCharacteristics": [
+    "Snare on beat 3 (not 2 and 4)",
+    "Kick on 1 and 3",
+    "Sparse hi-hats",
+    "More space",
+    "Heavier feel"
+  ],
+
+  "tags": ["half-time", "trap", "modern", "sparse", "slow", "heavy"]
+}

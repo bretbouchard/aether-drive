@@ -1,0 +1,65 @@
+{
+  "name": "Electric Piano",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 120,
+  "key": "F maj",
+  "duration": "3:30",
+  "difficulty": "Beginner",
+
+  "description": "Smooth electric piano using algorithm 2 with parallel modulation",
+
+  "features": {
+    "primary": ["FM Electric Piano", "Algorithm 2", "Parallel Modulation"],
+    "obscure": ["Detuned Operators", "Velocity Modulation", "Soft Attack"]
+  },
+
+  "algorithm": 2,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.7, "enabled": true},
+    {"index": 2, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.6, "enabled": true},
+    {"index": 3, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 4, "frequency_ratio": 3.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": false},
+    {"index": 6, "frequency_ratio": 14.0, "modulation_index": 0.0, "output_level": 0.2, "enabled": true}
+  ],
+
+  "modulation_matrix": [
+    {"source": 6, "destination": 1, "amount": 2},
+    {"source": 6, "destination": 2, "amount": 2},
+    {"source": 3, "destination": 1, "amount": 3},
+    {"source": 4, "destination": 2, "amount": 3}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.01,
+    "amp_decay": 0.8,
+    "amp_sustain": 0.3,
+    "amp_release": 0.5,
+    "velocity_sensitivity": 0.7
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 60, "velocity": 80, "duration": 0.5},
+      {"note": 64, "velocity": 75, "duration": 0.5},
+      {"note": 67, "velocity": 78, "duration": 0.5},
+      {"note": 72, "velocity": 85, "duration": 1.0},
+      {"note": 67, "velocity": 80, "duration": 0.5},
+      {"note": 64, "velocity": 76, "duration": 0.5},
+      {"note": 60, "velocity": 78, "duration": 1.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Smooth FM electric piano using Algorithm 2 (parallel carriers). Operators 1 and 2 are carriers (1:1 ratio for detuned unison). Operator 6 (high ratio 14) adds harmonic sparkle. Operators 3 and 4 modulate carriers for brightness. Soft attack (0.01s) for smooth transients. Medium decay (0.8s) for natural decay. Velocity controls brightness.",
+    "technique": "Algorithm 2 = parallel carriers. Use 1:1 ratio for detuned unison. High-ratio operator (14) adds sparkle. Parallel modulation creates rich, complex tone. Velocity sensitivity for dynamic playing. Classic DX7 electric piano technique.",
+    "genre": "Jazz / R&B / Smooth",
+    "tip": "Use parallel carriers for rich tone. High-ratio operators add sparkle. Velocity sensitivity adds dynamics. Add chorus for extra width."
+  },
+
+  "algorithmDescription": "Algorithm 2: Op6 → Op1 + Op2, Op3 → Op1, Op4 → Op2, All → Output (parallel)",
+
+  "tags": ["electric piano", "fm", "smooth", "jazz", "algorithm 2", "parallel"]
+}

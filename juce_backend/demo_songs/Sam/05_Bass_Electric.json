@@ -1,0 +1,64 @@
+{
+  "name": "Bass Electric",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 120,
+  "key": "E min",
+  "duration": "3:00",
+  "difficulty": "Beginner",
+
+  "description": "Punchy electric bass with finger and slap articulations",
+
+  "features": {
+    "primary": ["Electric Bass", "Articulation Switching", "Velocity Layers"],
+    "obscure": ["Finger vs Slap", "Mute Samples", "Slide Articulations"]
+  },
+
+  "soundfont": {
+    "file": "electric_bass.sf2",
+    "preset": "01 Finger Bass",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.01,
+    "amp_decay": 0.4,
+    "amp_sustain": 0.3,
+    "amp_release": 0.2,
+    "filter_enabled": true,
+    "filter_cutoff": 0.6,
+    "filter_resonance": 0.3,
+    "filter_type": "lowpass",
+    "velocity_sensitivity": 0.8
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 36, "velocity": 110, "duration": 0.4},
+      {"note": 36, "velocity": 105, "duration": 0.4},
+      {"note": 39, "velocity": 108, "duration": 0.4},
+      {"note": 41, "velocity": 112, "duration": 0.8},
+      {"note": 43, "velocity": 108, "duration": 0.4},
+      {"note": 41, "velocity": 105, "duration": 0.4},
+      {"note": 39, "velocity": 108, "duration": 0.4},
+      {"note": 36, "velocity": 110, "duration": 0.8}
+    ]
+  },
+
+  "performance": {
+    "notes": "Electric bass with finger articulation. Fast attack (0.01s) for punch. Low sustain (0.3) for decay. Filter tames high frequencies. Velocity controls dynamics. Creates driving bassline. Can switch to slap articulation for funk.",
+    "technique": "Load electric bass SoundFont. Use finger articulation for smooth bass. Switch to slap for percussive funk. Velocity controls dynamics. Filter controls brightness. Add distortion for aggressive tone.",
+    "genre": "All Styles / Electric Bass",
+    "tip": "Use finger articulation for smooth lines. Use slap for percussive funk. Add low-pass filter for warmth. Add overdrive for grit."
+  },
+
+  "articulations": [
+    "Finger - smooth, warm",
+    "Slap - percussive, funky",
+    "Pick - bright, punchy",
+    "Mute - dead notes",
+    "Slide - pitch transitions"
+  ],
+
+  "tags": ["bass", "electric", "finger", "slap", "driving", "punchy"]
+}

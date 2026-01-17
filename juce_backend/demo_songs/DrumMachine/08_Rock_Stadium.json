@@ -1,0 +1,78 @@
+{
+  "name": "Rock Stadium",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 132,
+  "key": "E",
+  "duration": "4:00",
+  "difficulty": "Beginner",
+
+  "description": "Anthem rock with driving beat and crashing cymbals",
+
+  "features": {
+    "primary": ["Driving Rock Beat", "Crash Cymbals", "Backbeat"],
+    "obscure": ["Crash Decay", "Cymbal Choke", "Fill Triggers"]
+  },
+
+  "kit": {
+    "name": "Rock Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.8, "decay": 0.3, "snap": 0.7},
+      "hihat_open": {"tone": 0.7, "decay": 0.5, "metal": 0.6},
+      "crash": {"tone": 0.6, "decay": 0.9, "metal": 0.7}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.52,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.9,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120}, {"step": 4, "active": true, "velocity": 118},
+          {"step": 8, "active": true, "velocity": 120}, {"step": 12, "active": true, "velocity": 119}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.8,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 115}, {"step": 12, "active": true, "velocity": 115}
+        ]
+      },
+      {
+        "index": 3,
+        "type": "HiHat Open",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 100}, {"step": 8, "active": true, "velocity": 100}
+        ]
+      },
+      {
+        "index": 11,
+        "type": "Crash",
+        "timing_role": "Pocket",
+        "volume": 0.75,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 110}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Driving rock beat with crash on beat 1. Open hi-hat on 1 and 3. Backbeat snare on 2 and 4. Strong kick with click for attack. Everything slightly behind the beat (Pull timing) for pocket.",
+    "technique": "Crash should be long decay (0.9) to sustain. Use cymbal choke to stop crash when fill starts. Add fill triggers for variety.",
+    "genre": "Rock / Stadium"
+  },
+
+  "tags": ["rock", "stadium", "crash", "driving", "anthem", "backbeat"]
+}

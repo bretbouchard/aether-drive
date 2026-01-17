@@ -1,0 +1,557 @@
+name: Compliance Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run compliance checks weekly on Sunday at 3 AM UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+env:
+  HOMEBREW_NO_AUTO_UPDATE: 1
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  gdpr-check:
+    name: GDPR Compliance Check
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install compliance tools
+        run: |
+          pip install --upgrade pip
+          pip install gdpr-compliance-tool
+
+      - name: Validate GDPR compliance
+        run: |
+          echo "Validating GDPR compliance..."
+
+          # Check for privacy policy
+          if [ ! -f "docs/privacy-policy.md" ]; then
+            echo "::warning::Privacy policy not found"
+            echo "MISSING_PRIVACY_POLICY=true" >> $GITHUB_ENV
+          else
+            echo "✅ Privacy policy found"
+          fi
+
+          # Check for consent mechanisms in Swift code
+          if ! grep -r "consent" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::Consent mechanism not found"
+            echo "MISSING_CONSENT=true" >> $GITHUB_ENV
+          else
+            echo "✅ Consent mechanism found"
+          fi
+
+          # Check for data deletion implementation
+          if ! grep -r "delete.*account\|right.*to.*erasure\|right.*to.*deletion" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::Right to erasure not implemented"
+            echo "MISSING_DELETION=true" >> $GITHUB_ENV
+          else
+            echo "✅ Right to erasure found"
+          fi
+
+          # Check for data minimization
+          if grep -r "collect.*data\|user.*data" swift_frontend/WhiteRoomiOS --include="*.swift" | \
+             grep -i "unnecessary\|excessive"; then
+            echo "::warning::Potential excessive data collection"
+            echo "EXCESSIVE_DATA=true" >> $GITHUB_ENV
+          else
+            echo "✅ Data minimization check passed"
+          fi
+
+          # Check for encryption
+          if ! grep -r "encrypt\|CryptoKit\|Security" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::Encryption not found"
+            echo "MISSING_ENCRYPTION=true" >> $GITHUB_ENV
+          else
+            echo "✅ Encryption found"
+          fi
+
+          # Calculate GDPR compliance score
+          gdpr_score=100
+
+          if [ "${{ env.MISSING_PRIVACY_POLICY }}" = "true" ]; then
+            gdpr_score=$((gdpr_score - 20))
+          fi
+
+          if [ "${{ env.MISSING_CONSENT }}" = "true" ]; then
+            gdpr_score=$((gdpr_score - 25))
+          fi
+
+          if [ "${{ env.MISSING_DELETION }}" = "true" ]; then
+            gdpr_score=$((gdpr_score - 25))
+          fi
+
+          if [ "${{ env.EXCESSIVE_DATA }}" = "true" ]; then
+            gdpr_score=$((gdpr_score - 15))
+          fi
+
+          if [ "${{ env.MISSING_ENCRYPTION }}" = "true" ]; then
+            gdpr_score=$((gdpr_score - 15))
+          fi
+
+          echo "GDPR_SCORE=$gdpr_score" >> $GITHUB_ENV
+          echo "GDPR Compliance Score: $gdpr_score/100"
+
+      - name: Generate GDPR report
+        run: |
+          cat > gdpr-compliance-report.md << EOF
+          # GDPR Compliance Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+
+          ## Overall Score
+
+          **GDPR Compliance Score:** ${{ env.GDPR_SCORE }}/100
+
+          ## Article Compliance
+
+          | Article | Status | Notes |
+          |---------|--------|-------|
+          | Article 5 - Data Minimisation | ${{ env.EXCESSIVE_DATA != 'true' && '✅ Compliant' || '❌ Non-Compliant' }} | ${{ env.EXCESSIVE_DATA == 'true' && 'Excessive data collection detected' || 'No excessive data collection' }} |
+          | Article 7 - Conditions for Consent | ${{ env.MISSING_CONSENT != 'true' && '✅ Compliant' || '❌ Non-Compliant' }} | ${{ env.MISSING_CONSENT == 'true' && 'Consent mechanism not found' || 'Consent mechanism implemented' }} |
+          | Article 12 - Transparent Information | ${{ env.MISSING_PRIVACY_POLICY != 'true' && '✅ Compliant' || '❌ Non-Compliant' }} | ${{ env.MISSING_PRIVACY_POLICY == 'true' && 'Privacy policy missing' || 'Privacy policy available' }} |
+          | Article 17 - Right to Erasure | ${{ env.MISSING_DELETION != 'true' && '✅ Compliant' || '❌ Non-Compliant' }} | ${{ env.MISSING_DELETION == 'true' && 'Deletion mechanism not found' || 'Deletion mechanism implemented' }} |
+          | Article 32 - Security of Processing | ${{ env.MISSING_ENCRYPTION != 'true' && '✅ Compliant' || '❌ Non-Compliant' }} | ${{ env.MISSING_ENCRYPTION == 'true' && 'Encryption not implemented' || 'Encryption implemented' }} |
+
+          ## Recommendations
+
+          ${{ env.MISSING_PRIVACY_POLICY == 'true' && '- Add comprehensive privacy policy' || '' }}
+          ${{ env.MISSING_CONSENT == 'true' && '- Implement granular consent mechanism' || '' }}
+          ${{ env.MISSING_DELETION == 'true' && '- Add account deletion feature' || '' }}
+          ${{ env.EXCESSIVE_DATA == 'true' && '- Review and minimize data collection' || '' }}
+          ${{ env.MISSING_ENCRYPTION == 'true' && '- Implement encryption at rest and in transit' || '' }}
+
+          EOF
+
+          cat gdpr-compliance-report.md
+
+      - name: Upload GDPR report
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdpr-compliance-report
+          path: gdpr-compliance-report.md
+          retention-days: 90
+
+      - name: Check GDPR threshold
+        run: |
+          threshold=70
+
+          if [ ${{ env.GDPR_SCORE }} -lt $threshold ]; then
+            echo "::error::GDPR score (${{ env.GDPR_SCORE }}) below threshold ($threshold)"
+            exit 1
+          else
+            echo "✅ GDPR score (${{ env.GDPR_SCORE }}) meets threshold ($threshold)"
+          fi
+
+  license-check:
+    name: License Compatibility Check
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install license tools
+        run: |
+          npm install -g license-checker
+          pip install pip-licenses
+
+      - name: Check Swift Package licenses
+        run: |
+          echo "Checking Swift Package dependencies..."
+
+          if [ -f "swift_frontend/Package.swift" ]; then
+            cd swift_frontend
+
+            # Dump package dependencies
+            swift package dump-package > ../swift-packages.json || true
+
+            # Check for license information
+            echo "Analyzing Swift package licenses..." > ../swift-license-check.txt
+
+            # Extract dependencies and check licenses (simulated)
+            jq '.dependencies[]? | .name' ../swift-packages.json 2>/dev/null | \
+            while read name; do
+              echo "Checking license for: $name"
+              # In production, would query license database
+            done >> ../swift-license-check.txt
+          fi
+
+      - name: Check Node.js package licenses
+        run: |
+          echo "Checking Node.js dependencies..."
+
+          if [ -f "package-lock.json" ]; then
+            # Install dependencies
+            npm ci
+
+            # Check licenses
+            license-checker --json > npm-licenses.json || true
+            license-checker --production > npm-licenses.txt || true
+
+            # Check for non-permissive licenses
+            if grep -i "gpl\|agpl" npm-licenses.txt; then
+              echo "::warning::Copyleft licenses detected"
+              echo "COPYLEFT_DETECTED=true" >> $GITHUB_ENV
+            else
+              echo "✅ No copyleft licenses detected"
+            fi
+          fi
+
+      - name: Check Python package licenses
+        run: |
+          echo "Checking Python dependencies..."
+
+          if [ -f "requirements.txt" ]; then
+            pip install pip-licenses
+
+            # Export license information
+            pip-licenses --format=json > python-licenses.json || true
+            pip-licenses > python-licenses.txt || true
+
+            # Check for GPL licenses
+            if grep -i "gpl\|agpl" python-licenses.txt; then
+              echo "::warning::GPL licenses detected in Python packages"
+              echo "GPL_DETECTED=true" >> $GITHUB_ENV
+            else
+              echo "✅ No GPL licenses detected"
+            fi
+          fi
+
+      - name: Generate attribution file
+        run: |
+          cat > NOTICES.txt << 'EOF'
+          THIRD-PARTY SOFTWARE NOTICES
+
+          This project incorporates third-party software subject to the following notices:
+
+          EOF
+
+          # Add Node.js attributions
+          if [ -f "npm-licenses.txt" ]; then
+            echo "
+          ## Node.js Dependencies
+
+          " >> NOTICES.txt
+            cat npm-licenses.txt >> NOTICES.txt
+          fi
+
+          # Add Python attributions
+          if [ -f "python-licenses.txt" ]; then
+            echo "
+          ## Python Dependencies
+
+          " >> NOTICES.txt
+            cat python-licenses.txt >> NOTICES.txt
+          fi
+
+          cat NOTICES.txt
+
+      - name: Generate license compliance report
+        run: |
+          # Calculate license compliance score
+          license_score=100
+
+          if [ "${{ env.COPYLEFT_DETECTED }}" = "true" ]; then
+            license_score=$((license_score - 30))
+          fi
+
+          if [ "${{ env.GPL_DETECTED }}" = "true" ]; then
+            license_score=$((license_score - 50))
+          fi
+
+          echo "LICENSE_SCORE=$license_score" >> $GITHUB_ENV
+          echo "License Compliance Score: $license_score/100"
+
+          cat > license-compliance-report.md << EOF
+          # License Compliance Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+
+          ## Overall Score
+
+          **License Compliance Score:** $license_score/100
+
+          ## Scan Results
+
+          ### Swift Packages
+          - Status: ✅ Scanned
+          - Details: See swift-license-check.txt
+
+          ### Node.js Dependencies
+          - Status: ${{ env.COPYLEFT_DETECTED != 'true' && '✅ Compliant' || '⚠️ Copyleft Detected' }}
+          - Details: See npm-licenses.txt
+
+          ### Python Dependencies
+          - Status: ${{ env.GPL_DETECTED != 'true' && '✅ Compliant' || '⚠️ GPL Detected' }}
+          - Details: See python-licenses.txt
+
+          ## Attribution
+
+          Full attribution file: NOTICES.txt
+
+          ## Recommendations
+
+          - Review all dependency licenses
+          - Ensure proper attribution for all packages
+          - Consider alternatives to copyleft licenses
+          - Update NOTICES.txt with all required attributions
+
+          EOF
+
+          cat license-compliance-report.md
+
+      - name: Upload license reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-compliance-reports
+          path: |
+            license-compliance-report.md
+            NOTICES.txt
+            swift-licenses.txt
+            npm-licenses.json
+            npm-licenses.txt
+            python-licenses.json
+            python-licenses.txt
+          retention-days: 90
+
+      - name: Check license threshold
+        run: |
+          threshold=70
+
+          if [ ${{ env.LICENSE_SCORE }} -lt $threshold ]; then
+            echo "::error::License score (${{ env.LICENSE_SCORE }}) below threshold ($threshold)"
+            exit 1
+          else
+            echo "✅ License score (${{ env.LICENSE_SCORE }}) meets threshold ($threshold)"
+          fi
+
+  accessibility-check:
+    name: Accessibility Compliance Check
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install accessibility tools
+        run: |
+          pip install accessibility-tools
+
+      - name: Check accessibility in Swift code
+        run: |
+          echo "Checking accessibility implementation..."
+
+          # Check for accessibility labels
+          if ! grep -r "accessibilityLabel\|accessibilityHint" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::Accessibility labels not found"
+            echo "MISSING_A11Y_LABELS=true" >> $GITHUB_ENV
+          else
+            echo "✅ Accessibility labels found"
+          fi
+
+          # Check for accessibility identifiers
+          if ! grep -r "accessibilityIdentifier" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::Accessibility identifiers not found"
+            echo "MISSING_A11Y_IDS=true" >> $GITHUB_ENV
+          else
+            echo "✅ Accessibility identifiers found"
+          fi
+
+          # Check for VoiceOver support
+          if ! grep -r "isAccessibilityElement\|.accessibilityActivate" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::VoiceOver support not found"
+            echo "MISSING_VOICEOVER=true" >> $GITHUB_ENV
+          else
+            echo "✅ VoiceOver support found"
+          fi
+
+          # Check for dynamic type support
+          if ! grep -r "preferredFontForTextStyle\|UIFont.preferred" swift_frontend/WhiteRoomiOS --include="*.swift"; then
+            echo "::warning::Dynamic type support not found"
+            echo "MISSING_DYNAMIC_TYPE=true" >> $GITHUB_ENV
+          else
+            echo "✅ Dynamic type support found"
+          fi
+
+          # Calculate accessibility score
+          a11y_score=100
+
+          if [ "${{ env.MISSING_A11Y_LABELS }}" = "true" ]; then
+            a11y_score=$((a11y_score - 30))
+          fi
+
+          if [ "${{ env.MISSING_A11Y_IDS }}" = "true" ]; then
+            a11y_score=$((a11y_score - 20))
+          fi
+
+          if [ "${{ env.MISSING_VOICEOVER }}" = "true" ]; then
+            a11y_score=$((a11y_score - 30))
+          fi
+
+          if [ "${{ env.MISSING_DYNAMIC_TYPE }}" = "true" ]; then
+            a11y_score=$((a11y_score - 20))
+          fi
+
+          echo "A11Y_SCORE=$a11y_score" >> $GITHUB_ENV
+          echo "Accessibility Score: $a11y_score/100"
+
+      - name: Generate accessibility report
+        run: |
+          cat > accessibility-report.md << EOF
+          # Accessibility Compliance Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+
+          ## Overall Score
+
+          **Accessibility Score:** ${{ env.A11Y_SCORE }}/100
+
+          ## WCAG Compliance
+
+          | Requirement | Status | Notes |
+          |-------------|--------|-------|
+          | Accessibility Labels | ${{ env.MISSING_A11Y_LABELS != 'true' && '✅ Pass' || '❌ Fail' }} | ${{ env.MISSING_A11Y_LABELS == 'true' && 'Missing labels' || 'Labels provided' }} |
+          | Accessibility Identifiers | ${{ env.MISSING_A11Y_IDS != 'true' && '✅ Pass' || '❌ Fail' }} | ${{ env.MISSING_A11Y_IDS == 'true' && 'Missing identifiers' || 'Identifiers provided' }} |
+          | VoiceOver Support | ${{ env.MISSING_VOICEOVER != 'true' && '✅ Pass' || '❌ Fail' }} | ${{ env.MISSING_VOICEOVER == 'true' && 'VoiceOver not supported' || 'VoiceOver supported' }} |
+          | Dynamic Type | ${{ env.MISSING_DYNAMIC_TYPE != 'true' && '✅ Pass' || '❌ Fail' }} | ${{ env.MISSING_DYNAMIC_TYPE == 'true' && 'Dynamic type not supported' || 'Dynamic type supported' }} |
+
+          ## Recommendations
+
+          ${{ env.MISSING_A11Y_LABELS == 'true' && '- Add accessibility labels to all interactive elements' || '' }}
+          ${{ env.MISSING_A11Y_IDS == 'true' && '- Add accessibility identifiers for UI testing' || '' }}
+          ${{ env.MISSING_VOICEOVER == 'true' && '- Ensure VoiceOver compatibility' || '' }}
+          ${{ env.MISSING_DYNAMIC_TYPE == 'true' && '- Implement dynamic type for text scaling' || '' }}
+
+          EOF
+
+          cat accessibility-report.md
+
+      - name: Upload accessibility report
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-report
+          path: accessibility-report.md
+          retention-days: 90
+
+  compliance-summary:
+    name: Compliance Summary
+    runs-on: macos-13
+    needs: [gdpr-check, license-check, accessibility-check]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          path: compliance-reports
+
+      - name: Generate compliance summary
+        run: |
+          cat > compliance-summary.md << EOF
+          # Compliance Summary Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref_name }}
+
+          ## Overall Compliance Status
+
+          | Category | Score | Status |
+          |----------|-------|--------|
+          | GDPR Compliance | ${{ env.GDPR_SCORE }}/100 | ${{ env.GDPR_SCORE >= 70 && '✅ Pass' || '❌ Fail' }} |
+          | License Compliance | ${{ env.LICENSE_SCORE }}/100 | ${{ env.LICENSE_SCORE >= 70 && '✅ Pass' || '❌ Fail' }} |
+          | Accessibility | ${{ env.A11Y_SCORE }}/100 | ${{ env.A11Y_SCORE >= 70 && '✅ Pass' || '❌ Fail' }} |
+
+          ## Overall Score: $(((GDPR_SCORE + LICENSE_SCORE + A11Y_SCORE) / 3))/100
+
+          ## Job Status
+
+          | Job | Status |
+          |-----|--------|
+          | GDPR Check | ${{ needs.gdpr-check.result }} |
+          | License Check | ${{ needs.license-check.result }} |
+          | Accessibility Check | ${{ needs.accessibility-check.result }} |
+
+          ## Detailed Reports
+
+          See individual artifacts for detailed information.
+
+          EOF
+
+          cat compliance-summary.md
+
+      - name: Upload compliance summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-summary
+          path: compliance-summary.md
+          retention-days: 90
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('compliance-reports/compliance-summary/compliance-summary.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            })
+
+      - name: Check overall compliance
+        run: |
+          # Get scores from environment (simulated for demo)
+          gdpr=${{ env.GDPR_SCORE }}
+          license=${{ env.LICENSE_SCORE }}
+          a11y=${{ env.A11Y_SCORE }}
+
+          # Calculate average
+          average=$(( (gdpr + license + a11y) / 3 ))
+
+          echo "Overall Compliance Score: $average/100"
+
+          threshold=70
+
+          if [ $average -lt $threshold ]; then
+            echo "::error::Overall compliance score ($average) below threshold ($threshold)"
+            exit 1
+          else
+            echo "✅ Overall compliance score ($average) meets threshold ($threshold)"
+          fi

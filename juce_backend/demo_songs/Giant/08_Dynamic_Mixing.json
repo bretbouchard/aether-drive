@@ -1,0 +1,98 @@
+{
+  "name": "Dynamic Mixing",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 110,
+  "key": "D maj",
+  "duration": "4:30",
+  "difficulty": "Advanced",
+
+  "description": "Demonstration of dynamic mixing with automated instrument levels and panning",
+
+  "features": {
+    "primary": ["Dynamic Mixing", "Automation Showcase", "Mix Evolution"],
+    "obscure": ["Volume Automation", "Pan Automation", "Instrument Spotlight"]
+  },
+
+  "instruments": {
+    "piano": {
+      "enabled": true,
+      "volume": 0.7,
+      "pan": -0.3,
+      "preset": "Grand Piano"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.6,
+      "pan": 0.3,
+      "preset": "String Ensemble"
+    },
+    "brass": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.0,
+      "preset": "Brass Section"
+    },
+    "woodwind": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.0,
+      "preset": "Woodwind Section"
+    },
+    "choir": {
+      "enabled": true,
+      "volume": 0.4,
+      "pan": 0.0,
+      "preset": "Choir Pad"
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.8,
+    "reverb_enabled": true,
+    "reverb_amount": 0.4,
+    "reverb_decay": 2.0
+  },
+
+  "automation": [
+    {"bar": 1, "piano_volume": 0.7, "piano_pan": -0.3, "strings_volume": 0.3, "strings_pan": 0.0},
+    {"bar": 8, "piano_volume": 0.5, "piano_pan": 0.0, "strings_volume": 0.6, "strings_pan": 0.3},
+    {"bar": 16, "strings_volume": 0.5, "strings_pan": 0.0, "brass_volume": 0.7, "brass_pan": -0.2},
+    {"bar": 24, "brass_volume": 0.5, "brass_pan": 0.0, "woodwind_volume": 0.7, "woodwind_pan": 0.2},
+    {"bar": 32, "woodwind_volume": 0.5, "woodwind_pan": 0.0, "choir_volume": 0.6, "choir_pan": 0.0},
+    {"bar": 40, "all_volumes": 0.5, "piano_volume": 0.7}
+  ],
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 80, "duration": 2.0},
+      {"note": 54, "velocity": 78, "duration": 2.0},
+      {"note": 57, "velocity": 82, "duration": 2.0},
+      {"note": 62, "velocity": 85, "duration": 3.0},
+      {"note": 66, "velocity": 83, "duration": 2.0},
+      {"note": 62, "velocity": 80, "duration": 2.0},
+      {"note": 57, "velocity": 78, "duration": 2.0},
+      {"note": 54, "velocity": 76, "duration": 2.0},
+      {"note": 50, "velocity": 78, "duration": 3.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Dynamic mixing demonstration with automated instrument levels and panning. Bars 1-8: Piano spotlight (volume 0.7, pan left -0.3), strings soft (volume 0.3, center). Bars 9-16: Strings spotlight (volume 0.6, pan right 0.3), piano fades (volume 0.5, center). Bars 17-24: Brass spotlight (volume 0.7, pan left -0.2), strings fade. Bars 25-32: Woodwind spotlight (volume 0.7, pan right 0.2), brass fade. Bars 33-40: Choir spotlight (volume 0.6, center), woodwind fade. Bars 41-48: All balanced, piano returns to melody. Each instrument gets spotlight. Creates dynamic, evolving mix.",
+    "technique": "Automate volume for spotlight. Automate pan for movement. One instrument spotlighted at a time. Others fade to background. Cycle through instruments. Return to balance at end. Dynamic mix = evolution.",
+    "structure": "Bars 1-8: Piano spotlight. Bars 9-16: Strings spotlight. Bars 17-24: Brass spotlight. Bars 25-32: Woodwind spotlight. Bars 33-40: Choir spotlight. Bars 41-48: Balance.",
+    "genre": "All Genres / Mixing Showcase",
+    "tip": "Volume automation = spotlight. Pan automation = movement. One instrument at a time = focus. Cycle through instruments = variety. Return to balance = resolution."
+  },
+
+  "mixingTechniques": [
+    "Spotlight automation - highlight instruments",
+    "Volume fades - transition",
+    "Pan automation - movement",
+    "Cycle through instruments - variety",
+    "Return to balance - resolution",
+    "Dynamic evolution - interest"
+  ],
+
+  "tags": ["mixing", "automation", "dynamic", "spotlight", "evolution", "advanced"]
+}

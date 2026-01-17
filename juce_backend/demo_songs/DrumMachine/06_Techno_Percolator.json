@@ -1,0 +1,70 @@
+{
+  "name": "Techno Percolator",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 135,
+  "key": "C",
+  "duration": "4:00",
+  "difficulty": "Advanced",
+
+  "description": "Hypnotic techno with evolving patterns and industrial percussion",
+
+  "features": {
+    "primary": ["Evolving Patterns", "Industrial Percussion", "Mutating Groove"],
+    "obscure": ["Mutation Rate", "Chaos Amount", "Automation Lane"]
+  },
+
+  "kit": {
+    "name": "Industrial Kit",
+    "voices": {
+      "kick": {"pitch": 0.7, "decay": 0.4, "click": 0.6},
+      "percussion": {"tone": 0.6, "decay": 0.3, "metal": 0.8}
+    }
+  },
+
+  "drill": {
+    "enabled": true,
+    "amount": 0.6,
+    "mutationRate": 0.4,
+    "chaosAmount": 0.5,
+    "automation": {
+      "points": [
+        {"bar": 16, "amount": 0.8},
+        {"bar": 32, "amount": 0.4},
+        {"bar": 48, "amount": 0.9},
+        {"bar": 64, "amount": 0.6}
+      ]
+    }
+  },
+
+  "pattern": {
+    "length": 32,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Push",
+        "volume": 0.85,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120}, {"step": 8, "active": true, "velocity": 118},
+          {"step": 16, "active": true, "velocity": 122}, {"step": 24, "active": true, "velocity": 119}
+        ]
+      },
+      {
+        "index": 9,
+        "type": "Percussion",
+        "timing_role": "Push",
+        "drill_override": {"use_override": true, "enabled": true, "mutationRate": 0.5}
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Hypnotic techno with evolving percussion. Mutation rate 0.4 creates slow evolution. Automation lane changes drill amount over 64 bars. Chaos amount 0.5 adds controlled randomness. Pattern never repeats exactly.",
+    "technique": "Use automation lane to create song structure. Mutation rate should be slow (0.3-0.5) for evolution. Too fast = chaos, too slow = boring.",
+    "genre": "Techno / Industrial"
+  },
+
+  "tags": ["techno", "industrial", "evolving", "mutation", "automation", "hypnotic"]
+}

@@ -9,6 +9,35 @@
 import Foundation
 
 // =============================================================================
+// MARK: - Global Signal Handler
+// =============================================================================
+
+// Global signal handler (C function pointer compatible)
+private func globalSignalHandler(_ sig: Int32) {
+    let signalNames: [Int32: String] = [
+        SIGABRT: "SIGABRT",
+        SIGILL: "SIGILL",
+        SIGSEGV: "SIGSEGV",
+        SIGFPE: "SIGFPE",
+        SIGBUS: "SIGBUS",
+        SIGPIPE: "SIGPIPE"
+    ]
+
+    let signalName = signalNames[sig] ?? "SIGUNKNOWN"
+
+    Task { @MainActor in
+        CrashReporting.shared.recordFatalSignal(
+            name: signalName,
+            signal: sig
+        )
+    }
+
+    // Restore default signal handler and re-raise
+    signal(sig, SIG_DFL)
+    raise(sig)
+}
+
+// =============================================================================
 // MARK: - Crash Reporting Service
 // =============================================================================
 
@@ -128,18 +157,8 @@ public class CrashReporting: Sendable {
         let signals = [SIGABRT, SIGILL, SIGSEGV, SIGFPE, SIGBUS, SIGPIPE]
 
         for signalId in signals {
-            _ = signal(signalId) { sig in
-                let signalName = self.signalToString(sig)
-                Task { @MainActor in
-                    CrashReporting.shared.recordFatalSignal(
-                        name: signalName,
-                        signal: sig
-                    )
-                }
-                // Restore default signal handler and re-raise
-                signal(sig, SIG_DFL)
-                raise(sig)
-            }
+            // Use global C function pointer (no context capture)
+            _ = signal(signalId, globalSignalHandler)
         }
     }
 

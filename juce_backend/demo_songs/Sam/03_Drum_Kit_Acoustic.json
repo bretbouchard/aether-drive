@@ -1,0 +1,68 @@
+{
+  "name": "Drum Kit Acoustic",
+  "instrument": "Sam",
+  "instrumentType": "SoundFont Sampler",
+  "bpm": 110,
+  "key": "C",
+  "duration": "2:30",
+  "difficulty": "Beginner",
+
+  "description": "Professional acoustic drum kit with realistic samples and velocity layers",
+
+  "features": {
+    "primary": ["Acoustic Drum Kit", "Velocity Layers", "Multiple Articulations"],
+    "obscure": ["Round-Robin Hi-Hats", "Cymbal Swells", "Direct vs Room Mics"]
+  },
+
+  "soundfont": {
+    "file": "acoustic_drums.sf2",
+    "preset": "00 Standard Kit",
+    "bank": 0
+  },
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 0.5,
+    "amp_sustain": 0.0,
+    "amp_release": 0.3,
+    "round_robin_enabled": true,
+    "round_robin_count": 8,
+    "velocity_layers": 16,
+    "cymbal_decay": 1.5
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 36, "velocity": 120, "duration": 0.5},
+      {"note": 36, "velocity": 115, "duration": 0.5},
+      {"note": 38, "velocity": 100, "duration": 0.3},
+      {"note": 36, "velocity": 118, "duration": 0.5},
+      {"note": 40, "velocity": 110, "duration": 0.3},
+      {"note": 38, "velocity": 100, "duration": 0.3},
+      {"note": 36, "velocity": 120, "duration": 0.5},
+      {"note": 42, "velocity": 105, "duration": 0.2},
+      {"note": 42, "velocity": 100, "duration": 0.2},
+      {"note": 36, "velocity": 118, "duration": 0.5}
+    ]
+  },
+
+  "performance": {
+    "notes": "Acoustic drum kit with realistic samples. Round-robin hi-hats (8 variations) prevent machine gun effect. 16 velocity layers for dynamic range. Instant attack for transient snap. Medium decay for natural drum sound. Cymbals have long decay (1.5s) for realistic ring.",
+    "technique": "Load acoustic drum SoundFont. Use round-robin for hi-hats and cymbals. Velocity controls volume and tone. Hard velocity = loud, bright. Soft velocity = quiet, dark. Cymbals sustain naturally.",
+    "genre": "All Styles / Acoustic Drums",
+    "tip": "Use round-robin to prevent repetition. Vary velocity for human feel. Hard hits for accent. Soft hits for ghost notes. Cymbals need long decay."
+  },
+
+  "drumMapping": [
+    "C2 (36) - Kick",
+    "D2 (38) - Snare",
+    "E2 (40) - Hi-Hat Closed",
+    "F2 (42) - Hi-Hat Open",
+    "G2 (44) - Tom Low",
+    "A2 (45) - Tom Hi",
+    "B2 (47) - Crash",
+    "C3 (49) - Ride"
+  ],
+
+  "tags": ["drums", "acoustic", "kit", "velocity", "realistic", "round-robin"]
+}

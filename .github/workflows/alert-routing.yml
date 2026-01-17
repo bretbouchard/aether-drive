@@ -1,0 +1,474 @@
+name: Alert Routing and Incident Response
+
+on:
+  workflow_run:
+    workflows: ["Phase 2 Complete Test Suite", "monitoring-dashboard"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      alert_type:
+        description: 'Type of alert to test'
+        required: true
+        default: 'test_failure'
+        type: choice
+        options:
+          - test_failure
+          - build_failure
+          - performance_degradation
+          - security_vulnerability
+          - flaky_test
+          - deployment_failure
+          - system_down
+      severity:
+        description: 'Alert severity level'
+        required: true
+        default: 'error'
+        type: choice
+        options:
+          - info
+          - warning
+          - error
+          - critical
+
+env:
+  SWIFT_VERSION: '5.9'
+  XCODE_VERSION: '15.0'
+
+jobs:
+  # Parse Failures Job
+  parse-failures:
+    name: Parse Test Failures
+    runs-on: macos-13
+    if: |
+      github.event.workflow_run.event == 'completed' &&
+      github.event.workflow_run.conclusion == 'failure'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Test Results
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: ${{ github.event.workflow_run.name }}
+          run_id: ${{ github.event.workflow_run.id }}
+          name: test-results
+          path: test-results/
+
+      - name: Parse Failure Data
+        id: parse
+        run: |
+          # Parse test failure data
+          cat > alert-data.json << EOF
+          {
+            "type": "test_failure",
+            "severity": "error",
+            "title": "Test Suite Failed",
+            "message": "$(cat test-results/summary.json | jq -r '.failures | first?.message // "Multiple test failures"')",
+            "source": "${{ github.event.workflow_run.name }}",
+            "context": {
+              "run_id": "${{ github.event.workflow_run.id }}",
+              "run_number": "${{ github.event.workflow_run.run_number }}",
+              "branch": "${{ github.event.workflow_run.head_branch }}",
+              "commit": "${{ github.event.workflow_run.head_sha }}"
+            },
+            "failed_tests": $(cat test-results/summary.json | jq '.failures | map({name, file, line, message})'),
+            "failure_count": $(cat test-results/summary.json | jq '.failures | length')
+          }
+          EOF
+
+          # Set output for next job
+          echo "alert_type=test_failure" >> $GITHUB_OUTPUT
+          echo "alert_severity=error" >> $GITHUB_OUTPUT
+          echo "failure_count=$(cat test-results/summary.json | jq '.failures | length')" >> $GITHUB_OUTPUT
+
+      - name: Upload Alert Data
+        uses: actions/upload-artifact@v3
+        with:
+          name: alert-data
+          path: alert-data.json
+          retention-days: 7
+
+  # Route Alerts Job
+  route-alerts:
+    name: Route Alerts to Destinations
+    runs-on: macos-13
+    needs: parse-failures
+    if: needs.parse-failures.result == 'success' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Build Alert Router
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          swift build -c release --product AlertRouter
+
+      - name: Download or Create Alert Data
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Create test alert from inputs
+            cat > alert-data.json << EOF
+            {
+              "type": "${{ github.event.inputs.alert_type }}",
+              "severity": "${{ github.event.inputs.severity }}",
+              "title": "Test Alert: ${{ github.event.inputs.alert_type }}",
+              "message": "This is a test alert triggered via workflow_dispatch",
+              "source": "GitHub Actions",
+              "context": {
+                "workflow": "alert-routing.yml",
+                "run_id": "${{ github.run_id }}",
+                "triggered_by": "${{ github.actor }}"
+              }
+            }
+            EOF
+          else
+            # Download from previous job
+            uses: actions/download-artifact@v3
+            with:
+              name: alert-data
+          fi
+
+      - name: Route Alert
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Route alert based on rules
+          .build/release/AlertRouter route \
+            --alert-file ../../alert-data.json \
+            --config .alert-rules.json \
+            --output routing-result.json
+
+          # Check routing result
+          ROUTE_SUCCESS=$(cat routing-result.json | jq -r '.success')
+          if [ "$ROUTE_SUCCESS" != "true" ]; then
+            echo "❌ Alert routing failed"
+            cat routing-result.json | jq -r '.error'
+            exit 1
+          fi
+
+          echo "✅ Alert routed successfully to $(cat routing-result.json | jq -r '.destinations | length') destinations"
+
+      - name: Display Routing Result
+        run: |
+          echo "### Alert Routing Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat swift_frontend/WhiteRoomiOS/routing-result.json | jq '.' >> $GITHUB_STEP_SUMMARY
+
+      - name: Send Slack Notifications
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_ALERTS }}
+        run: |
+          # Send Slack notification
+          curl -X POST "$SLACK_WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -d @- << EOF
+          {
+            "text": "$(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.title')",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "🚨 $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.type | ascii_upcase')"
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Severity:*\n$(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.severity')"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Source:*\n$(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.source')"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "$(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.message')"
+                }
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Details"
+                    },
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+
+      - name: Send Email Notifications
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "🚨 $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.title')"
+          to: ${{ secrets.ALERT_EMAIL_RECIPIENTS }}
+          from: White Room Monitor <monitoring@whiteroom.dev>
+          body: |
+            Alert Details:
+            -------------
+
+            Type: $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.type')
+            Severity: $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.severity')
+            Title: $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.title')
+            Message: $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.message')
+            Source: $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.source')
+
+            Context:
+            $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.context | to_entries | .[] | "\(.key): \(.value)"')
+
+            View Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Send PagerDuty Alert
+        if: |
+          cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.severity' == 'critical'
+        env:
+          PAGERDUTY_INTEGRATION_KEY: ${{ secrets.PAGERDUTY_INTEGRATION_KEY }}
+        run: |
+          # Create PagerDuty incident
+          curl -X POST "https://events.pagerduty.com/v2/enqueue" \
+            -H 'Content-Type: application/json' \
+            -d @- << EOF
+          {
+            "routing_key": "$PAGERDUTY_INTEGRATION_KEY",
+            "event_action": "trigger",
+            "payload": {
+              "summary": "$(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.title')",
+              "severity": "critical",
+              "source": "White Room Monitoring",
+              "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+              "custom_details": $(cat swift_frontend/WhiteRoomiOS/routing-result.json | jq -r '.alert.context')
+            }
+          }
+          EOF
+
+      - name: Upload Routing Result
+        uses: actions/upload-artifact@v3
+        with:
+          name: routing-result
+          path: swift_frontend/WhiteRoomiOS/routing-result.json
+          retention-days: 30
+
+  # Create Incident Job
+  create-incident:
+    name: Create Incident
+    runs-on: macos-13
+    needs: [parse-failures, route-alerts]
+    if: |
+      always() &&
+      needs.route-alerts.result == 'success' &&
+      (needs.parse-failures.outputs.alert_severity == 'error' ||
+       needs.parse-failures.outputs.alert_severity == 'critical')
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Download Alert Data
+        uses: actions/download-artifact@v3
+        with:
+          name: alert-data
+
+      - name: Build Incident Responder
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          swift build -c release --product IncidentResponder
+
+      - name: Create Incident
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Create incident from alert
+          .build/release/IncidentResponder create \
+            --alert-file ../../alert-data.json \
+            --playbook-file .incident-playbooks.json \
+            --output incident.json
+
+          # Display incident details
+          echo "### Incident Created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat incident.json | jq '.' >> $GITHUB_STEP_SUMMARY
+
+      - name: Execute Response Playbook
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Get playbook from incident
+          PLAYBOOK=$(cat incident.json | jq -r '.playbook')
+
+          if [ "$PLAYBOOK" != "null" ]; then
+            # Execute playbook if auto-execute is enabled
+            AUTO_EXECUTE=$(cat incident.json | jq -r '.playbook.autoExecute')
+
+            if [ "$AUTO_EXECUTE" = "true" ]; then
+              .build/release/IncidentResponder execute-playbook \
+                --incident-file incident.json \
+                --output playbook-result.json
+
+              echo "### Playbook Execution Result" >> $GITHUB_STEP_SUMMARY
+              cat playbook-result.json | jq '.' >> $GITHUB_STEP_SUMMARY
+            else
+              echo "⚠️ Playbook requires manual approval: $PLAYBOOK"
+            fi
+          else
+            echo "ℹ️ No playbook configured for this alert type"
+          fi
+
+      - name: Create GitHub Issue for Incident
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const incident = JSON.parse(fs.readFileSync('swift_frontend/WhiteRoomiOS/incident.json', 'utf8'));
+
+            const issueTitle = `🚨 Incident: ${incident.alert.title}`;
+            const issueBody = `## Incident Details
+
+            **ID:** ${incident.id}
+            **Type:** ${incident.alert.type}
+            **Severity:** ${incident.severity}
+            **Status:** ${incident.status}
+            **Started:** ${incident.startedAt}
+
+            ### Alert
+            **Title:** ${incident.alert.title}
+            **Message:** ${incident.alert.message}
+            **Source:** ${incident.alert.source}
+
+            ### Context
+            ${Object.entries(incident.alert.context).map(([k, v]) => `- **${k}:** ${v}`).join('\n')}
+
+            ${incident.playbook ? `
+            ### Response Playbook
+            **Name:** ${incident.playbook.name}
+            **Description:** ${incident.playbook.description}
+            **Auto-Execute:** ${incident.playbook.autoExecute}
+
+            ### Steps
+            ${incident.playbook.steps.map((step, i) => `${i + 1}. ${step.description}`).join('\n')}
+            ` : ''}
+
+            ### Workflow
+            - Triggered by: ${{ github.event.workflow_run.name }}
+            - Run ID: ${{ github.event.workflow_run.id }}
+            - Run URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}
+            `;
+
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: issueTitle,
+              body: issueBody,
+              labels: ['incident', incident.alert.type, incident.severity]
+            });
+
+            console.log(`Created issue: #${issue.data.number}`);
+
+            // Add issue number to incident
+            incident.issueNumber = issue.data.number;
+            fs.writeFileSync('swift_frontend/WhiteRoomiOS/incident.json', JSON.stringify(incident, null, 2));
+
+      - name: Update Incident with Issue Reference
+        working-directory: swift_frontend/WhiteRoomiOS
+        run: |
+          # Update incident with issue reference
+          INCIDENT_NUMBER=$(cat incident.json | jq -r '.issueNumber')
+          echo "Incident issue: #$INCIDENT_NUMBER"
+
+      - name: Send Incident Notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: |
+            🚨 New Incident Created
+
+            Alert: $(cat swift_frontend/WhiteRoomiOS/incident.json | jq -r '.alert.title')
+            Severity: $(cat swift_frontend/WhiteRoomiOS/incident.json | jq -r '.severity')
+            Issue: #$(cat swift_frontend/WhiteRoomiOS/incident.json | jq -r '.issueNumber')
+
+            View details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_INCIDENTS }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_INCIDENTS }}
+
+      - name: Upload Incident Data
+        uses: actions/upload-artifact@v3
+        with:
+          name: incident
+          path: |
+            swift_frontend/WhiteRoomiOS/incident.json
+            swift_frontend/WhiteRoomiOS/playbook-result.json
+          retention-days: 90
+
+  # Track Incident Job
+  track-incident:
+    name: Track Incident Metrics
+    runs-on: macos-13
+    needs: create-incident
+    if: always()
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Incident Data
+        uses: actions/download-artifact@v3
+        with:
+          name: incident
+
+      - name: Update Incident Metrics
+        run: |
+          # Store incident metrics
+          INCIDENT_TIME=$(cat swift_frontend/WhiteRoomiOS/incident.json | jq -r '.startedAt')
+          INCIDENT_SEVERITY=$(cat swift_frontend/WhiteRoomiOS/incident.json | jq -r '.severity')
+          INCIDENT_TYPE=$(cat swift_frontend/WhiteRoomiOS/incident.json | jq -r '.alert.type')
+
+          # Append to metrics file
+          echo "$INCIDENT_TIME,$INCIDENT_SEVERITY,$INCIDENT_TYPE" >> .incident-metrics.csv
+
+          # Calculate incident statistics
+          TOTAL_INCIDENTS=$(wc -l < .incident-metrics.csv)
+          CRITICAL_COUNT=$(grep ",critical," .incident-metrics.csv | wc -l)
+          ERROR_COUNT=$(grep ",error," .incident-metrics.csv | wc -l)
+
+          echo "### Incident Metrics" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Total Incidents: $TOTAL_INCIDENTS" >> $GITHUB_STEP_SUMMARY
+          echo "- Critical: $CRITICAL_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- Error: $ERROR_COUNT" >> $GITHUB_STEP_SUMMARY
+
+      - name: Commit Metrics
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add .incident-metrics.csv
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update incident metrics [skip ci]"
+
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

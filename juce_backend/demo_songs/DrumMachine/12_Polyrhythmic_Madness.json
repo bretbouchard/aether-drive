@@ -1,0 +1,82 @@
+{
+  "name": "Polyrhythmic Madness",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 128,
+  "key": "C",
+  "duration": "3:00",
+  "difficulty": "Advanced",
+
+  "description": "Complex polyrhythms with 3-over-2, 5-over-4, and 7-over-8 patterns",
+
+  "features": {
+    "primary": ["Polyrhythms", "Odd Time Signatures", "Cross-Rhythms"],
+    "obscure": ["Pattern Length Override", "Track Length Independence", "Micro-Timing"]
+  },
+
+  "kit": {
+    "name": "Polyrhythm Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.4, "click": 0.5},
+      "snare": {"tone": 0.7, "decay": 0.3, "snap": 0.6},
+      "tom_mid": {"pitch": 0.5, "decay": 0.5, "tone": 0.6}
+    }
+  },
+
+  "pattern": {
+    "length": 24,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.85,
+        "patternLength": 3,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120},
+          {"step": 3, "active": true, "velocity": 120},
+          {"step": 6, "active": true, "velocity": 120}
+        ]
+      },
+      {
+        "index": 1,
+        "type": "Snare",
+        "timing_role": "Pocket",
+        "volume": 0.8,
+        "patternLength": 2,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 115},
+          {"step": 2, "active": true, "velocity": 115}
+        ]
+      },
+      {
+        "index": 6,
+        "type": "Tom Mid",
+        "timing_role": "Push",
+        "volume": 0.7,
+        "patternLength": 5,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 100},
+          {"step": 5, "active": true, "velocity": 100},
+          {"step": 10, "active": true, "velocity": 100}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "3-over-2 polyrhythm. Kick pattern length 3 (every 3 steps). Snare pattern length 2 (every 2 steps). They cycle every 6 steps. 5-length tom pattern adds 5-over-4 feel. Overall pattern length 24 steps (LCM of 2, 3, 5).",
+    "technique": "Per-track pattern length independence is the key. Track lengths should be coprime (2, 3, 5) for true polyrhythm. Overall pattern length = LCM of all track lengths. Creates complex cycling rhythms.",
+    "genre": "Math Rock / Avant-Garde"
+  },
+
+  "polyrhythms": [
+    "3-over-2: Kick every 3 steps, snare every 2",
+    "5-over-4: Toms every 5 steps, beat every 4",
+    "7-over-8: Percussion every 7, hi-hats every 8",
+    "All create complex cycling patterns"
+  ],
+
+  "tags": ["polyrhythm", "odd time", "math rock", "complex", "avant-garde", "pattern length"]
+}

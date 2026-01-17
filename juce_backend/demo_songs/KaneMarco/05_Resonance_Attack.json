@@ -1,0 +1,59 @@
+{
+  "name": "Resonance Attack",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 130,
+  "key": "E min",
+  "duration": "3:00",
+  "difficulty": "Intermediate",
+
+  "description": "Percussive resonance with sharp attack and quick decay",
+
+  "features": {
+    "primary": ["Percussive Resonance", "Sharp Attack", "Quick Decay"],
+    "obscure": ["Attack Transient", "Resonant Snap", "Percussive Physical Modeling"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "resonance_amount": 0.85,
+    "resonance_decay": 0.4,
+    "resonance_attack": 0.001,
+    "string_tension": 0.7,
+    "string_damping": 0.6,
+    "brightness": 0.75,
+    "body_resonance": 0.4,
+    "velocity_sensitivity": 0.9
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 52, "velocity": 115, "duration": 0.3},
+      {"note": 52, "velocity": 110, "duration": 0.3},
+      {"note": 56, "velocity": 112, "duration": 0.3},
+      {"note": 52, "velocity": 115, "duration": 0.3},
+      {"note": 59, "velocity": 118, "duration": 0.4},
+      {"note": 56, "velocity": 112, "duration": 0.3},
+      {"note": 52, "velocity": 115, "duration": 0.3},
+      {"note": 52, "velocity": 110, "duration": 0.3}
+    ]
+  },
+
+  "performance": {
+    "notes": "Percussive resonance using physical modeling. Very high resonance (0.85) for bright harmonics. Very quick resonance decay (0.4s) for percussive character. Instant resonance attack (0.001s) for sharp transient. High string tension (0.7) for tight response. High damping (0.6) for quick harmonic decay. Brightness (0.75) for clarity. Body resonance (0.4) adds acoustic character. Very high velocity sensitivity (0.9) for dynamic response. High velocities (110-118) for impact. Short durations (0.3-0.4s) for percussion. Creates sharp, percussive resonant strikes.",
+    "technique": "Very high resonance = bright harmonics. Quick decay = percussive. Instant attack = sharp transient. High tension = tight response. High damping = quick decay. High velocity sensitivity = dynamic. High velocities = impact.",
+    "genre": "Percussive / Contemporary / Rhythmic",
+    "tip": "Quick decay (0.2-0.5s) = percussion. Instant attack = transient. High resonance = brightness. High damping = quick harmonic decay. High velocities = impact."
+  },
+
+  "percussiveTechniques": [
+    "Quick decay (0.2-0.5s) - percussion",
+    "Instant attack - sharp transient",
+    "High resonance (0.8-0.95) - brightness",
+    "High damping (0.5-0.7) - quick harmonic decay",
+    "High tension - tight response",
+    "High velocity sensitivity - dynamics"
+  ],
+
+  "tags": ["percussive", "resonance", "attack", "transient", "rhythmic"]
+}

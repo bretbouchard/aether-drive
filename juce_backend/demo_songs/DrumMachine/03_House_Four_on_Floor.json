@@ -1,0 +1,60 @@
+{
+  "name": "House Four on the Floor",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 128,
+  "key": "C",
+  "duration": "3:00",
+  "difficulty": "Beginner",
+
+  "description": "Classic house music beat with driving four-on-the-floor kick and syncopated hi-hats",
+
+  "features": {
+    "primary": ["Four-on-the-Floor Kick", "Off-beat Hi-Hats", "Swing Groove"],
+    "obscure": ["Per-Track Timing Roles", "Kick Accent Pattern"]
+  },
+
+  "kit": {
+    "name": "House Kit",
+    "voices": {
+      "kick": {"pitch": 0.6, "decay": 0.5, "click": 0.4},
+      "snare": {"tone": 0.7, "decay": 0.4, "snap": 0.6},
+      "hihat_closed": {"tone": 0.5, "decay": 0.2, "metal": 0.6}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.52,
+    "tracks": [
+      {
+        "index": 0,
+        "type": "Kick",
+        "timing_role": "Pocket",
+        "volume": 0.9,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 120}, {"step": 4, "active": true, "velocity": 115},
+          {"step": 8, "active": true, "velocity": 120}, {"step": 12, "active": true, "velocity": 118}
+        ]
+      },
+      {
+        "index": 2,
+        "type": "HiHat Closed",
+        "timing_role": "Pocket",
+        "volume": 0.65,
+        "steps": [
+          {"step": 2, "active": true, "velocity": 90}, {"step": 6, "active": true, "velocity": 85},
+          {"step": 10, "active": true, "velocity": 90}, {"step": 14, "active": true, "velocity": 85}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "House music's iconic four-on-the-floor kick pattern. Every quarter note has a kick. Hi-hats on offbeats (2, 6, 10, 14). Slight swing (0.52) adds groove. Kick accents slightly vary for human feel.",
+    "technique": "Keep kick punchy with short decay. Hi-hats should be tight and crisp. Use timing role 'Pocket' to keep everything steady.",
+    "genre": "House Music"
+  },
+
+  "tags": ["house", "four-on-the-floor", "dance", "kick", "hi-hats", "groove"]
+}

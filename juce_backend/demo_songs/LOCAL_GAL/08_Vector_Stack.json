@@ -1,0 +1,98 @@
+{
+  "name": "Vector Stack",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 128,
+  "key": "C maj",
+  "duration": "3:30",
+  "difficulty": "Advanced",
+
+  "description": "Layer multiple instances with different feel vectors for complex, rich sounds",
+
+  "features": {
+    "primary": ["Multi-Layer Stacking", "Vector Layering", "Sound Design"],
+    "obscure": ["Layer Balance", "Vector Combinations", "Stack Processing"]
+  },
+
+  "layers": [
+    {
+      "name": "Base Layer",
+      "feelVector": {"rubber": 0.2, "bite": 0.3, "hollow": 0.3, "growl": 0.2},
+      "osc1_waveform": "sawtooth",
+      "osc1_pitch": 0.5,
+      "filter_cutoff": 0.5,
+      "volume": 0.7,
+      "pan": -0.3
+    },
+    {
+      "name": "Bite Layer",
+      "feelVector": {"rubber": 0.1, "bite": 0.9, "hollow": 0.1, "growl": 0.3},
+      "osc1_waveform": "square",
+      "osc1_pitch": 0.5,
+      "filter_cutoff": 0.7,
+      "filter_resonance": 0.6,
+      "volume": 0.4,
+      "pan": 0.0
+    },
+    {
+      "name": "Hollow Layer",
+      "feelVector": {"rubber": 0.3, "bite": 0.1, "hollow": 0.9, "growl": 0.1},
+      "osc1_waveform": "sine",
+      "osc1_pitch": 0.5,
+      "osc2_detune": 0.2,
+      "filter_cutoff": 0.4,
+      "volume": 0.5,
+      "pan": 0.3
+    },
+    {
+      "name": "Growl Layer",
+      "feelVector": {"rubber": 0.2, "bite": 0.4, "hollow": 0.1, "growl": 0.85},
+      "osc1_waveform": "sawtooth",
+      "osc1_pitch": 0.5,
+      "osc2_octave": 1,
+      "distortion_enabled": true,
+      "distortion_amount": 0.6,
+      "filter_cutoff": 0.6,
+      "filter_resonance": 0.7,
+      "volume": 0.3,
+      "pan": 0.0
+    }
+  ],
+
+  "parameters": {
+    "amp_env_attack": 0.1,
+    "amp_env_decay": 0.3,
+    "amp_env_sustain": 0.6,
+    "amp_env_release": 0.8
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 60, "velocity": 100, "duration": 2.0},
+      {"note": 64, "velocity": 95, "duration": 2.0},
+      {"note": 67, "velocity": 98, "duration": 2.0},
+      {"note": 72, "velocity": 102, "duration": 2.0},
+      {"note": 67, "velocity": 100, "duration": 2.0},
+      {"note": 64, "velocity": 96, "duration": 2.0},
+      {"note": 60, "velocity": 98, "duration": 2.0},
+      {"note": 72, "velocity": 100, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Four layers stacked, each with different feel vector. Base layer = foundation (rubber 0.2, bite 0.3). Bite layer = percussive attack (bite 0.9). Hollow layer = ethereal width (hollow 0.9). Growl layer = aggressive harmonics (growl 0.85). Layers panned for stereo width. Creates complex, rich, evolving sound.",
+    "technique": "Stack multiple instances with different feel vectors. Each layer contributes different character. Pan layers for stereo spread. Balance volumes for mix. Use different waveforms per layer. Add selective effects per layer. Creates massive, complex sounds.",
+    "genre": "Progressive House / Trance / Electronica",
+    "tip": "Use 3-4 layers maximum to avoid mud. Pan hard left/right for width. Use highpass on some layers. EQ layers to fill different frequency ranges. Add reverb to hollow layer only."
+  },
+
+  "layeringTechniques": [
+    "Unison layers - same pitch, different feel",
+    "Octave layers - pitch spread for thickness",
+    "Harmonic layers - chord voicings",
+    "Panned layers - stereo width",
+    "Frequency layers - bass, mid, high spread"
+  ],
+
+  "tags": ["stack", "layer", "multi", "complex", "rich", "sound design"]
+}

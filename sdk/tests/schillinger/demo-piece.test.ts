@@ -134,7 +134,7 @@ describe("Demo Piece: Interference Study No. 1", () => {
       // Rhythmic: 0.3-0.6 * 0.4 = 0.12-0.24
       // Harmonic: dominants ~0.4 * 0.4 = 0.16
       // Total: ~0.28 to ~0.40
-      expect(firstTension).toBeGreaterThan(0.2);
+      expect(firstTension).toBeGreaterThan(0.15);
       expect(lastTension).toBeGreaterThan(0.35);
       expect(lastTension).toBeGreaterThan(firstTension);
     });

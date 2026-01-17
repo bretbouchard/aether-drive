@@ -1,0 +1,62 @@
+{
+  "name": "Harmonic Bows",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 90,
+  "key": "G maj",
+  "duration": "5:00",
+  "difficulty": "Intermediate",
+
+  "description": "Bowed string simulation with bow pressure and vibrato control",
+
+  "features": {
+    "primary": ["Bowed Strings", "Bow Pressure", "Vibrato Control"],
+    "obscure": ["Bow Position", "String Harmonics", "Expressive Playing"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "bow_enabled": true,
+    "bow_pressure": 0.7,
+    "bow_position": 0.5,
+    "resonance_amount": 0.8,
+    "resonance_decay": 2.0,
+    "string_tension": 0.6,
+    "string_damping": 0.3,
+    "brightness": 0.65,
+    "vibrato_enabled": true,
+    "vibrato_rate": 0.5,
+    "vibrato_depth": 0.5,
+    "velocity_sensitivity": 0.8
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 55, "velocity": 85, "duration": 2.5},
+      {"note": 59, "velocity": 82, "duration": 2.5},
+      {"note": 62, "velocity": 88, "duration": 3.0},
+      {"note": 67, "velocity": 90, "duration": 3.5},
+      {"note": 62, "velocity": 86, "duration": 2.5},
+      {"note": 59, "velocity": 83, "duration": 2.5},
+      {"note": 55, "velocity": 85, "duration": 3.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Bowed string simulation using physical modeling. Bow pressure (0.7) controls grip and brightness. Bow position (0.5) controls tone (bridge = bright, fingerboard = warm). High resonance (0.8) for rich harmonics. Long resonance decay (2.0s) for singing tone. String tension (0.6) for stability. Low damping (0.3) for sustained harmonics. Brightness (0.65) for clarity. Vibrato (rate 0.5, depth 0.5) adds warmth and expression. High velocity sensitivity (0.8) for dynamic playing. Medium velocities (82-90) for expressive tone. Creates beautiful, expressive bowed strings.",
+    "technique": "Bow pressure = grip and brightness. Bow position = tone color. High resonance = rich harmonics. Long decay = singing tone. Low damping = sustain. Vibrato = expression. Velocity sensitivity = dynamics.",
+    "genre": "Classical / Soundtrack / Expressive",
+    "tip": "Bow pressure: 0.3-0.5 = light, 0.5-0.7 = medium, 0.7-1.0 = heavy. Bow position: 0.0 = fingerboard (warm), 1.0 = bridge (bright). Vibrato depth = expression."
+  },
+
+  "bowTechniques": [
+    "Light pressure (0.3-0.5) - soft, delicate",
+    "Medium pressure (0.5-0.7) - balanced tone",
+    "Heavy pressure (0.7-1.0) - bright, aggressive",
+    "Fingerboard position (0.0-0.4) - warm, mellow",
+    "Middle position (0.4-0.6) - balanced",
+    "Bridge position (0.6-1.0) - bright, brilliant"
+  ],
+
+  "tags": ["bow", "strings", "physical modeling", "expressive", "classical"]
+}

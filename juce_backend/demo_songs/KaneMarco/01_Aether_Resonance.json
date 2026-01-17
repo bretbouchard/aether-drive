@@ -1,0 +1,62 @@
+{
+  "name": "Aether Resonance",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 80,
+  "key": "D min",
+  "duration": "4:30",
+  "difficulty": "Beginner",
+
+  "description": "Basic aether resonance demonstration with soft, ethereal tones",
+
+  "features": {
+    "primary": ["Aether Resonance", "Physical Modeling", "Ethereal Tones"],
+    "obscure": ["Resonance Decay", "String Harmonics", "Natural Vibration"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "resonance_amount": 0.6,
+    "resonance_decay": 1.5,
+    "string_tension": 0.5,
+    "string_damping": 0.4,
+    "body_resonance": 0.5,
+    "brightness": 0.5,
+    "vibrato_enabled": true,
+    "vibrato_rate": 0.4,
+    "vibrato_depth": 0.3
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 75, "duration": 3.0},
+      {"note": 53, "velocity": 72, "duration": 3.0},
+      {"note": 57, "velocity": 78, "duration": 3.0},
+      {"note": 62, "velocity": 80, "duration": 4.0},
+      {"note": 65, "velocity": 78, "duration": 3.0},
+      {"note": 62, "velocity": 76, "duration": 3.0},
+      {"note": 57, "velocity": 74, "duration": 3.0},
+      {"note": 53, "velocity": 72, "duration": 3.0},
+      {"note": 50, "velocity": 75, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Basic aether resonance demonstration. Aether engine creates physical modeling synthesis. Resonance amount (0.6) controls harmonic content. Resonance decay (1.5s) determines how long harmonics ring. String tension (0.5) controls pitch stability. String damping (0.4) controls harmonic decay. Body resonance (0.5) adds acoustic character. Brightness (0.5) controls high harmonics. Vibrato adds warmth (rate 0.4, depth 0.3). Soft velocities (72-80) for gentle tone. Creates soft, ethereal, floating pads.",
+    "technique": "Aether resonance = physical modeling. Resonance amount = harmonic richness. Resonance decay = ring time. String tension = stability. Damping = harmonic decay. Body resonance = acoustic character. Brightness = high harmonics. Vibrato = warmth.",
+    "genre": "Ambient / Meditation / Ethereal",
+    "tip": "Resonance amount controls harmonic richness. Decay controls ring time. Damping controls harmonic decay. Body resonance adds acoustic character. Brightness controls high harmonics."
+  },
+
+  "aetherParameters": [
+    "Resonance Amount - harmonic richness",
+    "Resonance Decay - how long harmonics ring",
+    "String Tension - pitch stability",
+    "String Damping - harmonic decay",
+    "Body Resonance - acoustic character",
+    "Brightness - high harmonics",
+    "Vibrato - warmth and movement"
+  ],
+
+  "tags": ["aether", "resonance", "physical modeling", "ethereal", "ambient"]
+}

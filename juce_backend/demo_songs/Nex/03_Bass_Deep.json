@@ -1,0 +1,68 @@
+{
+  "name": "Bass Deep",
+  "instrument": "Nex",
+  "instrumentType": "FM Synthesizer",
+  "bpm": 128,
+  "key": "E min",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "Deep FM bass with sub harmonics and punchy attack",
+
+  "features": {
+    "primary": ["FM Bass", "Sub Harmonics", "Algorithm 3"],
+    "obscure": ["Low Ratios", "Fast Attack", "Filter Modulation"]
+  },
+
+  "algorithm": 3,
+
+  "operators": [
+    {"index": 1, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.9, "enabled": true},
+    {"index": 2, "frequency_ratio": 0.5, "modulation_index": 0.0, "output_level": 0.7, "enabled": true},
+    {"index": 3, "frequency_ratio": 1.0, "modulation_index": 0.0, "output_level": 0.5, "enabled": true},
+    {"index": 4, "frequency_ratio": 2.0, "modulation_index": 0.0, "output_level": 0.4, "enabled": true},
+    {"index": 5, "frequency_ratio": 4.0, "modulation_index": 0.0, "output_level": 0.3, "enabled": false},
+    {"index": 6, "frequency_ratio": 6.0, "modulation_index": 0.0, "output_level": 0.2, "enabled": false}
+  ],
+
+  "modulation_matrix": [
+    {"source": 2, "destination": 1, "amount": 15},
+    {"source": 3, "destination": 1, "amount": 8},
+    {"source": 4, "destination": 2, "amount": 5}
+  ],
+
+  "parameters": {
+    "amp_attack": 0.001,
+    "amp_decay": 0.5,
+    "amp_sustain": 0.2,
+    "amp_release": 0.3,
+    "filter_enabled": true,
+    "filter_cutoff": 0.5,
+    "filter_resonance": 0.3,
+    "filter_type": "lowpass"
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 36, "velocity": 120, "duration": 0.4},
+      {"note": 36, "velocity": 115, "duration": 0.4},
+      {"note": 39, "velocity": 118, "duration": 0.4},
+      {"note": 41, "velocity": 120, "duration": 0.8},
+      {"note": 43, "velocity": 117, "duration": 0.4},
+      {"note": 41, "velocity": 115, "duration": 0.4},
+      {"note": 39, "velocity": 118, "duration": 0.4},
+      {"note": 36, "velocity": 120, "duration": 0.8}
+    ]
+  },
+
+  "performance": {
+    "notes": "Deep FM bass using Algorithm 3. Operator 2 uses 0.5 ratio for sub-octave. Heavy modulation (index 15) creates rich harmonics. Operators 3 and 4 add brightness. Fast attack (0.001s) for punch. Low sustain (0.2) for tight bass. Filter tames harsh harmonics. Creates powerful, deep bass.",
+    "technique": "Use low ratios (0.5) for sub harmonics. Heavy modulation index for rich bass. Fast attack for punch. Low sustain for tightness. Filter to tame harshness. Algorithm 3 great for bass.",
+    "genre": "Techno / House / Trance",
+    "tip": "Use 0.5 ratio for sub bass. Heavy modulation (10-20) for richness. Filter to control brightness. Add distortion for grit."
+  },
+
+  "algorithmDescription": "Algorithm 3: Op4 → Op2 → Op1, Op3 → Op1, Op1 → Output (complex modulation)",
+
+  "tags": ["bass", "fm", "deep", "sub", "techno", "algorithm 3"]
+}

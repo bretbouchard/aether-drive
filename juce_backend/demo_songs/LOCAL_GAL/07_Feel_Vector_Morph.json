@@ -1,0 +1,71 @@
+{
+  "name": "Feel Vector Morph",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 125,
+  "key": "A min",
+  "duration": "5:00",
+  "difficulty": "Advanced",
+
+  "description": "Dynamic morphing between all four feel vectors using automation",
+
+  "features": {
+    "primary": ["Feel Vector Morphing", "Automation Lane", "Timbral Evolution"],
+    "obscure": ["Vector Crossfading", "Smooth Transitions", "Automated Feel Changes"]
+  },
+
+  "automation": [
+    {"bar": 1, "rubber": 0.1, "bite": 0.8, "hollow": 0.1, "growl": 0.3},
+    {"bar": 8, "rubber": 0.5, "bite": 0.5, "hollow": 0.5, "growl": 0.3},
+    {"bar": 16, "rubber": 0.9, "bite": 0.1, "hollow": 0.3, "growl": 0.2},
+    {"bar": 24, "rubber": 0.2, "bite": 0.2, "hollow": 0.9, "growl": 0.1},
+    {"bar": 32, "rubber": 0.3, "bite": 0.3, "hollow": 0.3, "growl": 0.9},
+    {"bar": 40, "rubber": 0.5, "bite": 0.5, "hollow": 0.5, "growl": 0.5}
+  ],
+
+  "parameters": {
+    "osc1_waveform": "sawtooth",
+    "osc1_pitch": 0.5,
+    "osc2_detune": 0.1,
+    "filter_cutoff": 0.6,
+    "filter_resonance": 0.5,
+    "amp_env_attack": 0.1,
+    "amp_env_decay": 0.3,
+    "amp_env_sustain": 0.6,
+    "amp_env_release": 0.5,
+    "lfo1_rate": 0.3,
+    "lfo1_depth": 0.5,
+    "lfo1_destination": "filter_cutoff"
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 57, "velocity": 100, "duration": 2.0},
+      {"note": 60, "velocity": 95, "duration": 2.0},
+      {"note": 64, "velocity": 98, "duration": 2.0},
+      {"note": 69, "velocity": 102, "duration": 2.0},
+      {"note": 64, "velocity": 100, "duration": 2.0},
+      {"note": 60, "velocity": 96, "duration": 2.0},
+      {"note": 57, "velocity": 98, "duration": 2.0},
+      {"note": 69, "velocity": 100, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Feel vectors morph over 40 bars. Each 8-bar section emphasizes different vector. Bar 1-8: Bite (percussive). Bar 9-16: Rubber (elastic). Bar 17-24: Hollow (ethereal). Bar 25-32: Growl (aggressive). Bar 33-40: All balanced. Creates evolving, morphing timbre.",
+    "technique": "Use automation lane to morph feel vectors over time. Smooth crossfading creates gradual transitions. Each vector has distinct character: Bite = punchy, Rubber = elastic, Hollow = thin, Growl = aggressive. Perfect for evolving pads or leads.",
+    "structure": "Bars 1-8: Bite phase (percussive attack). Bars 9-16: Morph to rubber (elastic pitch). Bars 17-24: Morph to hollow (thin, spacious). Bars 25-32: Morph to growl (distorted). Bars 33-40: Return to balanced.",
+    "genre": "Progressive / Psytrance / Soundtrack",
+    "tip": "Use slow automation for smooth morphs. Fast automation creates glitchy effects. Combine with filter automation for complex evolution."
+  },
+
+  "morphTechniques": [
+    "Linear morphing - smooth transitions",
+    "Stepped morphing - abrupt changes",
+    "Random morphing - chaotic evolution",
+    "LFO morphing - periodic cycling",
+    "Velocity morphing - responsive feel"
+  ],
+
+  "tags": ["morph", "automation", "evolution", "feel vector", "morphing", "progressive"]
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Jazz Combo",
+  "instrument": "Giant",
+  "instrumentType": "Multi-Instrument",
+  "bpm": 120,
+  "key": "Bb maj",
+  "duration": "4:00",
+  "difficulty": "Intermediate",
+
+  "description": "Jazz combo with piano, upright bass, and woodwind solos",
+
+  "features": {
+    "primary": ["Jazz Combo", "Small Ensemble", "Improvisation"],
+    "obscure": ["Swing Feel", "Call and Response", "Instrument Interaction"]
+  },
+
+  "instruments": {
+    "piano": {
+      "enabled": true,
+      "volume": 0.7,
+      "pan": -0.15,
+      "preset": "Jazz Piano"
+    },
+    "woodwind": {
+      "enabled": true,
+      "volume": 0.65,
+      "pan": 0.15,
+      "preset": "Saxophone Section"
+    },
+    "strings": {
+      "enabled": true,
+      "volume": 0.5,
+      "pan": 0.0,
+      "preset": "Upright Bass"
+    },
+    "brass": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    },
+    "choir": {
+      "enabled": false,
+      "volume": 0.0,
+      "pan": 0.0
+    }
+  },
+
+  "parameters": {
+    "master_volume": 0.75,
+    "reverb_enabled": true,
+    "reverb_amount": 0.25,
+    "reverb_room_size": 0.4,
+    "swing": 0.58,
+    "velocity_humanization": 0.15
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 58, "velocity": 75, "duration": 1.0},
+      {"note": 62, "velocity": 70, "duration": 1.0},
+      {"note": 65, "velocity": 73, "duration": 1.0},
+      {"note": 69, "velocity": 78, "duration": 2.0},
+      {"note": 72, "velocity": 80, "duration": 1.0},
+      {"note": 69, "velocity": 76, "duration": 1.0},
+      {"note": 65, "velocity": 73, "duration": 1.0},
+      {"note": 62, "velocity": 70, "duration": 1.0},
+      {"note": 58, "velocity": 75, "duration": 2.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Jazz combo using 3 instruments. Piano provides comping chords (slightly left). Woodwind (sax) plays melody (slightly right). Strings (upright bass) provide foundation (center). Light reverb (0.25) with small room (0.4) simulates jazz club. Swing feel (0.58) adds groove. Velocity humanization (0.15) adds organic feel. Medium tempo (120 BPM) for swing. Creates authentic jazz combo sound.",
+    "technique": "Piano + sax + bass = jazz trio. Light reverb = jazz club. Swing = groove. Humanization = organic feel. Piano = comping. Sax = melody. Bass = foundation.",
+    "genre": "Jazz / Swing / Combo",
+    "tip": "Swing is essential (0.55-0.6). Light reverb for jazz club. Humanization = organic. Piano comping = sparse. Sax = expressive. Bass = walking."
+  },
+
+  "jazzTechniques": [
+    "Swing - groove feel",
+    "Light reverb - jazz club",
+    "Humanization - organic",
+    "Sparse comping - space",
+    "Expressive melody - sax"
+  ],
+
+  "tags": ["jazz", "combo", "swing", "piano", "sax", "upright bass"]
+}

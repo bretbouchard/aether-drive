@@ -46,16 +46,20 @@ export function zeroTension(): StructuralTension {
 /**
  * Aggregates the three tension domains into a single total tension value
  *
- * Schillinger Principle: Tension domains sum directly, no weighting.
+ * Schillinger Principle: Tension domains contribute with different weights
+ * based on their perceptual and musical impact.
  *
- * Each domain (rhythmic, harmonic, formal) is already normalized to [0, 1]
- * based on its musical contribution. The total tension is the simple sum
- * of all domains, clamped to [0, 1].
+ * Domain weights reflect musical reality:
+ * - Rhythm (40%): Creates immediate tension (drill, fills, silence, density)
+ * - Harmony (40%): Creates sustained tension (dissonance, instability, voice leading)
+ * - Form (20%): Creates expected tension (phrase endings, cadences, boundaries)
  *
- * This reflects musical reality:
- * - Rhythm creates immediate tension (drill, fills, silence)
- * - Harmony creates sustained tension (dissonance, instability)
- * - Form creates expected tension (phrase endings, cadences)
+ * These weights ensure that:
+ * 1. High rhythmic events (drill at 0.95) contribute significantly to total tension
+ * 2. Harmonic instability (altered dominants at 0.55) has appropriate impact
+ * 3. Formal tension (phrase boundaries) provides context without overwhelming
+ *
+ * Formula: total = (rhythmic * 0.4) + (harmonic * 0.4) + (formal * 0.2)
  *
  * @param t - The structural tension to aggregate
  * @returns Total tension clamped to [0, 1]
@@ -66,8 +70,9 @@ export function totalTension(t: StructuralTension): number {
   const harmonic = Math.max(0, Math.min(1, t.harmonic));
   const formal = Math.max(0, Math.min(1, t.formal));
 
-  // Simple sum of tension domains (no weighting)
-  const total = rhythmic + harmonic + formal;
+  // Weighted sum of tension domains
+  // Rhythm and harmony dominate (40% each), form provides context (20%)
+  const total = (rhythmic * 0.4) + (harmonic * 0.4) + (formal * 0.2);
 
   // Clamp final result to valid range
   return Math.max(0, Math.min(1, total));

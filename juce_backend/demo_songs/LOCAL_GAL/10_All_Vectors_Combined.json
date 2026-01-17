@@ -1,0 +1,114 @@
+{
+  "name": "All Vectors Combined",
+  "instrument": "LOCAL_GAL",
+  "instrumentType": "Feel Vector Synthesizer",
+  "bpm": 120,
+  "key": "D min",
+  "duration": "6:00",
+  "difficulty": "Advanced",
+
+  "description": "Complete demonstration of all four feel vectors working together in cohesive sound design",
+
+  "features": {
+    "primary": ["All Four Feel Vectors", "Vector Balance", "Complete Feature Set"],
+    "obscure": ["Vector Interactions", "Complex Modulation", "Advanced Sound Design"]
+  },
+
+  "feelVector": {
+    "rubber": 0.6,
+    "bite": 0.5,
+    "hollow": 0.5,
+    "growl": 0.5
+  },
+
+  "parameters": {
+    "osc1_waveform": "sawtooth",
+    "osc1_pitch": 0.5,
+    "osc1_pulse_width": 0.6,
+    "osc2_enabled": true,
+    "osc2_waveform": "square",
+    "osc2_detune": 0.12,
+    "osc2_phase": 90,
+    "osc3_enabled": true,
+    "osc3_waveform": "triangle",
+    "osc3_detune": 0.08,
+    "osc3_octave": -1,
+    "filter_cutoff": 0.6,
+    "filter_resonance": 0.65,
+    "filter_type": "lowpass",
+    "filter_env_amount": 0.5,
+    "filter_env_attack": 0.1,
+    "filter_env_decay": 0.3,
+    "filter_env_sustain": 0.4,
+    "distortion_enabled": true,
+    "distortion_amount": 0.4,
+    "distortion_type": "overdrive",
+    "amp_env_attack": 0.08,
+    "amp_env_decay": 0.4,
+    "amp_env_sustain": 0.6,
+    "amp_env_release": 0.8,
+    "lfo1_enabled": true,
+    "lfo1_rate": 0.4,
+    "lfo1_depth": 0.6,
+    "lfo1_waveform": "sine",
+    "lfo1_destination": "filter_cutoff",
+    "lfo2_enabled": true,
+    "lfo2_rate": 0.7,
+    "lfo2_depth": 0.3,
+    "lfo2_waveform": "triangle",
+    "lfo2_destination": "rubber",
+    "mod_matrix": [
+      {"source": "velocity", "destination": "bite", "amount": 0.6},
+      {"source": "velocity", "destination": "filter_cutoff", "amount": 0.5},
+      {"source": "aftertouch", "destination": "growl", "amount": 0.8},
+      {"source": "aftertouch", "destination": "distortion_amount", "amount": 0.7},
+      {"source": "pitch_bend", "destination": "rubber", "amount": 0.9},
+      {"source": "mod_wheel", "destination": "hollow", "amount": 0.7},
+      {"source": "lfo1", "destination": "filter_resonance", "amount": 0.4},
+      {"source": "lfo2", "destination": "osc2_detune", "amount": 0.5}
+    ]
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 75, "duration": 1.0},
+      {"note": 53, "velocity": 80, "duration": 1.0},
+      {"note": 57, "velocity": 85, "duration": 1.0},
+      {"note": 62, "velocity": 95, "duration": 2.0},
+      {"note": 65, "velocity": 90, "duration": 1.0},
+      {"note": 62, "velocity": 88, "duration": 1.0},
+      {"note": 57, "velocity": 82, "duration": 1.0},
+      {"note": 53, "velocity": 78, "duration": 1.0},
+      {"note": 50, "velocity": 100, "duration": 2.0},
+      {"note": 62, "velocity": 105, "duration": 2.0},
+      {"note": 57, "velocity": 98, "duration": 1.5},
+      {"note": 50, "velocity": 95, "duration": 1.5}
+    ]
+  },
+
+  "performance": {
+    "notes": "All four feel vectors balanced at 0.5-0.6. Rubber provides elastic pitch modulation. Bite adds percussive attack. Hollow creates spacious width. Growl adds aggressive harmonics. Three oscillators create thick tone. Distortion adds warmth. LFOs modulate filter and rubber. Extensive modulation matrix for expressiveness. Velocity affects bite and filter. Aftertouch affects growl and distortion. Pitch bend affects rubber. Mod wheel affects hollow. Complete showcase of all features.",
+    "technique": "Balance all four vectors for complex, evolving sound. Rubber (0.6) = moderate elasticity. Bite (0.5) = medium attack. Hollow (0.5) = balanced width. Growl (0.5) = moderate aggression. Use modulation matrix to connect everything. This is the 'everything on' preset - demonstrates full capability.",
+    "genre": "Complete Showcase / All Genres",
+    "structure": "Intro: Soft notes, low velocity. Build: Increase velocity and aftertouch. Climax: High velocity, aftertouch, pitch bend. Outro: Return to soft.",
+    "masteryLevel": "Uses all LOCAL_GAL parameters in cohesive arrangement. 50+ parameters working together.",
+    "tip": "Start with balanced vectors (0.5 each). Adjust one vector at a time to hear its effect. Use modulation matrix to connect controllers. Experiment with different balances."
+  },
+
+  "vectorRoles": [
+    "Rubber - Pitch elasticity, vibrato, bend",
+    "Bite - Attack sharpness, transient snap",
+    "Hollow - Phase cancellation, width, space",
+    "Growl - Harmonics, distortion, aggression"
+  ],
+
+  "advancedTechniques": [
+    "Vector morphing for evolving timbre",
+    "Layer stacking for complex sounds",
+    "Performance expression mappings",
+    "LFO modulation for movement",
+    "Automation for compositional changes"
+  ],
+
+  "tags": ["complete", "showcase", "all vectors", "master", "advanced", "ultimate"]
+}

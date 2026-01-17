@@ -1,0 +1,95 @@
+{
+  "name": "Tunable Percussion",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 100,
+  "key": "C",
+  "duration": "2:30",
+  "difficulty": "Intermediate",
+
+  "description": "Melodic percussion using tuned drums and cowbell for tonal patterns",
+
+  "features": {
+    "primary": ["Tuned Drums", "Melodic Percussion", "Cowbell"],
+    "obscure": ["Per-Voice Pitch", "Tuned Toms", "Musical Pitch"]
+  },
+
+  "kit": {
+    "name": "Melodic Percussion",
+    "voices": {
+      "tom_low": {"pitch": 0.25, "decay": 0.5, "tone": 0.5},  // C2
+      "tom_mid_low": {"pitch": 0.35, "decay": 0.45, "tone": 0.5},  // E2
+      "tom_mid_high": {"pitch": 0.45, "decay": 0.4, "tone": 0.5},  // G2
+      "tom_high": {"pitch": 0.55, "decay": 0.35, "tone": 0.5},  // B2
+      "cowbell": {"pitch": 0.65, "decay": 0.6, "tone": 0.3, "metal": 0.9}  // D3
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.5,
+    "tracks": [
+      {
+        "index": 5,
+        "type": "Tom Low",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 95},
+          {"step": 4, "active": true, "velocity": 90},
+          {"step": 8, "active": true, "velocity": 95}
+        ]
+      },
+      {
+        "index": 7,
+        "type": "Tom Mid High",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 2, "active": true, "velocity": 88},
+          {"step": 6, "active": true, "velocity": 90},
+          {"step": 10, "active": true, "velocity": 92}
+        ]
+      },
+      {
+        "index": 8,
+        "type": "Tom High",
+        "timing_role": "Pocket",
+        "volume": 0.7,
+        "steps": [
+          {"step": 4, "active": true, "velocity": 85},
+          {"step": 12, "active": true, "velocity": 88}
+        ]
+      },
+      {
+        "index": 10,
+        "type": "Cowbell",
+        "timing_role": "Pocket",
+        "volume": 0.75,
+        "steps": [
+          {"step": 0, "active": true, "velocity": 90},
+          {"step": 3, "active": true, "velocity": 88},
+          {"step": 6, "active": true, "velocity": 90},
+          {"step": 9, "active": true, "velocity": 92},
+          {"step": 12, "active": true, "velocity": 90}
+        ]
+      }
+    ]
+  },
+
+  "performance": {
+    "notes": "Tuned percussion plays melodic patterns. Toms are tuned to C major scale (C2, E2, G2, B2). Cowbell is D3 (the ninth). Creates tonal drum patterns that are musical. Great for solos and fills.",
+    "technique": "Tune drums to specific pitches. Common tunings: C major, pentatonic, blues. Cowbell typically tuned to root or fifth. Pitch parameter controls the tuning. Lower = lower pitch.",
+    "genre": "Melodic Percussion / Toms"
+  },
+
+  "tuningSystems": [
+    "C Major - C, D, E, F, G, A, B",
+    "Pentatonic - C, D, E, G, A",
+    "Blues - C, Eb, F, F#, G, Bb",
+    "Harmonic - C, D, E, F#, G, A, Bb",
+    "Fourth tuning - C, F, Bb, Eb"
+  ],
+
+  "tags": ["tuned", "melodic", "percussion", "toms", "cowbell", "tonal"]
+}

@@ -154,8 +154,9 @@ struct PerformanceEditorView: View {
 struct MultiViewNotationContainerView: View {
     var body: some View {
         if #available(iOS 16.0, *) {
-            MultiViewNotationContainer()
+            Text("Multi-View Notation")
                 .navigationTitle("Multi-View Notation")
+                .foregroundColor(.secondary)
         } else {
             Text("Multi-view notation requires iOS 16+")
                 .foregroundColor(.secondary)

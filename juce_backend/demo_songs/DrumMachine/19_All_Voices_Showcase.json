@@ -1,0 +1,85 @@
+{
+  "name": "All Voices Showcase",
+  "instrument": "DrumMachine",
+  "instrumentType": "Drum Machine",
+  "bpm": 120,
+  "key": "C",
+  "duration": "3:00",
+  "difficulty": "Beginner",
+
+  "description": "Complete demonstration of all 15 drum voices and their capabilities",
+
+  "features": {
+    "primary": ["All 15 Voices", "Voice Characteristics", "Voice Tuning"],
+    "obscure": ["Voice Routing", "Voice Selection", "Complete Kit"]
+  },
+
+  "kit": {
+    "name": "Complete Kit",
+    "voices": {
+      "kick": {"pitch": 0.5, "decay": 0.5, "click": 0.5, "sweep": 0.5},
+      "snare": {"tone": 0.6, "decay": 0.3, "snap": 0.6, "noise": 0.5},
+      "hihat_closed": {"tone": 0.6, "decay": 0.2, "metal": 0.7},
+      "hihat_open": {"tone": 0.6, "decay": 0.6, "metal": 0.7},
+      "clap": {"tone": 0.5, "decay": 0.3, "attack": 0.4, "layers": 3},
+      "tom_low": {"pitch": 0.3, "decay": 0.5, "tone": 0.6},
+      "tom_mid": {"pitch": 0.5, "decay": 0.45, "tone": 0.6},
+      "tom_high": {"pitch": 0.7, "decay": 0.4, "tone": 0.6},
+      "crash": {"tone": 0.5, "decay": 1.0, "metal": 0.6},
+      "ride": {"tone": 0.5, "decay": 0.8, "metal": 0.5},
+      "cowbell": {"pitch": 0.5, "decay": 0.6, "tone": 0.3, "metal": 0.9},
+      "shaker": {"tone": 0.7, "decay": 0.15, "noise": 0.6},
+      "tambourine": {"tone": 0.8, "decay": 0.2, "metal": 0.7},
+      "percussion": {"type": "fx", "tone": 0.5, "decay": 0.4, "metal": 0.5},
+      "special": {"type": "texture", "tone": 0.5, "decay": 1.5, "metal": 0.3}
+    }
+  },
+
+  "pattern": {
+    "length": 16,
+    "swing": 0.5,
+    "tracks": [
+      {"index": 0, "type": "Kick", "volume": 0.85, "steps": [{"step": 0, "active": true, "velocity": 120}, {"step": 8, "active": true, "velocity": 118}]},
+      {"index": 1, "type": "Snare", "volume": 0.8, "steps": [{"step": 4, "active": true, "velocity": 115}, {"step": 12, "active": true, "velocity": 115}]},
+      {"index": 2, "type": "HiHat Closed", "volume": 0.65, "steps": [{"step": 2, "active": true, "velocity": 90}, {"step": 6, "active": true, "velocity": 88}, {"step": 10, "active": true, "velocity": 90}, {"step": 14, "active": true, "velocity": 88}]},
+      {"index": 3, "type": "HiHat Open", "volume": 0.6, "steps": [{"step": 0, "active": true, "velocity": 95}]},
+      {"index": 4, "type": "Clap", "volume": 0.7, "steps": [{"step": 12, "active": true, "velocity": 105}]},
+      {"index": 5, "type": "Tom Low", "volume": 0.7, "steps": [{"step": 6, "active": true, "velocity": 95}]},
+      {"index": 6, "type": "Tom Mid", "volume": 0.7, "steps": [{"step": 7, "active": true, "velocity": 93}]},
+      {"index": 7, "type": "Tom High", "volume": 0.7, "steps": [{"step": 8, "active": true, "velocity": 90}]},
+      {"index": 8, "type": "Crash", "volume": 0.6, "steps": [{"step": 0, "active": true, "velocity": 100}]},
+      {"index": 9, "type": "Ride", "volume": 0.6, "steps": [{"step": 0, "active": true, "velocity": 88}, {"step": 4, "active": true, "velocity": 85}, {"step": 8, "active": true, "velocity": 88}, {"step": 12, "active": true, "velocity": 85}]},
+      {"index": 10, "type": "Cowbell", "volume": 0.65, "steps": [{"step": 4, "active": true, "velocity": 95}]},
+      {"index": 11, "type": "Shaker", "volume": 0.5, "steps": [{"step": 2, "active": true, "velocity": 70}, {"step": 6, "active": true, "velocity": 68}, {"step": 10, "active": true, "velocity": 70}, {"step": 14, "active": true, "velocity": 68}]},
+      {"index": 12, "type": "Tambourine", "volume": 0.55, "steps": [{"step": 4, "active": true, "velocity": 75}, {"step": 12, "active": true, "velocity": 72}]},
+      {"index": 13, "type": "Percussion", "volume": 0.5, "steps": [{"step": 8, "active": true, "velocity": 80}]},
+      {"index": 14, "type": "Special", "volume": 0.4, "steps": [{"step": 0, "active": true, "velocity": 60}]}
+    ]
+  },
+
+  "performance": {
+    "notes": "Complete showcase of all 15 voices. Basic rock beat with all voices demonstrating. Kick and snare on backbeat. Hi-hats keep time. Crash on beat 1. Ride plays eighth notes. Toms fill. Percussion adds texture. Special voice adds atmosphere.",
+    "technique": "Each voice has unique parameters. Kick: click, sweep, pitch, decay. Snare: tone, snap, noise. Hi-hats: tone, decay, metal. Cymbals: tone, decay, metal. Percussion: various. Special: textures.",
+    "genre": "Complete Showcase"
+  },
+
+  "allVoices": [
+    "0. Kick - Deep punch",
+    "1. Snare - Crack and snap",
+    "2. HiHat Closed - Tight",
+    "3. HiHat Open - Ringing",
+    "4. Clap - Layers",
+    "5. Tom Low - Bottom",
+    "6. Tom Mid - Middle",
+    "7. Tom High - Top",
+    "8. Crash - Loud decay",
+    "9. Ride - Steady pattern",
+    "10. Cowbell - Ring",
+    "11. Shaker - Shake",
+    "12. Tambourine - Jingle",
+    "13. Percussion - FX",
+    "14. Special - Texture"
+  ],
+
+  "tags": ["showcase", "all voices", "complete", "15 voices", "demonstration"]
+}

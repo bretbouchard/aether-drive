@@ -1,0 +1,76 @@
+{
+  "name": "Plasma Fields",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 70,
+  "key": "C min",
+  "duration": "7:00",
+  "difficulty": "Advanced",
+
+  "description": "Evolving plasma field textures with modulation and resonance sweeps",
+
+  "features": {
+    "primary": ["Plasma Textures", "Evolving Soundscapes", "Resonance Sweeps"],
+    "obscure": ["Plasma Modulation", "Harmonic Sweeps", "Atmospheric Evolution"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "plasma_enabled": true,
+    "plasma_density": 0.8,
+    "plasma_movement": 0.7,
+    "resonance_amount": 0.9,
+    "resonance_decay": 3.5,
+    "string_tension": 0.4,
+    "string_damping": 0.2,
+    "brightness": 0.6,
+    "modulation_enabled": true,
+    "modulation_rate": 0.15,
+    "modulation_depth": 0.8,
+    "lfo1_enabled": true,
+    "lfo1_rate": 0.2,
+    "lfo1_depth": 0.6,
+    "lfo1_destination": "resonance"
+  },
+
+  "automation": [
+    {"bar": 1, "resonance_amount": 0.6, "brightness": 0.4},
+    {"bar": 16, "resonance_amount": 0.9, "brightness": 0.7},
+    {"bar": 32, "plasma_movement": 0.9, "resonance_decay": 4.5},
+    {"bar": 48, "brightness": 0.5, "modulation_depth": 0.9},
+    {"bar": 64, "all_parameters": "return_to_base"}
+  ],
+
+  "pattern": {
+    "notes": [
+      {"note": 48, "velocity": 65, "duration": 8.0},
+      {"note": 52, "velocity": 63, "duration": 8.0},
+      {"note": 55, "velocity": 68, "duration": 8.0},
+      {"note": 60, "velocity": 70, "duration": 8.0},
+      {"note": 64, "velocity": 68, "duration": 8.0},
+      {"note": 60, "velocity": 66, "duration": 8.0},
+      {"note": 55, "velocity": 65, "duration": 8.0},
+      {"note": 52, "velocity": 63, "duration": 8.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Evolving plasma field textures using physical modeling. Plasma density (0.8) controls texture richness. Plasma movement (0.7) controls evolution speed. Very high resonance (0.9) for intense harmonics. Very long resonance decay (3.5s) for singing texture. Low string tension (0.4) for instability and movement. Very low damping (0.2) for endless harmonics. LFO modulates resonance (rate 0.2, depth 0.6) for sweeping harmonics. Automation changes parameters over 64 bars for evolution. Soft velocities (63-70) for atmospheric texture. Very long notes (8 bars) for sustained pads. Creates evolving, otherworldly plasma fields.",
+    "technique": "Plasma density = texture richness. Plasma movement = evolution speed. Very high resonance = intense harmonics. Very long decay = singing texture. Low tension = instability. LFO = harmonic sweeps. Automation = evolution. Long notes = sustained pads.",
+    "structure": "Bars 1-16: Build resonance and brightness. Bars 17-32: Increase plasma movement, decay. Bars 33-48: Reduce brightness, increase modulation. Bars 49-64: Return to base.",
+    "genre": "Ambient / Soundscape / Experimental",
+    "tip": "High plasma density = rich texture. Plasma movement = evolution. Very high resonance = intensity. Long decay = singing. LFO resonance = sweeps. Automation = evolution."
+  },
+
+  "plasmaTechniques": [
+    "Density - texture richness",
+    "Movement - evolution speed",
+    "High resonance - intense harmonics",
+    "Long decay - singing texture",
+    "Low tension - instability",
+    "LFO modulation - harmonic sweeps",
+    "Automation - evolution"
+  ],
+
+  "tags": ["plasma", "texture", "evolving", "soundscape", "atmospheric", "advanced"]
+}

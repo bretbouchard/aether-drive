@@ -163,18 +163,90 @@ public struct SongMetadata: Equatable, Codable, Sendable {
      */
     public var tags: [String]
 
+    // MARK: - NEW FIELDS - Extended Metadata
+
+    /**
+     Composer name
+     */
+    public var composer: String?
+
+    /**
+     Genre classification
+     */
+    public var genre: String?
+
+    /**
+     Mood tag
+     */
+    public var mood: String?
+
+    /**
+     Difficulty level (easy/medium/hard)
+     */
+    public var difficulty: String?
+
+    /**
+     User rating (1-5 stars)
+     */
+    public var rating: Int?
+
+    /**
+     Song notes/comments
+     */
+    public var comments: String?
+
+    /**
+     Arranger name
+     */
+    public var arranger: String?
+
+    /**
+     Copyright information
+     */
+    public var copyright: String?
+
+    /**
+     International Standard Recording Code
+     */
+    public var isrc: String?
+
+    /**
+     Practice mode flag
+     */
+    public var practiceMode: Bool?
+
     public init(
         tempo: Double,
         timeSignature: [Int],
         duration: Double? = nil,
         key: String? = nil,
-        tags: [String] = []
+        tags: [String] = [],
+        composer: String? = nil,
+        genre: String? = nil,
+        mood: String? = nil,
+        difficulty: String? = nil,
+        rating: Int? = nil,
+        comments: String? = nil,
+        arranger: String? = nil,
+        copyright: String? = nil,
+        isrc: String? = nil,
+        practiceMode: Bool? = nil
     ) {
         self.tempo = tempo
         self.timeSignature = timeSignature
         self.duration = duration
         self.key = key
         self.tags = tags
+        self.composer = composer
+        self.genre = genre
+        self.mood = mood
+        self.difficulty = difficulty
+        self.rating = rating
+        self.comments = comments
+        self.arranger = arranger
+        self.copyright = copyright
+        self.isrc = isrc
+        self.practiceMode = practiceMode
     }
 }
 
@@ -219,13 +291,63 @@ public struct Section: Equatable, Codable, Sendable, Identifiable {
      */
     public var realizationHints: [String: CodableAny]?
 
+    // MARK: - NEW FIELDS - Section Annotations
+
+    /**
+     Section color for UI (hex color string)
+     */
+    public var color: String?
+
+    /**
+     Section tags for organization
+     */
+    public var tags: [String]?
+
+    /**
+     Number of repeats for this section
+     */
+    public var repeatCount: Int?
+
+    /**
+     Dynamic marking (pp/p/mp/mf/f/ff)
+     */
+    public var dynamicMarking: String?
+
+    /**
+     Tempo multiplier for this section
+     */
+    public var tempoChange: Double?
+
+    /**
+     Time signature change for this section
+     */
+    public var timeSignatureChange: [Int]?
+
+    /**
+     Rehearsal marks (letters, numbers)
+     */
+    public var rehearsalMarks: [String]?
+
+    /**
+     Performance notes for this section
+     */
+    public var performanceNotes: String?
+
     public init(
         id: String,
         name: String,
         start: MusicalTime,
         end: MusicalTime,
         roles: [String],
-        realizationHints: [String: CodableAny]? = nil
+        realizationHints: [String: CodableAny]? = nil,
+        color: String? = nil,
+        tags: [String]? = nil,
+        repeatCount: Int? = nil,
+        dynamicMarking: String? = nil,
+        tempoChange: Double? = nil,
+        timeSignatureChange: [Int]? = nil,
+        rehearsalMarks: [String]? = nil,
+        performanceNotes: String? = nil
     ) {
         self.id = id
         self.name = name
@@ -233,6 +355,14 @@ public struct Section: Equatable, Codable, Sendable, Identifiable {
         self.end = end
         self.roles = roles
         self.realizationHints = realizationHints
+        self.color = color
+        self.tags = tags
+        self.repeatCount = repeatCount
+        self.dynamicMarking = dynamicMarking
+        self.tempoChange = tempoChange
+        self.timeSignatureChange = timeSignatureChange
+        self.rehearsalMarks = rehearsalMarks
+        self.performanceNotes = performanceNotes
     }
 }
 
@@ -316,18 +446,76 @@ public struct Role: Equatable, Codable, Sendable, Identifiable {
      */
     public var parameters: RoleParameters
 
+    // MARK: - NEW FIELDS - Role Configuration
+
+    /**
+     Enable/disable role
+     */
+    public var enabled: Bool?
+
+    /**
+     Role color for UI (hex color string)
+     */
+    public var color: String?
+
+    /**
+     Role icon for UI (icon identifier)
+     */
+    public var icon: String?
+
+    /**
+     Role notes
+     */
+    public var notes: String?
+
+    /**
+     Default instrument ID for this role
+     */
+    public var defaultInstrumentId: String?
+
+    /**
+     Default voice ID for this role
+     */
+    public var defaultVoiceId: String?
+
+    /**
+     MIDI program for this role
+     */
+    public var midiProgram: Int?
+
+    /**
+     Mark required roles
+     */
+    public var required: Bool?
+
     public init(
         id: String,
         name: String,
         type: RoleType,
         generatorConfig: GeneratorConfig,
-        parameters: RoleParameters
+        parameters: RoleParameters,
+        enabled: Bool? = nil,
+        color: String? = nil,
+        icon: String? = nil,
+        notes: String? = nil,
+        defaultInstrumentId: String? = nil,
+        defaultVoiceId: String? = nil,
+        midiProgram: Int? = nil,
+        required: Bool? = nil
     ) {
         self.id = id
         self.name = name
         self.type = type
         self.generatorConfig = generatorConfig
         self.parameters = parameters
+        self.enabled = enabled
+        self.color = color
+        self.icon = icon
+        self.notes = notes
+        self.defaultInstrumentId = defaultInstrumentId
+        self.defaultVoiceId = defaultVoiceId
+        self.midiProgram = midiProgram
+        self.required = required
     }
 }
 
@@ -592,6 +780,62 @@ public struct TrackConfig: Equatable, Codable, Sendable, Identifiable {
      */
     public var solo: Bool
 
+    // MARK: - NEW FIELDS - Instrument and Voice Assignment
+
+    /**
+     Instrument ID for this track (CRITICAL - was missing, causing data loss)
+     */
+    public var instrumentId: String?
+
+    /**
+     Voice ID for this track (CRITICAL - was missing, causing data loss)
+     */
+    public var voiceId: String?
+
+    /**
+     Plugin preset ID for this track
+     */
+    public var presetId: String?
+
+    // MARK: - NEW FIELDS - MIDI Configuration
+
+    /**
+     MIDI channel assignment (0-15)
+     */
+    public var midiChannel: Int?
+
+    /**
+     MIDI program change number (0-127)
+     */
+    public var midiProgram: Int?
+
+    /**
+     MIDI bank select MSB (0-127)
+     */
+    public var midiBankMsb: Int?
+
+    /**
+     MIDI bank select LSB (0-127)
+     */
+    public var midiBankLsb: Int?
+
+    // MARK: - NEW FIELDS - UI and Organization
+
+    /**
+     Track color for UI (hex color string, e.g., "#FF5733")
+     */
+    public var color: String?
+
+    /**
+     Track icon for UI (icon identifier)
+     */
+    public var icon: String?
+
+    /**
+     Track notes/comments
+     */
+    public var comments: String?
+
     /**
      Additional track-specific parameters
      */
@@ -604,6 +848,16 @@ public struct TrackConfig: Equatable, Codable, Sendable, Identifiable {
         pan: Double,
         mute: Bool = false,
         solo: Bool = false,
+        instrumentId: String? = nil,
+        voiceId: String? = nil,
+        presetId: String? = nil,
+        midiChannel: Int? = nil,
+        midiProgram: Int? = nil,
+        midiBankMsb: Int? = nil,
+        midiBankLsb: Int? = nil,
+        color: String? = nil,
+        icon: String? = nil,
+        comments: String? = nil,
         additionalParameters: [String: CodableAny]? = nil
     ) {
         self.id = id
@@ -612,6 +866,16 @@ public struct TrackConfig: Equatable, Codable, Sendable, Identifiable {
         self.pan = pan
         self.mute = mute
         self.solo = solo
+        self.instrumentId = instrumentId
+        self.voiceId = voiceId
+        self.presetId = presetId
+        self.midiChannel = midiChannel
+        self.midiProgram = midiProgram
+        self.midiBankMsb = midiBankMsb
+        self.midiBankLsb = midiBankLsb
+        self.color = color
+        self.icon = icon
+        self.comments = comments
         self.additionalParameters = additionalParameters
     }
 }

@@ -1,0 +1,61 @@
+{
+  "name": "Modal Harmonics",
+  "instrument": "Kane Marco",
+  "instrumentType": "Physical Modeling",
+  "bpm": 75,
+  "key": "D min",
+  "duration": "6:00",
+  "difficulty": "Advanced",
+
+  "description": "Exploration of modal harmonics and physical overtones",
+
+  "features": {
+    "primary": ["Modal Harmonics", "Physical Overtones", "Harmonic Series"],
+    "obscure": ["Harmonic Emphasis", "Modal Ratios", "Overtone Control"]
+  },
+
+  "parameters": {
+    "aether_enabled": true,
+    "resonance_amount": 0.95,
+    "resonance_decay": 2.8,
+    "harmonic_emphasis": 0.8,
+    "modal_ratios": [1.0, 2.0, 3.0, 4.0, 5.0],
+    "harmonic_control": 0.7,
+    "string_tension": 0.5,
+    "string_damping": 0.25,
+    "brightness": 0.55,
+    "overtone_enabled": true,
+    "overtone_balance": 0.6
+  },
+
+  "pattern": {
+    "notes": [
+      {"note": 50, "velocity": 70, "duration": 4.0},
+      {"note": 54, "velocity": 68, "duration": 4.0},
+      {"note": 57, "velocity": 72, "duration": 4.0},
+      {"note": 62, "velocity": 75, "duration": 5.0},
+      {"note": 66, "velocity": 73, "duration": 4.0},
+      {"note": 62, "velocity": 71, "duration": 4.0},
+      {"note": 57, "velocity": 70, "duration": 4.0},
+      {"note": 54, "velocity": 68, "duration": 4.0}
+    ]
+  },
+
+  "performance": {
+    "notes": "Exploration of modal harmonics using physical modeling. Maximum resonance (0.95) for rich harmonic series. Long resonance decay (2.8s) for sustained overtones. Harmonic emphasis (0.8) controls harmonic series strength. Modal ratios [1.0, 2.0, 3.0, 4.0, 5.0] define harmonic series (integer ratios for musical harmonics). Harmonic control (0.7) adjusts overtone balance. String tension (0.5) for stability. Very low damping (0.25) for sustained harmonics. Brightness (0.55) for clarity. Overtone enabled (0.6 balance) adds upper harmonics. Soft velocities (68-75) for pure tone. Long notes (4-5 bars) for harmonic exploration. Creates pure, harmonic-rich textures.",
+    "technique": "Maximum resonance = rich harmonics. Long decay = sustained overtones. Harmonic emphasis = harmonic series strength. Modal ratios = harmonic intervals (integer ratios). Overtone balance = upper harmonics. Low damping = sustain.",
+    "genre": "Contemporary / Experimental / Harmonic",
+    "tip": "Integer ratios (1, 2, 3, 4, 5) = musical harmonics. Harmonic emphasis controls strength. Low damping = sustained overtones. Long decay = harmonic exploration."
+  },
+
+  "harmonicTechniques": [
+    "Integer ratios - musical harmonics",
+    "Harmonic emphasis - series strength",
+    "Overtone balance - upper harmonics",
+    "Low damping - sustained overtones",
+    "Long decay - harmonic exploration",
+    "Soft velocities - pure tone"
+  ],
+
+  "tags": ["harmonics", "modal", "overtones", "physical modeling", "experimental"]
+}

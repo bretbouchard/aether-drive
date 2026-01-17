@@ -16,7 +16,11 @@ let package = Package(
             targets: ["SwiftFrontendShared"]),
     ],
     dependencies: [
-        // Add external dependencies here
+        // SnapshotTesting for visual regression tests
+        .package(
+            url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
+            from: "1.17.0"
+        ),
     ],
     targets: [
         .target(
@@ -29,7 +33,10 @@ let package = Package(
         ),
         .testTarget(
             name: "SwiftFrontendSharedTests",
-            dependencies: ["SwiftFrontendShared"],
+            dependencies: [
+                "SwiftFrontendShared",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+            ],
             path: "../SwiftFrontendSharedTests"
         ),
     ]

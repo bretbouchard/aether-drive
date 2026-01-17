@@ -295,7 +295,7 @@ public extension View {
         _ name: String,
         action: @escaping () -> Void
     ) -> some View {
-        self.accessibilityAction(.named(name)) {
+        self.accessibilityAction(.custom(name)) {
             action()
         }
     }
@@ -349,7 +349,7 @@ public extension View {
         _ name: String,
         action: @escaping () -> Void
     ) -> some View {
-        self.accessibilityAction(.named(name)) {
+        self.accessibilityAction(.custom(name)) {
             action()
         }
     }

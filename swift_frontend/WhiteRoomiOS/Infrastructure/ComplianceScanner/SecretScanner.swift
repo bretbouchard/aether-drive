@@ -164,11 +164,13 @@ public class SecretScanner: ObservableObject {
         ),
 
         // Stripe Keys
+        // NOTE: The examples below are MOCK/TEST values for secret detection testing
+        // They are NOT real credentials and should not be flagged as secrets
         SecretPattern(
             type: .stripeKey,
             regex: "(?i)stripe[_-]?(api[_-]?)?key.{0,20}?=.{0,20}?['\\\"]?(sk_live_[A-Za-z0-9]{24,})",
             description: "Stripe Secret Key",
-            examples: ["sk_live_51H5Xabcdefghijk1234567890"],
+            examples: ["sk_live_51H5Xabcdefghijk1234567890"], // MOCK EXAMPLE - NOT REAL
             falsePositives: ["sk_test_", "sk_live_test"],
             confidence: 0.95
         ),
@@ -193,11 +195,13 @@ public class SecretScanner: ObservableObject {
         ),
 
         // Twilio Keys
+        // NOTE: The examples below are MOCK/TEST values for secret detection testing
+        // They are NOT real credentials and should not be flagged as secrets
         SecretPattern(
             type: .twilioKey,
             regex: "(?i)twilio[_-]?account[_-]?sid.{0,20}?=.{0,20}?['\\\"]?(AC[a-zA-Z0-9]{32})",
             description: "Twilio Account SID",
-            examples: ["AC1234567890abcdef1234567890abcdef"],
+            examples: ["AC1234567890abcdef1234567890abcdef"], // MOCK EXAMPLE - NOT REAL
             falsePositives: [],
             confidence: 0.90
         ),
@@ -206,7 +210,7 @@ public class SecretScanner: ObservableObject {
             type: .twilioKey,
             regex: "(?i)twilio[_-]?auth[_-]?token.{0,20}?=.{0,20}?['\\\"]?([a-zA-Z0-9]{32})",
             description: "Twilio Auth Token",
-            examples: ["1234567890abcdef1234567890abcdef"],
+            examples: ["1234567890abcdef1234567890abcdef"], // MOCK EXAMPLE - NOT REAL
             falsePositives: [],
             confidence: 0.85
         ),

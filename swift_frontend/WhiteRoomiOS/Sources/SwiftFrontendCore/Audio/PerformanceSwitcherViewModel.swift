@@ -539,10 +539,7 @@ struct PendingSwitchIndicator: View {
 
 struct PerformanceStripView_Previews: PreviewProvider {
     static var previews: some View {
-        let switcher = PerformanceSwitcherViewModel()
-
-        return PerformanceStripView(switcher: switcher)
-            .frame(height: 150)
-            .previewLayout(.sizeThatFits)
+        // Preview is handled in PerformanceStrip.swift
+        Text("See PerformanceStrip.swift for previews")
     }
 }

@@ -37,7 +37,7 @@ public struct PerformanceEditCommand: Command {
         case tags([String])
         case active(Bool)
         case parameter(String, CodableAny)
-        case projection(String, Projection?)
+        case projection(String, InstrumentProjection?)
     }
 
     /// The edit operation
@@ -87,9 +87,9 @@ public struct PerformanceEditCommand: Command {
             performance.parameters[key] = value
         case .projection(let roleId, let projection):
             if let projection = projection {
-                performance.projections[roleId] = projection
+                performance.instrumentProjections[roleId] = projection
             } else {
-                performance.projections.removeValue(forKey: roleId)
+                performance.instrumentProjections.removeValue(forKey: roleId)
             }
         }
 

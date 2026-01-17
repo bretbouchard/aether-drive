@@ -1547,9 +1547,13 @@ extension View {
         #if os(iOS)
         return self.contextMenu {
             Menu {
-                ForEach(actions.indices, id: \.self) { index in
-                    if let action = actions[index] as? UIAction {
-                        Button(action: action.handler) {
+                ForEach(Array(actions.enumerated()), id: \.element) { index, element in
+                    if let action = element as? UIAction {
+                        Button {
+                            // Extract the handler from UIAction's internal state
+                            let handler = action.value(forKey: "handler") as? () -> Void
+                            handler?()
+                        } label: {
                             Text(action.title)
                             if let image = action.image {
                                 Image(uiImage: image)

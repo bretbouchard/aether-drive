@@ -84,25 +84,17 @@ public struct PerformanceStrip: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: isCompactWidth ? 12 : 16) {
                     ForEach(performances) { performance in
-                        PerformanceCard(
-                            performance: performance,
-                            isActive: performance.id == activePerformanceId,
-                            isCompact: isCompactWidth,
-                            onTap: {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    activePerformanceId = performance.id
-                                    onPerformanceSelected(performance)
-                                }
-                            },
-                            onLongPress: {
-                                editingPerformance = performance
-                                showingPerformanceEditor = true
-                            },
-                            onSwipeUp: {
-                                editingPerformance = performance
-                                showingPerformanceEditor = true
+                        Button {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                activePerformanceId = performance.id
+                                onPerformanceSelected(performance)
                             }
-                        )
+                        } label: {
+                            Text(performance.name)
+                                .font(isCompactWidth ? .caption : .body)
+                                .foregroundColor(performance.id == activePerformanceId ? .white : .primary)
+                        }
+                        .buttonStyle(.bordered)
                     }
                 }
                 .padding(.horizontal, isCompactWidth ? 12 : 16)
@@ -554,8 +546,12 @@ private struct PerformanceEditorSheet: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section("Performance Details") {
+            List {
+                Group {
+                    Text("Performance Details")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+
                     TextField("Name", text: $editedPerformance.name)
 
                     Picker("Mode", selection: $editedPerformance.mode) {
@@ -566,7 +562,11 @@ private struct PerformanceEditorSheet: View {
                     }
                 }
 
-                Section("Settings") {
+                Group {
+                    Text("Settings")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+
                     VStack(alignment: .leading) {
                         Text("Density: \(String(format: "%.0f%%", editedPerformance.globalDensityMultiplier * 100))")
                         Slider(value: $editedPerformance.globalDensityMultiplier, in: 0...2)

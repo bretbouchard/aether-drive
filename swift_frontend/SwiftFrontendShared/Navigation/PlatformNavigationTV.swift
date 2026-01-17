@@ -82,7 +82,7 @@ public struct PlatformNavigationTV: View {
                     .foregroundColor(selectedTab == destination ? .accentColor : .secondary)
                 }
                 .buttonStyle(.plain)
-                .focusable()
+                .focusableWrapper()
             }
 
             Spacer()
@@ -99,7 +99,7 @@ public struct PlatformNavigationTV: View {
                 }
             }
             .buttonStyle(.plain)
-            .focusable()
+            .focusableWrapper()
         }
         .padding()
         .background(Color.black.opacity(0.8))
@@ -138,6 +138,15 @@ extension View {
             return self.tabViewStyle(PageTabViewStyle())
         }
     }
+
+    @ViewBuilder
+    func focusableWrapper() -> some View {
+        if #available(iOS 17.0, tvOS 17.0, *) {
+            self.focusable()
+        } else {
+            self
+        }
+    }
 }
 
 // =============================================================================
@@ -155,7 +164,7 @@ struct SlideOverPanelModifier: ViewModifier {
 
     private var backgroundMaterial: some ShapeStyle {
         if #available(iOS 17.0, tvOS 17.0, *) {
-            return Color.ultraThickMaterial
+            return .ultraThickMaterial
         } else {
             return Color.black.opacity(0.8)
         }

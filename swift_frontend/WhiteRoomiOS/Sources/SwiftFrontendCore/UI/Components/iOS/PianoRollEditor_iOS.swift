@@ -135,7 +135,7 @@ public struct PianoRollEditor_iOS: View {
         VStack(spacing: 0) {
             // Piano keyboard (top in portrait)
             keyboardView
-                .frame(height: CGFloat(currentOctaveCount * currentKeyHeight))
+                .frame(height: CGFloat(currentOctaveCount) * currentKeyHeight)
 
             Divider()
 
@@ -398,7 +398,7 @@ public struct PianoRollEditor_iOS: View {
             }
 
             let x = CGFloat(note.startBeat) * pixelsPerBeat
-            let y = CGFloat(yOffset) * currentKeyHeight
+            let y = CGFloat(yOffset as Int) * currentKeyHeight
             let width = CGFloat(note.duration) * pixelsPerBeat
             let height = currentKeyHeight
 
@@ -414,7 +414,7 @@ public struct PianoRollEditor_iOS: View {
             let rect = CGRect(x: x, y: y, width: width, height: height)
 
             // Note fill with velocity-based opacity
-            let velocity = note.velocity / 127.0
+            let velocity = Double(note.velocity) / 127.0
             context.fill(
                 Path { path in
                     path.addRoundedRect(in: rect, cornerSize: CGSize(width: 4, height: 4))
@@ -448,8 +448,9 @@ public struct PianoRollEditor_iOS: View {
         // Complete note drawing
     }
 
-    private func handleTap(at location: CGPoint) {
+    private func handleTap(at location: TapGesture.Value) {
         // Select note at location
+        let location = location
     }
 
     private func handleLongPress(_ value: SequenceGesture<LongPressGesture, DragGesture>.Value) {
@@ -528,7 +529,7 @@ public struct PianoRollEditor_iOS: View {
         case 0.25: return "1/4"
         case 0.125: return "1/8"
         case 0.0625: return "1/16"
-        default: return "\(Int(1/value))"
+        default: return "\(Int(1.0/value))"
         }
     }
 

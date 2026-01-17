@@ -50,7 +50,7 @@ public struct PianoRollEditor: View {
                 timelineView
             }
         }
-        .background(Color(NSColor.textBackgroundColor))
+        .background(Color(UIColor.systemBackground))
     }
 
     // MARK: - Header View
@@ -143,7 +143,7 @@ public struct PianoRollEditor: View {
                     width: geometry.size.width * zoomLevel,
                     height: CGFloat((isCompactWidth ? octaveCountCompact : octaveCount) * 12) * (isCompactWidth ? keyHeightCompact : keyHeight)
                 )
-                .background(Color(NSColor.controlBackgroundColor))
+                .background(Color.secondary.opacity(0.1))
             }
         }
     }

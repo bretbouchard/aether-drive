@@ -153,9 +153,29 @@ public struct PerformanceState: Equatable, Codable, Sendable, Identifiable {
     public var name: String
 
     /**
+     Performance description
+     */
+    public var description: String?
+
+    /**
      Performance version (for migration)
      */
     public var version: String
+
+    /**
+     Whether this performance is active
+     */
+    public var active: Bool
+
+    /**
+     Performance parameters (key-value pairs)
+     */
+    public var parameters: [String: CodableAny]
+
+    /**
+     Performance instrument projections (role ID -> instrument projection)
+     */
+    public var instrumentProjections: [String: InstrumentProjection]
 
     // MARK: - Performance Mode
 
@@ -264,7 +284,11 @@ public struct PerformanceState: Equatable, Codable, Sendable, Identifiable {
     public init(
         id: String,
         name: String,
+        description: String? = nil,
         version: String,
+        active: Bool = true,
+        parameters: [String: CodableAny] = [:],
+        instrumentProjections: [String: InstrumentProjection] = [:],
         mode: PerformanceMode,
         roleOverrides: [String: RoleOverride],
         globalDensityMultiplier: Double,
@@ -280,7 +304,11 @@ public struct PerformanceState: Equatable, Codable, Sendable, Identifiable {
     ) {
         self.id = id
         self.name = name
+        self.description = description
         self.version = version
+        self.active = active
+        self.parameters = parameters
+        self.instrumentProjections = instrumentProjections
         self.mode = mode
         self.roleOverrides = roleOverrides
         self.globalDensityMultiplier = globalDensityMultiplier
@@ -721,5 +749,53 @@ public struct EffectSlot: Equatable, Codable, Sendable, Identifiable {
         self.position = position
     }
 }
+
+// =============================================================================
+// MARK: - Instrument Projection
+// =============================================================================
+
+/**
+ Instrument projection for a performance
+ */
+public struct InstrumentProjection: Equatable, Codable, Sendable {
+    /// Projection type
+    public let type: ProjectionType
+
+    /// Instrument assignment
+    public let instrumentId: String
+
+    /// Volume/level for this projection
+    public let level: Double
+
+    /// Pan position (-1.0 to 1.0)
+    public let pan: Double
+
+    /// Effects applied
+    public let effects: [String]
+
+    public init(
+        type: ProjectionType,
+        instrumentId: String,
+        level: Double = 1.0,
+        pan: Double = 0.0,
+        effects: [String] = []
+    ) {
+        self.type = type
+        self.instrumentId = instrumentId
+        self.level = level
+        self.pan = pan
+        self.effects = effects
+    }
+
+    public enum ProjectionType: String, Codable, Sendable {
+        case direct
+        case room
+        case hall
+        case plate
+        case chamber
+        case custom
+    }
+}
+
 // Performance type alias for backward compatibility
 public typealias Performance = PerformanceState

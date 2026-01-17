@@ -1529,7 +1529,7 @@ extension View {
     /// Adds swipe gesture for fine value adjustment
     func swipeGesture(
         axis: Axis = .horizontal,
-        onSwipe: (CGFloat) -> Void
+        onSwipe: @escaping (CGFloat) -> Void
     ) -> some View {
         self.gesture(
             DragGesture()

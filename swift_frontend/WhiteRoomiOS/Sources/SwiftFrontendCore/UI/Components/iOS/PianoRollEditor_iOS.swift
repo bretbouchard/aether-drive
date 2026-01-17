@@ -393,12 +393,12 @@ public struct PianoRollEditor_iOS: View {
 
         for note in notes {
             // Calculate Y position based on MIDI pitch within our range
-            guard let yOffset = midiRange.firstIndex(of: note.pitch) else {
+            guard let yOffsetIndex = midiRange.firstIndex(of: note.pitch) else {
                 continue  // Note is outside visible range
             }
 
             let x = CGFloat(note.startBeat) * pixelsPerBeat
-            let y = CGFloat(yOffset as Int) * currentKeyHeight
+            let y = CGFloat(midiRange.distance(from: midiRange.startIndex, to: yOffsetIndex)) * currentKeyHeight
             let width = CGFloat(note.duration) * pixelsPerBeat
             let height = currentKeyHeight
 

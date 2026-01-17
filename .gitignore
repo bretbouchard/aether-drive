@@ -192,3 +192,9 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+
+# ==============================================================================
+# INGEST (Auto-generated project snapshots for AI sharing)
+# ==============================================================================
+ingest/*.md
+!ingest/README.md

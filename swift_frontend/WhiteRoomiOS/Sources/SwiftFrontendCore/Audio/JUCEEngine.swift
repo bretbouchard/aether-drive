@@ -92,12 +92,16 @@ public class JUCEEngine: ObservableObject {
             let clampedValue = max(0.0, min(1.0, blendValue))
 
             // Call FFI to set performance blend
-            let result = sch_engine_set_performance_blend(
-                handle,
-                performanceA.id,
-                performanceB.id,
-                clampedValue
-            )
+            let result = performanceA.id.withCString { idA in
+                performanceB.id.withCString { idB in
+                    sch_engine_set_performance_blend(
+                        handle,
+                        idA,
+                        idB,
+                        clampedValue
+                    )
+                }
+            }
 
             if result == SCH_OK {
                 DispatchQueue.main.async {
@@ -337,59 +341,102 @@ enum sch_transport_state_t: UInt32 {
 
 // MARK: - FFI Function Declarations
 
+// NOTE: These are stub implementations for compilation
+// Real FFI bridge will be implemented when JUCE backend is integrated
+
 /// Create a new Schillinger engine instance
-@_silgen_name("sch_engine_create")
-internal func sch_engine_create(_ out_engine: UnsafeMutablePointer<OpaquePointer?>) -> SchResult
+internal func sch_engine_create(_ out_engine: UnsafeMutablePointer<OpaquePointer?>) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_create called")
+    // Stub: Create a fake opaque pointer
+    out_engine.pointee = UnsafeMutableRawPointer(bitPattern: 0x12345678)
+    return .ok
+}
 
 /// Destroy an engine instance
-@_silgen_name("sch_engine_destroy")
-internal func sch_engine_destroy(_ engine: OpaquePointer?) -> SchResult
+internal func sch_engine_destroy(_ engine: OpaquePointer?) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_destroy called")
+    return .ok
+}
 
 /// Get engine version info
-@_silgen_name("sch_engine_get_version")
-internal func sch_engine_get_version(_ out_version: UnsafeMutablePointer<sch_string_t>) -> SchResult
+internal func sch_engine_get_version(_ out_version: UnsafeMutablePointer<sch_string_t>) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_get_version called")
+    let version = "0.1.0-stub"
+    out_version.pointee = sch_string_t(
+        data: UnsafeMutablePointer(mutating: (version as NSString).utf8String),
+        length: version.count
+    )
+    return .ok
+}
 
 /// Create a default song
-@_silgen_name("sch_engine_create_default_song")
-internal func sch_engine_create_default_song(_ engine: OpaquePointer?) -> SchResult
+internal func sch_engine_create_default_song(_ engine: OpaquePointer?) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_create_default_song called")
+    return .ok
+}
 
 /// Load a song from JSON
-@_silgen_name("sch_engine_load_song")
-internal func sch_engine_load_song(_ engine: OpaquePointer?, _ json: UnsafePointer<CChar>) -> SchResult
+internal func sch_engine_load_song(_ engine: OpaquePointer?, _ json: UnsafePointer<CChar>) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_load_song called")
+    return .ok
+}
 
 /// Get current song as JSON
-@_silgen_name("sch_engine_get_song")
-internal func sch_engine_get_song(_ engine: OpaquePointer?, _ out_json: UnsafeMutablePointer<sch_string_t>) -> SchResult
+internal func sch_engine_get_song(_ engine: OpaquePointer?, _ out_json: UnsafeMutablePointer<sch_string_t>) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_get_song called")
+    let song = "{\"name\":\"Stub Song\"}"
+    out_json.pointee = sch_string_t(
+        data: UnsafeMutablePointer(mutating: (song as NSString).utf8String),
+        length: song.count
+    )
+    return .ok
+}
 
 /// Initialize audio subsystem
-@_silgen_name("sch_engine_audio_init")
-internal func sch_engine_audio_init(_ engine: OpaquePointer?, _ config: UnsafePointer<sch_audio_config_t>) -> SchResult
+internal func sch_engine_audio_init(_ engine: OpaquePointer?, _ config: UnsafePointer<sch_audio_config_t>) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_audio_init called")
+    return .ok
+}
 
 /// Start audio processing
-@_silgen_name("sch_engine_audio_start")
-internal func sch_engine_audio_start(_ engine: OpaquePointer?) -> SchResult
+internal func sch_engine_audio_start(_ engine: OpaquePointer?) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_audio_start called")
+    return .ok
+}
 
 /// Stop audio processing
-@_silgen_name("sch_engine_audio_stop")
-internal func sch_engine_audio_stop(_ engine: OpaquePointer?) -> SchResult
+internal func sch_engine_audio_stop(_ engine: OpaquePointer?) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_audio_stop called")
+    return .ok
+}
 
 /// Set performance blend
-@_silgen_name("sch_engine_set_performance_blend")
 internal func sch_engine_set_performance_blend(
     _ engine: OpaquePointer?,
     _ performance_a_id: UnsafePointer<CChar>,
     _ performance_b_id: UnsafePointer<CChar>,
     _ blend_value: Double
-) -> SchResult
+) -> SchResult {
+    let idA = String(cString: performance_a_id)
+    let idB = String(cString: performance_b_id)
+    NSLog("[JUCEEngine STUB] sch_engine_set_performance_blend: \(idA) <-> \(idB) @ \(blend_value)")
+    return .ok
+}
 
 /// Set transport state
-@_silgen_name("sch_engine_set_transport")
-internal func sch_engine_set_transport(_ engine: OpaquePointer?, _ state: sch_transport_state_t) -> SchResult
+internal func sch_engine_set_transport(_ engine: OpaquePointer?, _ state: sch_transport_state_t) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_set_transport: \(state)")
+    return .ok
+}
 
 /// Set tempo
-@_silgen_name("sch_engine_set_tempo")
-internal func sch_engine_set_tempo(_ engine: OpaquePointer?, _ tempo: Double) -> SchResult
+internal func sch_engine_set_tempo(_ engine: OpaquePointer?, _ tempo: Double) -> SchResult {
+    NSLog("[JUCEEngine STUB] sch_engine_set_tempo: \(tempo)")
+    return .ok
+}
 
 /// Free string allocated by FFI
-@_silgen_name("sch_free_string")
-internal func sch_free_string(_ str: UnsafeMutablePointer<sch_string_t>)
+internal func sch_free_string(_ str: UnsafeMutablePointer<sch_string_t>) {
+    // Stub: strings are statically allocated, no need to free
+    NSLog("[JUCEEngine STUB] sch_free_string called")
+}

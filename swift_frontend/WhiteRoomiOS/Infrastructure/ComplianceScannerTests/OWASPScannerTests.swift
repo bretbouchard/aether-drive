@@ -106,7 +106,7 @@ final class OWASPScannerTests: XCTestCase {
 
     func testHardcodedAPIKeyDetection() async throws {
         let testContent = """
-        let apiKey = "sk_live_1234567890abcdefghijklmnop"
+        let apiKey = "sk_live_EXAMPLE_EXAMPLE_EXAMPLE_EXAMPLE"
         """
         let testFile = try createTestFile(content: testContent)
 

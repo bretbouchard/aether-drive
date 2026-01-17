@@ -1,4 +1,4 @@
-prefix=/usr/local
+prefix=/Users/bretbouchard/apps/schill/white_room/plugins/iOS
 includedir=${prefix}/include
 
 Name: clap

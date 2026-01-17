@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>NSExtension</key>
+    <dict>
+        <key>NSExtensionPointIdentifier</key>
+        <string>com.apple.audiounit-app</string>
+        <key>NSExtensionPointVersion</key>
+        <string>1.0</string>
+        <key>NSExtensionProtocol</key>
+        <string>com.apple.AudioUnit</string>
+        <key>NSExtensionAttribute</key>
+        <dict>
+            <key>AudioComponentDescription</key>
+            <dict>
+                <key>componentType</key>
+                <string>aufx</string>
+                <!-- EFFECT type (aufx), NOT instrument (aumu) -->
+                <key>componentSubType</key>
+                <string>athr</string>
+                <!-- Unique subtype for AetherDrive -->
+                <key>componentManufacturer</key>
+                <string>WHRM</string>
+                <!-- WhiteRoom manufacturer code -->
+                <key>componentFlags</key>
+                <integer>0</integer>
+                <key>componentFlagsMask</key>
+                <integer>0</integer>
+            </dict>
+            <key>AudioComponents</key>
+            <array>
+                <dict>
+                    <key>description</key>
+                    <string>Aether Drive Guitar Effects</string>
+                    <key>name</key>
+                    <string>Aether Drive: White Room</string>
+                    <key>type</key>
+                    <string>aufx</string>
+                    <!-- EFFECT type -->
+                    <key>subtype</key>
+                    <string>athr</string>
+                    <key>manufacturer</key>
+                    <string>WHRM</string>
+                    <key>version</key>
+                    <integer>65536</integer>
+                    <key>sandboxSafe</key>
+                    <true/>
+                    <key>requiresAudioAccessory</key>
+                    <false/>
+                    <key>tags</key>
+                    <array>
+                        <string>Effects</string>
+                        <string>Distortion</string>
+                        <string>Guitar</string>
+                    </array>
+                </dict>
+            </array>
+        </dict>
+    </dict>
+</dict>
+</plist>

@@ -1,11 +1,16 @@
 name: XCUITest Suite
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  # push:
+  #   branches: [main, develop]
+  # pull_request:
+  #   branches: [main, develop]
   workflow_dispatch:
+  # DISABLED: Non-existent Xcode project and test infrastructure
+  # This workflow references:
+  # - Non-existent Xcode project, schemes, and test targets
+  # Repository is Swift Package Manager, not Xcode project
+  # TODO: Either create proper Xcode project or delete this workflow
 
 jobs:
   # iOS Tests
